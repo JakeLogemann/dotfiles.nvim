@@ -1,0 +1,227 @@
+{
+  "normal": {
+    "/": [ ":Commentary", "comment selected" ],
+    "T": [ ":Vista!!", "Tags" ],
+    "e": [ ":Dirvish %", "Explore Current Dir"],
+    "b": {
+      "F": [ ":Denite filetype", "Filetypes" ],
+      "X": [ "bdestroy", "destroy" ],
+      "b": [ ":Denite buffer", "Find Buffer" ],
+      "c": [ "enew", "enew" ],
+      "l": [
+        "BLines",
+        "lines ..."
+      ],
+      "n": [
+        "bnext",
+        "next"
+      ],
+      "name": "buffer",
+      "o": [
+        "only",
+        "only"
+      ],
+      "p": [
+        "bprev",
+        "previous"
+      ],
+      "x": [
+        "bdelete",
+        "delete"
+      ]
+    },
+    "c": {
+      "A": [
+        "<Plug>(coc-codeaction)",
+        "action"
+      ],
+      "C": [
+        ":CocList commands",
+        "compl-cmds"
+      ],
+      "D": [
+        ":CocList diagnostics",
+        "diagnostics"
+      ],
+      "E": [
+        ":CocList extensions",
+        "extensions"
+      ],
+      "R": [
+        ":CocListResume",
+        "resume"
+      ],
+      "a": [
+        "<Plug>(coc-codeaction-selected)",
+        "action (sel)"
+      ],
+      "c": [
+        "<Plug>(coc-fix-current)",
+        "fix-current"
+      ],
+      "f": [
+        "<Plug>(coc-format-selected)",
+        "format"
+      ],
+      "l": [
+        ":Commentary",
+        "comment line"
+      ],
+      "n": [
+        ":CocNext",
+        "next"
+      ],
+      "name": "completion",
+      "o": [
+        ":CocList outline",
+        "outline"
+      ],
+      "p": [
+        ":CocPrev",
+        "prev"
+      ],
+      "r": [
+        "<Plug>(coc-rename)",
+        "rename"
+      ],
+      "s": [
+        ":CocList -I symbols",
+        "symbols"
+      ]
+    },
+    "f": {
+      "f": [
+        ":Denite file/rec",
+        "Files"
+      ],
+      "h": [
+        "History",
+        "file history"
+      ],
+      "m": [
+        ":Denite mark",
+        "Marks"
+      ],
+      "name": "find",
+      "s": [
+        "Snippets",
+        "snippets"
+      ],
+      "t": [
+        "Denite tag",
+        "Tags"
+      ],
+      "w": [
+        "Windows",
+        "search windows"
+      ]
+    },
+    "g": {
+      "name": "goto"
+    },
+    "o": {
+      "l": [
+        "lopen",
+        "locs"
+      ],
+      "name": "open",
+      "q": [
+        "copen",
+        "qfix"
+      ],
+      "s": [
+        "Startify",
+        "start"
+      ],
+      "t": [
+        "Vista!!",
+        "tags"
+      ]
+    },
+    "t": {
+      "c": [
+        "tabnew",
+        "new"
+      ],
+      "n": [
+        "tabNext",
+        "next"
+      ],
+      "name": "tab",
+      "p": [
+        "tabprevious",
+        "previous"
+      ]
+    },
+    "v": {
+      "C": [
+        "Console",
+        "Console"
+      ],
+      "K": [
+        ":ReloadKeybinds",
+        "reload keys"
+      ],
+      "c": [
+        ":Colors",
+        "Colorschemes"
+      ],
+      "e": [
+        "ConfigEdit",
+        "edit config .."
+      ],
+      "h": [
+        ":Helptags",
+        "Helptags"
+      ],
+      "k": [
+        ":Maps",
+        "keys"
+      ],
+      "m": [
+        ":Messages",
+        "Messages"
+      ],
+      "name": "vim",
+      "S": [
+        ":Scriptnames",
+        "Scripts"
+      ],
+      "x": [
+        ":Commands",
+        "search commands"
+      ]
+    },
+    "w": {
+      "d": [
+        "VimwikiDiaryIndex",
+        "daily notes"
+      ],
+      "n": [
+        "VimwikiMakeTomorrowDiaryNote",
+        "next day"
+      ],
+      "name": "wiki",
+      "p": [
+        "VimwikiMakeYesterdayDiaryNote",
+        "prev day"
+      ],
+      "t": [
+        "VimwikiMakeDiaryNote",
+        "today"
+      ],
+      "w": [
+        "VimwikiIndex",
+        "open wiki"
+      ]
+    }
+  },
+  "visual": {
+    "c": {
+      "l": [
+        ":Commentary",
+        "comment selected"
+      ]
+    }
+  }
+}

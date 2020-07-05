@@ -50,13 +50,13 @@ function! dotfiles#setup#augroup() abort
 endfunction
 
 function! dotfiles#setup#dirs() abort
-  " Create cache directories automatically before they're needed.
+  " Create cache directories automatically before they're needed. {{{
   for d in ['backup', 'dein', 'info', 'swap',  'undo'] 
     let l:path = expand(g:dotfiles.dirs.cache .. '/' .. d)
     if !isdirectory(l:path) 
       call mkdir(l:path, 'p') 
     endif
-  endfor
+  endfor "}}}
 
   " Paths requiring expansion
   execute 'set backupdir=' . expand(g:dotfiles.dirs.backup) . '/'

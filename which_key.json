@@ -1,219 +1,102 @@
 {
   "normal": {
-    "/": [ ":Commentary", "comment selected" ],
-    "T": [ ":Vista!!", "Tags" ],
-    "e": [ ":Dirvish %", "Explore Current Dir"],
+    "T": {
+      "name": "tags",
+      "c": [ ":Vista!", "close tagbar" ],
+      "o": [ ":Vista", "open tagbar" ],
+      "r": [ ":Vista", "refresh tagbar" ],
+      "x": [ ":Vista!!", "toggle tagbar" ],
+      "f": [ ":Tags", "find tag" ]
+    },
+    "F": {
+      "name": "file",
+      "d": [":Dirvish %", "current dir"],
+      "f": [":Denite file/rec", "find"],
+      "h": ["History", "file history" ],
+      "w": [":Dirvish", "working dir"]
+    },
     "b": {
-      "F": [ ":Denite filetype", "Filetypes" ],
-      "X": [ "bdestroy", "destroy" ],
-      "b": [ ":Denite buffer", "Find Buffer" ],
-      "c": [ "enew", "enew" ],
-      "l": [
-        "BLines",
-        "lines ..."
-      ],
-      "n": [
-        "bnext",
-        "next"
-      ],
       "name": "buffer",
-      "o": [
-        "only",
-        "only"
-      ],
-      "p": [
-        "bprev",
-        "previous"
-      ],
-      "x": [
-        "bdelete",
-        "delete"
-      ]
+      "F": [ ":Denite filetype", "filetype" ],
+      "X": [ "bdestroy", "destroy buf" ],
+      "b": [ ":Denite buffer", "find buf" ],
+      "c": [ "enew", "new buf" ],
+      "l": [ "BLines", "find line" ],
+      "n": [ "bnext", "next buf" ],
+      "o": [ "only", "only" ],
+      "p": [ "bprev", "previous" ],
+      "x": [ "bdelete", "delete" ]
     },
-    "c": {
-      "A": [
-        "<Plug>(coc-codeaction)",
-        "action"
-      ],
-      "C": [
-        ":CocList commands",
-        "compl-cmds"
-      ],
-      "D": [
-        ":CocList diagnostics",
-        "diagnostics"
-      ],
-      "E": [
-        ":CocList extensions",
-        "extensions"
-      ],
-      "R": [
-        ":CocListResume",
-        "resume"
-      ],
-      "a": [
-        "<Plug>(coc-codeaction-selected)",
-        "action (sel)"
-      ],
-      "c": [
-        "<Plug>(coc-fix-current)",
-        "fix-current"
-      ],
-      "f": [
-        "<Plug>(coc-format-selected)",
-        "format"
-      ],
-      "l": [
-        ":Commentary",
-        "comment line"
-      ],
-      "n": [
-        ":CocNext",
-        "next"
-      ],
-      "name": "completion",
-      "o": [
-        ":CocList outline",
-        "outline"
-      ],
-      "p": [
-        ":CocPrev",
-        "prev"
-      ],
-      "r": [
-        "<Plug>(coc-rename)",
-        "rename"
-      ],
-      "s": [
-        ":CocList -I symbols",
-        "symbols"
-      ]
-    },
-    "f": {
-      "f": [
-        ":Denite file/rec",
-        "Files"
-      ],
-      "h": [
-        "History",
-        "file history"
-      ],
-      "m": [
-        ":Denite mark",
-        "Marks"
-      ],
-      "name": "find",
-      "s": [
-        "Snippets",
-        "snippets"
-      ],
-      "t": [
-        "Denite tag",
-        "Tags"
-      ],
-      "w": [
-        "Windows",
-        "search windows"
-      ]
+    "/": {
+      "name": "search",
+      "m": [ ":Denite mark", "marks" ],
+      "s": [ "Snippets", "snippets" ],
+      "t": [ "Denite tag", "Tags" ],
+      "w": [ "Windows", "search windows" ]
     },
     "g": {
-      "name": "goto"
+      "name": "git",
+      "s": ["Gina status", "status"],
+      "z": ["Gina stash", "stash"],
+      "t": ["Gina tag", "tags"],
+      "C": ["Gina commit", "commit"],
+      "c": ["Gina changes", "changes"],
+      "d": ["Gina diff", "diff"],
+      "g": ["Gina grep", "grep"],
+      "r": ["Gina rebase", "rebase"],
+      "b": ["Gina branch", "branches"],
+      "B": ["Gina blame", "blame"],
+      "l": ["Gina log", "log"]
     },
     "o": {
-      "l": [
-        "lopen",
-        "locs"
-      ],
       "name": "open",
-      "q": [
-        "copen",
-        "qfix"
-      ],
-      "s": [
-        "Startify",
-        "start"
-      ],
-      "t": [
-        "Vista!!",
-        "tags"
-      ]
+      "l": [ "lopen", "locs" ],
+      "q": [ "copen", "qfix" ],
+      "s": [ "Startify", "start" ],
+      "t": [ "Vista!!", "tags" ]
     },
     "t": {
-      "c": [
-        "tabnew",
-        "new"
-      ],
-      "n": [
-        "tabNext",
-        "next"
-      ],
       "name": "tab",
-      "p": [
-        "tabprevious",
-        "previous"
-      ]
+      "c": [ "tabnew", "new" ],
+      "n": [ "tabNext", "next" ],
+      "p": [ "tabprevious", "previous" ]
     },
     "v": {
-      "C": [
-        "Console",
-        "Console"
-      ],
-      "K": [
-        ":ReloadKeybinds",
-        "reload keys"
-      ],
-      "c": [
-        ":Colors",
-        "Colorschemes"
-      ],
-      "e": [
-        "ConfigEdit",
-        "edit config .."
-      ],
-      "h": [
-        ":Helptags",
-        "Helptags"
-      ],
-      "k": [
-        ":Maps",
-        "keys"
-      ],
-      "m": [
-        ":Messages",
-        "Messages"
-      ],
       "name": "vim",
-      "S": [
-        ":Scriptnames",
-        "Scripts"
-      ],
-      "x": [
-        ":Commands",
-        "search commands"
-      ]
+      "C": [ "Console", "console" ],
+      "E": [ "EditKeybinds", "edit mappings" ],
+      "K": [ "ReloadKeybinds", "reload mappings" ],
+      "S": [ "Scriptnames", "vimscripts" ],
+      "c": [ "Colors", "colorscheme" ],
+      "e": [ "EditConfig", "edit config" ],
+      "h": [ "Helptags", "find help" ],
+      "k": [ "Maps",        "find mapping" ],
+      "m": [ "Messages", "messages" ],
+      "r": [ "ReloadConfig", "reload config" ],
+      "x": [ "Commands", "commands" ]
     },
     "w": {
-      "d": [
-        "VimwikiDiaryIndex",
-        "daily notes"
-      ],
-      "n": [
-        "VimwikiMakeTomorrowDiaryNote",
-        "next day"
-      ],
+      "name": "window",
+      "w": [ "Windows",   "find" ],
+      "n": [ "wnext",     "next" ],
+      "p": [ "wprevious", "prev" ]
+    },
+    "W": {
       "name": "wiki",
-      "p": [
-        "VimwikiMakeYesterdayDiaryNote",
-        "prev day"
-      ],
-      "t": [
-        "VimwikiMakeDiaryNote",
-        "today"
-      ],
-      "w": [
-        "VimwikiIndex",
-        "open wiki"
-      ]
+      "d": [ "VimwikiDiaryIndex", "daily notes" ],
+      "n": [ "VimwikiMakeTomorrowDiaryNote", "next day" ],
+      "p": [ "VimwikiMakeYesterdayDiaryNote", "prev day" ],
+      "t": [ "VimwikiMakeDiaryNote", "today" ],
+      "o": [ "VimwikiIndex", "open wiki" ]
+    },
+    "z": {
+      "name": "toggle",
+      "s": [ ":setlocal spell!", "spell" ],
+      "l": [ ":setlocal list!", "list" ],
+      "c": [ ":setlocal conceal!", "conceal" ],
+      "f": [ ":setlocal foldenable!", "folding" ],
+      "a": [ ":setlocal autoindent!", "autoindent" ],
+      "w": [ ":setlocal wrap!", "wrap" ]
     }
   },
   "visual": {

@@ -10,14 +10,16 @@ function! dotfiles#setup() abort
 
   call dotfiles#vars#init()
   call dotfiles#setup#dirs()
+
   call dotfiles#setup#color_row_and_column()
   call dotfiles#setup#augroup()
+  call dotfiles#statusline#init()
+  call dotfiles#startpage#init()
+  call dotfiles#keybinds#init()
+  call dotfiles#completion#init()
+  call dotfiles#wiki#init()
   call dotfiles#setup#lazy_setup()
 
-  command! ConfigEdit   call dotfiles#config_edit()
-  command! ConfigReload call dotfiles#config_reload()
-  command! ConfigView   call dotfiles#vars#view()
-  command! ConfigReset  call dotfiles#setup()
 endfunction
 
 function! dotfiles#json_view(prefix, keyname) abort
@@ -47,7 +49,11 @@ function! dotfiles#config_reload() abort
 endfunction
 
 function! dotfiles#config_edit() abort
-  execute printf(":Dirvish %s", expand(g:dotfiles_vim_config_dir))
+  execute printf(":tabedit %s", expand(g:dotfiles_vim_config_file))
   autocmd BufWrite <buffer> call dotfiles#reload()
+endfunction
+
+function! dotfiles#config_browse() abort
+  execute printf(":Dirvish %s", expand(g:dotfiles_vim_config_dir))
 endfunction
 

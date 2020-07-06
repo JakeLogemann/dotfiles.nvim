@@ -4,3 +4,15 @@
 [submodule "pack/default/opt/vim-clap"]
 	path = pack/default/opt/vim-clap
 	url = https://github.com/liuchengxu/vim-clap
+[submodule "pack/default/start/clap"]
+	path = pack/default/start/clap
+	url = https://github.com/liuchengxu/vim-clap.git
+[submodule "pack/default/start/dashboard"]
+	path = pack/default/start/dashboard
+	url = https://github.com/hardcoreplayers/dashboard-nvim
+[submodule "pack/default/start/libmodal"]
+	path = pack/default/start/libmodal
+	url = https://github.com/Iron-E/nvim-libmodal
+[submodule "pack/default/start/impromptu"]
+	path = pack/default/start/impromptu
+	url = https://github.com/hkupty/impromptu.nvim

@@ -1,0 +1,6 @@
+[submodule "pack/default/start/nvim-lsp"]
+	path = pack/default/start/nvim-lsp
+	url = https://github.com/neovim/nvim-lsp
+[submodule "pack/default/opt/vim-clap"]
+	path = pack/default/opt/vim-clap
+	url = https://github.com/liuchengxu/vim-clap

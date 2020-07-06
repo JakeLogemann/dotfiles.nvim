@@ -44,14 +44,14 @@ function! dotfiles#keybinds#leader()
   let g:which_key_fallback_to_native_key = 1
   let g:which_key_flatten                = 1
   let g:which_key_floating_relative_win  = 0
-  let g:which_key_hspace                 = 6
+  let g:which_key_hspace                 = 10 
   let g:which_key_run_map_on_popup       = 0
   let g:which_key_sep                    = '‣'
   let g:which_key_sort_horizontal        = 0
   let g:which_key_timeout                = &timeoutlen
-  let g:which_key_use_floating_win       = 0
-  let g:which_key_vertical               = 0
-  let g:which_key_disable_default_offset = 0
+  let g:which_key_use_floating_win       = 1
+  let g:which_key_vertical               = 1
+  let g:which_key_disable_default_offset = 1
   " Load the definition from JSON separately for easier reloading.
   call dotfiles#keybinds#reload()
 endfunction

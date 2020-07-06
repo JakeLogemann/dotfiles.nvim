@@ -4,8 +4,6 @@
 "
 " (hint: use K to jump to a definition in :help) 
 "
-" vim: fdm=marker
-"
 " General (Neo)Vim Settings {{{1
 scriptencoding utf-8
 set nocompatible
@@ -213,3 +211,4 @@ let g:dotfiles_vim_config_dir = expand('<sfile>:p:h')
 let g:dotfiles_vim_config_file = expand('<sfile>')
 call dotfiles#setup()
 " }}}
+" vim: fdm=marker

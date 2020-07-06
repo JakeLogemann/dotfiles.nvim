@@ -6,22 +6,22 @@
       "o": [ ":Vista", "open tagbar" ],
       "r": [ ":Vista", "refresh tagbar" ],
       "x": [ ":Vista!!", "toggle tagbar" ],
-      "f": [ ":Tags", "find tag" ]
+      "f": [ ":Clap tags", "find tag" ]
     },
     "F": {
       "name": "file",
       "d": [":Dirvish %", "current dir"],
-      "f": [":Denite file/rec", "find"],
-      "h": ["History", "file history" ],
+      "f": [":Clap files", "find file"],
+      "h": [":Clap history", "file history" ],
       "w": [":Dirvish", "working dir"]
     },
     "b": {
       "name": "buffer",
-      "F": [ ":Denite filetype", "filetype" ],
+      "F": [ ":Clap filetypes", "filetype" ],
       "X": [ "bdestroy", "destroy buf" ],
-      "b": [ ":Denite buffer", "find buf" ],
+      "b": [ ":Clap buffers", "find buf" ],
       "c": [ "enew", "new buf" ],
-      "l": [ "BLines", "find line" ],
+      "l": [ ":Clap blines", "find line" ],
       "n": [ "bnext", "next buf" ],
       "o": [ "only", "only" ],
       "p": [ "bprev", "previous" ],
@@ -29,10 +29,13 @@
     },
     "/": {
       "name": "search",
-      "m": [ ":Denite mark", "marks" ],
-      "s": [ "Snippets", "snippets" ],
-      "t": [ "Denite tag", "Tags" ],
-      "w": [ "Windows", "search windows" ]
+      "m": [":Clap marks", "marks" ],
+      "b": [":Clap buffers", "buffers" ],
+      "y": [":Clap yanks", "yanks" ],
+      "r": [":Clap registers", "registers" ],
+      "f": [":Clap files", "files"],
+      "t": [":Clap tags", "tags" ],
+      "w": [":Clap windows", "windows" ]
     },
     "g": {
       "name": "git",

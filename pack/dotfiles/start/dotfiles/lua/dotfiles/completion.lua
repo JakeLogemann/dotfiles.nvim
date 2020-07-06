@@ -1,8 +1,9 @@
 local completion = {}
+local nvim_lsp = require'nvim_lsp'
 
 function completion.init ()
-  local nvim_lsp = require'nvim_lsp'
-  nvim_lsp.rls.setup({})
+  nvim_lsp.rust_analyzer.setup({})
+  -- nvim_lsp.rls.setup({})
   nvim_lsp.bashls.setup({})
   nvim_lsp.vimls.setup({})
   nvim_lsp.rnix.setup({})

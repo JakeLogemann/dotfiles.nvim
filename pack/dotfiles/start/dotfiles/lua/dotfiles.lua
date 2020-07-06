@@ -1,4 +1,4 @@
-local dotfiles = { completion = {} }
+local dotfiles = {}
 local completion = require('dotfiles.completion')
 -- local layers = require('spacevim.layer')
 

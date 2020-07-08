@@ -196,6 +196,12 @@ command! ReloadKeybinds call dotfiles#keybinds#reload()
 " :W saves a file with sudo.
 command! W w !sudo tee % > /dev/null
 
+" setup rust_analyzer LSP (IDE features)
+lua require'nvim_lsp'.rust_analyzer.setup{}
+
+" Use LSP omni-completion in Rust files
+autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
 " Dotfiles Bootstrapping {{{1
 " Ignore system "paths", use only what we provide. {{{
 for p in [ 

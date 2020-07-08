@@ -23,6 +23,8 @@ function! dotfiles#keybinds#normal()
   "nnoremap                <c-h>           :SidewaysLeft<cr>
   "nnoremap                <c-l>           :SidewaysRight<cr>
   nnoremap <silent>       <C-s>           :write<cr>
+  nnoremap <silent>       <C-S-p>         :Clap commands<cr>
+  nnoremap <silent>       <C-Space>       :Clap files<cr>
   nnoremap <silent>       <Esc><Esc>      :noh<cr>
 endfunction
 

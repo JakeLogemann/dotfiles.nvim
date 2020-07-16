@@ -214,6 +214,8 @@ packloadall
 let g:dotfiles_vim_config_dir = expand('<sfile>:p:h')
 let g:dotfiles_vim_config_file = expand('<sfile>')
 call dotfiles#setup()
+" Execute lua scripts from ./init.lua
+execute printf("luafile %s", expand('<sfile>:p:h') . "/init.lua")
 " Post-Bootstrap Tweaks  (Should be absorbed "soon"(tm))  {{{1
 " setup rust_analyzer LSP (IDE features)
 "lua require'nvim_lsp'.rust_analyzer.setup{}

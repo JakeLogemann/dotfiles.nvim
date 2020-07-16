@@ -16,7 +16,6 @@ function! dotfiles#setup() abort
   call dotfiles#statusline#init()
   call dotfiles#startpage#init()
   call dotfiles#keybinds#init()
-  call dotfiles#completion#init()
   call dotfiles#wiki#init()
   call dotfiles#setup#lazy_setup()
 

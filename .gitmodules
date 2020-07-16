@@ -25,3 +25,9 @@
 [submodule "pack/default/start/diagnostic-nvim"]
 	path = pack/default/start/diagnostic-nvim
 	url = https://github.com/nvim-lua/diagnostic-nvim
+[submodule "pack/default/start/completion-nvim"]
+	path = pack/default/start/completion-nvim
+	url = https://github.com/nvim-lua/completion-nvim
+[submodule "pack/default/start/iron.nvim"]
+	path = pack/default/start/iron.nvim
+	url = https://github.com/hkupty/iron.nvim

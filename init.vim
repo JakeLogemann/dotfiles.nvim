@@ -196,12 +196,10 @@ command! ReloadKeybinds call dotfiles#keybinds#reload()
 " :W saves a file with sudo.
 command! W w !sudo tee % > /dev/null
 
-" setup rust_analyzer LSP (IDE features)
-lua require'nvim_lsp'.rust_analyzer.setup{}
 
-" Use LSP omni-completion in Rust files
-autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
+" Statusline configuration {{{1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " Dotfiles Bootstrapping {{{1
 " Ignore system "paths", use only what we provide. {{{
 for p in [ 
@@ -216,5 +214,33 @@ packloadall
 let g:dotfiles_vim_config_dir = expand('<sfile>:p:h')
 let g:dotfiles_vim_config_file = expand('<sfile>')
 call dotfiles#setup()
-" }}}
-" vim: fdm=marker
+" Post-Bootstrap Tweaks  (Should be absorbed "soon"(tm))  {{{1
+" setup rust_analyzer LSP (IDE features)
+"lua require'nvim_lsp'.rust_analyzer.setup{}
+"lua require'nvim_lsp'.rls.setup{}
+
+" Use LSP omni-completion in Rust files
+autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+"By default, when switching to another buffer, the current buffer is hidden
+"and its window is used to display the requested buffer. However, some
+"commands can be configured with the 'switchbuf' option to switch to another
+"window, possibly in another tab, if the buffer is currently displayed in
+"another window. (`:help 'switchbuf'`).  
+"
+"With the following, you can switch to the next buffer by pressing F8, or the
+"previous buffer by pressing Shift-F8. If the target buffer is already
+"displayed in a window in one of the tabs, that window will be displayed.
+"Otherwise, a new tab will be opened, and the target buffer will be
+"displayed in the new window.
+set switchbuf=usetab,newtab
+nnoremap <F8> :sbnext<CR>
+nnoremap <S-F8> :sbprevious<CR>
+
+" The following command abbreviation allows typing :tabv myfile.txt to view
+" the specified file in a new tab; the buffer is read-only and nomodifiable so
+" you cannot accidentally change it.
+cabbrev tabv tab sview +setlocal\ nomodifiable
+
+" }}} And a few vim tweaks for easier editing.
+" vim: fdm=marker fdo=all fcl=all nu ts=2 sw=2 et

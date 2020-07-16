@@ -16,3 +16,12 @@
 [submodule "pack/default/start/impromptu"]
 	path = pack/default/start/impromptu
 	url = https://github.com/hkupty/impromptu.nvim
+[submodule "pack/default/start/airline"]
+	path = pack/default/start/airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "pack/default/start/airline-themes"]
+	path = pack/default/start/airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "pack/default/start/diagnostic-nvim"]
+	path = pack/default/start/diagnostic-nvim
+	url = https://github.com/nvim-lua/diagnostic-nvim

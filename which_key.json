@@ -8,7 +8,7 @@
       "x": [ ":Vista!!", "toggle tagbar" ],
       "f": [ ":Clap tags", "find tag" ]
     },
-    "F": {
+    "f": {
       "name": "file",
       "d": [":Dirvish %", "current dir"],
       "f": [":Clap files", "find file"],
@@ -39,23 +39,23 @@
     },
     "g": {
       "name": "git",
-      "s": ["Gina status", "status"],
-      "z": ["Gina stash", "stash"],
-      "t": ["Gina tag", "tags"],
-      "C": ["Gina commit", "commit"],
-      "c": ["Gina changes", "changes"],
-      "d": ["Gina diff", "diff"],
-      "g": ["Gina grep", "grep"],
-      "r": ["Gina rebase", "rebase"],
-      "b": ["Gina branch", "branches"],
-      "B": ["Gina blame", "blame"],
-      "l": ["Gina log", "log"]
+      "s": [":tabdo Gina status", "status"],
+      "z": [":tabdo Gina stash", "stash"],
+      "t": [":tabdo Gina tag", "tags"],
+      "C": [":tabdo Gina commit", "commit"],
+      "c": [":tabdo Gina changes", "changes"],
+      "d": [":tabdo Gina diff", "diff"],
+      "g": [":tabdo Gina grep", "grep"],
+      "r": [":tabdo Gina rebase", "rebase"],
+      "b": [":tabdo Gina branch", "branches"],
+      "B": [":tabdo Gina blame", "blame"],
+      "l": [":tabdo Gina log", "log"]
     },
     "o": {
       "name": "open",
       "l": [ "lopen", "locs" ],
-      "q": [ "copen", "qfix" ],
-      "s": [ "Startify", "start" ],
+      "q": [ "copen", "quickfix" ],
+      "d": [ "Dashboard", "dashboard" ],
       "t": [ "Vista!!", "tags" ]
     },
     "t": {
@@ -66,21 +66,21 @@
     },
     "v": {
       "name": "vim",
-      "C": [ "Console", "console" ],
-      "E": [ "EditKeybinds", "edit mappings" ],
-      "K": [ "ReloadKeybinds", "reload mappings" ],
-      "S": [ "Scriptnames", "vimscripts" ],
-      "c": [ "Colors", "colorscheme" ],
-      "e": [ "EditConfig", "edit config" ],
-      "h": [ "Helptags", "find help" ],
-      "k": [ "Maps",        "find mapping" ],
-      "m": [ "Messages", "messages" ],
-      "r": [ "ReloadConfig", "reload config" ],
-      "x": [ "Commands", "commands" ]
+      "C": [ ":tabdo Console", "console" ],
+      "E": [ ":EditKeybinds", "edit mappings" ],
+      "K": [ ":ReloadKeybinds", "reload mappings" ],
+      "S": [ ":Scriptnames", "vimscripts" ],
+      "c": [ ":Clap colors", "colorscheme" ],
+      "e": [ ":EditConfig", "edit config" ],
+      "h": [ ":Clap help", "help" ],
+      "k": [ ":Clap maps", "mappings" ],
+      "m": [ ":Messages", "messages" ],
+      "r": [ ":ReloadConfig", "reload config" ],
+      "x": [ ":Clap commands", "commands" ]
     },
     "w": {
       "name": "window",
-      "w": [ "Windows",   "find" ],
+      "w": [ ":Clap windows", "find window" ],
       "n": [ "wnext",     "next" ],
       "p": [ "wprevious", "prev" ]
     },

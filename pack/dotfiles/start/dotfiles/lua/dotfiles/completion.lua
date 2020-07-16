@@ -1,7 +1,8 @@
 local completion = {}
-local nvim_lsp = require'nvim_lsp'
+-- local diag_on_attach = require'diagnostic'.on_attach
 
 function completion.init ()
+  local nvim_lsp = require'nvim_lsp'
   nvim_lsp.rust_analyzer.setup({})
   -- nvim_lsp.rls.setup({})
   nvim_lsp.bashls.setup({})

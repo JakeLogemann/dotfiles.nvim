@@ -143,6 +143,7 @@ Vista                                                                      *Vist
 
                   `:Vista finder coc`  same with `:Vista finder fzf:coc` .
 
+  `:Vista finder clap` synonysm for `:Clap tags`
                                                                       *vista-info*
 
   `:Vista info`     print information about vista.vim, including the explicit
@@ -176,6 +177,14 @@ g:vista_sidebar_width                                      *g:vista_sidebar_widt
   Default: `30`
 
   Width of vista sidebar.
+
+g:vista_sidebar_keepalt                                  *g:vista_sidebar_keepalt*
+
+  Type: |Number|
+  Default: `0`
+
+  Set this option to `1` to keep the alternate buffer when opening vista
+  sidebar. See `:h keepalt` for more information.
 
 g:vista_fold_toggle_icons                              *g:vista_fold_toggle_icons*
 
@@ -462,6 +471,18 @@ g:vista_no_mappings                                          *g:vista_no_mapping
   Default: `0`
 
   Disable the default mappings.
+
+g:vista_log_file                                                *g:vista_log_file*
+
+  Type: |String|
+  Default: `Undefined`
+
+  Enable the logging feature for debugging. For example:
+  >
+  let g:vista_log_file = expand('~/vista.log')
+<
+  Note: Do not enable this unless you want to debug vista.vim as this may have
+  a side effect on the performance!
 
 --------------------------------------------------------------------------------
 Key Mappings                                                  *vista-key-mappings*

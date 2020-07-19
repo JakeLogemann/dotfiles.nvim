@@ -4,6 +4,7 @@
   "tyru/caw.vim": {},
   "nvim-lua/completion-nvim": {},
   "nvim-lua/diagnostic-nvim": {},
+  "liuchengxu/vista.vim": { "on_cmd": ["Vista"] },
   "hkupty/impromptu.nvim": {},
   "hkupty/iron.nvim": {},
   "Iron-E/nvim-libmodal": {},

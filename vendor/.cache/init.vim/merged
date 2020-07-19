@@ -1,0 +1,3 @@
+{'repo': v:val.repo, 'rev': get(v:val, 'rev', '')}
+0
+[{'rev': '', 'repo': '/home/jake/.config/nvim/vendor/repos/github.com/Shougo/dein.vim'}, {'rev': '', 'repo': 'Iron-E/nvim-libmodal'}, {'rev': '', 'repo': 'hkupty/impromptu.nvim'}, {'rev': '', 'repo': 'hkupty/iron.nvim'}, {'rev': '', 'repo': 'neovim/nvim-lsp'}, {'rev': '', 'repo': 'nvim-lua/completion-nvim'}, {'rev': '', 'repo': 'nvim-lua/diagnostic-nvim'}, {'rev': '', 'repo': 'tyru/caw.vim'}, {'rev': '', 'repo': 'vim-airline/vim-airline'}, {'rev': '', 'repo': 'vim-airline/vim-airline-themes'}]

@@ -1,0 +1,11 @@
+{
+  "vim-airline/vim-airline": { "name": "airline" },
+  "vim-airline/vim-airline-themes": { "name": "airline-themes" },
+  "tyru/caw.vim": {},
+  "nvim-lua/completion-nvim": {},
+  "nvim-lua/diagnostic-nvim": {},
+  "hkupty/impromptu.nvim": {},
+  "hkupty/iron.nvim": {},
+  "Iron-E/nvim-libmodal": {},
+  "neovim/nvim-lsp": {}
+}

@@ -13,6 +13,7 @@
       "d": [":Dirvish %", "current dir"],
       "f": [":Clap files", "find file"],
       "h": [":Clap history", "file history" ],
+      "H": [ ":Clap help_tags", "help" ],
       "w": [":Dirvish", "working dir"]
     },
     "b": {
@@ -34,6 +35,7 @@
       "y": [":Clap yanks", "yanks" ],
       "r": [":Clap registers", "registers" ],
       "f": [":Clap files", "files"],
+      "H": [ ":Clap help_tags", "help" ],
       "t": [":Clap tags", "tags" ],
       "w": [":Clap windows", "windows" ]
     },
@@ -72,7 +74,7 @@
       "S": [ ":Scriptnames", "vimscripts" ],
       "c": [ ":Clap colors", "colorscheme" ],
       "e": [ ":EditConfig", "edit config" ],
-      "h": [ ":Clap help", "help" ],
+      "h": [ ":Clap help_tags", "help" ],
       "k": [ ":Clap maps", "mappings" ],
       "m": [ ":Messages", "messages" ],
       "r": [ ":ReloadConfig", "reload config" ],

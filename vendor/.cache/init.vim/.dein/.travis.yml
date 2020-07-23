@@ -1,31 +1,48 @@
-# This config is based on lightline.vim <https://github.com/itchyny/lightline.vim/blob/master/.travis.yml>
+language: generic
+sudo: false
 
-language: ruby
-before_install:
-  - curl -f -L "https://raw.githubusercontent.com/vim-airline/vim-airline-themes/master/autoload/airline/themes/simple.vim" -o autoload/airline/themes/simple.vim
-  - curl -f -L "https://raw.githubusercontent.com/vim-airline/vim-airline-themes/master/autoload/airline/themes/molokai.vim" -o autoload/airline/themes/molokai.vim
-  - mkdir colors && curl -f -L 'https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim' -o colors/molokai.vim
-  - (if ! test -d $HOME/vim-$VIM_VERSION/bin; then
-       git clone https://github.com/vim/vim $HOME/vim &&
-       cd $HOME/vim &&
-       git checkout v$VIM_VERSION &&
-       ./configure --prefix=$HOME/vim-$VIM_VERSION &&
-       make &&
-       make install;
-     fi)
-    #rvm:
-    #  - 1.9.3
 cache:
   directories:
-    - $HOME/vim-$VIM_VERSION
+    - $HOME/.vvm
+matrix:
+  include:
+    - os: linux
+      env:
+        - VIM_VERSION=8.0.0000
+    - os: linux
+      env:
+        - VIM_VERSION=8.1.0000
+    - os: linux
+      env:
+        - VIM_VERSION=8.2.0000
+    - os: osx
+      env:
+        - VIM_VERSION=8.0.0000
+    - os: osx
+      env:
+        - VIM_VERSION=8.1.0000
+    - os: osx
+      env:
+        - VIM_VERSION=8.2.0000
 
-env:
-  - VIM_VERSION=8.2.0000
-  - VIM_VERSION=8.1.0000
-  - VIM_VERSION=8.0.0000
-  - VIM_VERSION=7.4
+before_install:
+  - curl https://raw.githubusercontent.com/kana/vim-version-manager/master/bin/vvm | python - setup; true
+  - source ~/.vvm/etc/login
+  - vvm update_itself
+  - vvm use vimorg--v$VIM_VERSION --install --with-features=huge
 
-script:
-  - export PATH=$HOME/vim-$VIM_VERSION/bin:$PATH
-  - cd $TRAVIS_BUILD_DIR
-  - rake ci
+before_script: |
+  git clone https://github.com/junegunn/vader.vim.git
+  git clone https://github.com/vim-airline/vim-airline
+  find $PWD/autoload/airline/themes -name "*.vim" > themes.txt
+
+script: |
+  vim --not-a-term -Nu <(cat << VIMRC
+  filetype off
+  set rtp+=vader.vim
+  set rtp+=vim-airline
+  set rtp+=.
+  set rtp+=after
+  filetype plugin indent on
+  syntax enable
+  VIMRC) -c 'Vader! test/*' > /dev/null

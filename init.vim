@@ -1,18 +1,18 @@
 " My NeoVim Configuration
-"
 " Maintainer: Jake Logemann <jake.logemann@gmail.com>
-"
-" (hint: use K to jump to a definition in :help) 
-"
+"==================================================================================================
 let g:dotfiles_vim_config_dir = expand('<sfile>:p:h')
 let g:dotfiles_vim_config_file = expand('<sfile>')
-" Start Up (Neo)Vim Settings {{{1
+"==================================================================================================
+let g:dotfiles_vim_config_dir = expand('<sfile>:p:h')
+" |startup|    Start Up (Neo)Vim Settings    {{{1
 scriptencoding utf-8
 set nocompatible
 filetype plugin indent on  " Load plugins according to detected filetype.
 syntax on                  " Enable syntax highlighting.
 
 " Builtin Plugins {{{1
+"==================================================================================================
 let g:loaded_2html_plugin = 1
 let g:loaded_getscript = 1
 let g:loaded_getscriptPlugin = 1
@@ -34,6 +34,7 @@ let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
 
 " Leader & LocalLeader definition {{{1
+"==================================================================================================
 if has('vim_starting')
   " Required before loading plugins!
   let g:mapleader="\<Space>"
@@ -47,6 +48,7 @@ if has('vim_starting')
   xnoremap \        <Nop>
 endif "}}}
 " General (Neo)Vim Settings {{{1
+"==================================================================================================
 set autoread               " Load changes automatically,
 set autowrite              " write on lose focus.
 set background  =dark
@@ -79,7 +81,7 @@ set mat=5                  " how many tenths of a second to blink
 set matchpairs=(:),{:},[:],<:>  " Defines targets of the % motion.
 set matchtime=5            " Show matching time
 set noerrorbells
-set nolazyredraw           " Only redraw when necessary.
+set nolazyredraw           " redraw only when necessary.
 set noshowmode             " don't show which mode disabled for PowerLine
 set previewheight=12       " Completion preview height
 set pumheight=20           " Avoid the pop up menu occupying the whole screen
@@ -90,7 +92,7 @@ set showbreak=…            " show ellipsis at breaking
 set showcmd                " Show already typed keys when more are expected.
 set showmatch              " show matching braces
 set showmode               " Show current mode in command-line.
-set smartcase 
+set smartcase
 set scrolloff=2            " keep at least N lines on screen when scrolling up/down.
 set nospell spelllang=en spellsuggest=best
 set splitbelow splitright  " Open new windows below-right of the current window.
@@ -125,7 +127,7 @@ if has('conceal') && v:version >= 703 "{{{
   set conceallevel=2 concealcursor=niv
 endif "}}}
 if exists('+inccommand') "{{{
-  set inccommand=nosplit 
+  set inccommand=nosplit
 endif "}}}
 if has('wildmenu') "{{{
   " Wildmenu
@@ -169,7 +171,7 @@ if has('patch-8.1.0360') || has('nvim-0.4') "{{{
   " set diffopt=indent-heuristic,algorithm:patience
 endif "}}}
 if has("termguicolors") "{{{
-  set termguicolors 
+  set termguicolors
   if exists('&pumblend') "{{{
     " Pseudo-transparency for completion menu.
     set pumblend=5
@@ -182,6 +184,7 @@ endif "}}}
 if &termguicolors "{{{
 endif "}}}
 " Window/Terminal Title {{{
+"==================================================================================================
 set title titlelen=95
 let &g:titlestring="
       \ %{expand('%:p:~:.')}%(%m%r%w%)
@@ -205,7 +208,7 @@ if has('patch-7.3.541')
   set formatoptions+=j       " Remove comment leader when joining lines
 endif "}}}
 if has('mouse')  "{{{
-  set mouse=nv 
+  set mouse=nv
 endif "}}}
 if &shell =~# 'fish$'  "{{{
   set shell=/bin/bash
@@ -239,7 +242,7 @@ set redrawtime=1500           " Maximum time to allow redraw to run before cance
 " Tabs & Indent {{{1
 " --------
 if exists('&breakindent') "{{{
-  set breakindentopt=shift:2,min:20 
+  set breakindentopt=shift:2,min:20
 endif "}}}
 set shiftwidth  =2         " >> indents by N spaces.
 set autoindent             " Indent according to previous line.
@@ -251,13 +254,14 @@ set tabstop =2
 
 
 " UI/GUI Colorscheme {{{1
-
+"==================================================================================================
 augroup LuaHighlight "{{{
-  autocmd!  
+  autocmd!
   if has('nvim') " requires nvim 0.5.0+
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-  endif 
+  endif
 augroup END "}}}
+
 if exists('+colorcolumn') "{{{
   " Make current window more obvious by turning off/adjusting some features
   " in non-current windows.
@@ -265,9 +269,9 @@ if exists('+colorcolumn') "{{{
   augroup DotfilesColorRowAndColumn
     autocmd!
 
-    " autocmd BufEnter,FocusGained,VimEnter,WinEnter * 
+    " autocmd BufEnter,FocusGained,VimEnter,WinEnter *
     "       \ let &l:colorcolumn='+' . join(range(0, 254), ',+')
-    " autocmd FocusLost,WinLeave * 
+    " autocmd FocusLost,WinLeave *
     "       \ let &l:colorcolumn=join(range(1, 255), ',')
 
     " only show cursorline in the current window
@@ -275,16 +279,17 @@ if exists('+colorcolumn') "{{{
       autocmd InsertLeave,VimEnter,WinEnter * setlocal cursorline
       autocmd InsertEnter,WinLeave          * setlocal nocursorline
     endif
-
   augroup END
 endif "}}}
+
 if has('gui') && has('gui_running') "{{{
-  if exists(':GuiTabline')   | execute GuiTabline 0   | endif 
-  if exists(':GuiPopupMenu') | execute GuiPopupMenu 0 | endif 
+  if exists(':GuiTabline')   | execute GuiTabline 0   | endif
+  if exists(':GuiPopupMenu') | execute GuiPopupMenu 0 | endif
   set guifont="Noto Sans Mono Nerd Font":style=Regular:h10
   " set guifont=NotoSansMono:style=Regular:10,NotoSansMono\ Nerd\ Font:style=Regular:10
   " call rpcnotify(1, 'Gui', 'Font', 'Fira Code Nerd Font Complete')
 endif "}}}
+
 " Terminal-specific overrides {{{1
 if $TERM == 'xterm-kitty' || $TERM == 'alacritty' "{{{2
   set t_Co=256 termguicolors
@@ -294,8 +299,18 @@ if $TERM == 'xterm-kitty' || $TERM == 'alacritty' "{{{2
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   let g:deus_termcolors=&t_Co
 endif "}}}1
+" Auto Commands {{{1
+"==================================================================================================
+augroup dotfiles_auto_format
+  au!
+  au BufWritePre *.vim %s/\s\+$//e
+
+augroup END
+
 " Plugin Configurations {{{1
-" Dashboard {{{2
+" =================================================================================================
+
+" Plugin: Dashboard {{{2
 let g:dashboard_custom_shortcut=get(g:, 'dashboard_custom_shortcut', {})
 let g:dashboard_custom_shortcut={}
 let g:dashboard_custom_header = [
@@ -340,7 +355,10 @@ let g:echodoc#enable_at_startup=0
 let g:echodoc#type = 'virtual'
 let g:echodoc#type="floating"
 " Plugin: Ruby Configuration {{{2
-let g:ruby_host_prog = '~/.gem/ruby/2.7.0/bin/neovim-ruby-host'
+let g:ruby_host_prog = expand('$HOME/.rbenv/shims/neovim-ruby-host')
+let g:node_host_prog = expand('$HOME/.yarn/bin/neovim-node-host')
+" let g:python_host_prog  = ''
+" let g:python3_host_prog  = ''
 " Plugin: JSON Configuration {{{2
 let g:vim_json_syntax_conceal = 0
 " Plugin: Gutentags {{{2
@@ -349,7 +367,7 @@ let g:gutentags_enabled=0
 let g:gutentags_generate_on_empty_buffer = 0
 let g:gutentags_generate_on_missing = 0
 let g:gutentags_generate_on_new = 0
-let g:gutentags_generate_on_write = 0 
+let g:gutentags_generate_on_write = 0
 " Plugin: Rust Configuration {{{2
 let g:cargo_makeprg_params = 'build'
 let g:cargo_shell_command_runner = '!'  " use exec instead of :terminal (?)
@@ -380,7 +398,7 @@ let g:which_key_display_names          = {'<CR>': '↵', '<TAB>': '→'}
 let g:which_key_fallback_to_native_key = 1
 let g:which_key_flatten                = 1
 let g:which_key_floating_relative_win  = 0
-let g:which_key_hspace                 = 10 
+let g:which_key_hspace                 = 10
 let g:which_key_my_json                = json_decode(readfile(expand(g:dotfiles_vim_config_dir) . "/which_key.json"))
 let g:which_key_run_map_on_popup       = 0
 let g:which_key_sep                    = '‣'
@@ -454,12 +472,12 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " Dotfiles Bootstrapping {{{1
 " Ignore system "paths", use only what we provide. {{{
 for p in [
-      \ '~/.local/share/nvim/site', 
+      \ '~/.local/share/nvim/site',
       \ '/etc/xdg/nvim',
       \ '/usr/local/share/nvim/site',
       \ '/usr/share/nvim/site']
   execute printf("set path-=%s path-=%s/after packpath-=%s rtp-=%s", p, p, p ,p)
-endfor 
+endfor
 packloadall
 
 
@@ -477,7 +495,7 @@ let g:dein#cache_directory = g:dotfiles_vendor_dir
 execute printf("set rtp+=%s", g:dotfiles_vendor_rtp_lib)
 
 if dein#load_state(g:dotfiles_vendor_dir)
-  call dein#begin(g:dotfiles_vendor_dir) 
+  call dein#begin(g:dotfiles_vendor_dir)
   call dein#add(g:dotfiles_vendor_rtp_lib)
   " Add or remove your plugins here like this:
   "call dein#add('Shougo/neosnippet.vim')
@@ -495,8 +513,7 @@ if dein#check_install()
 endif "}}}
 
 call dotfiles#setup()
-" Execute lua scripts from ./init.lua
-execute printf("luafile %s", expand('<sfile>:p:h') . "/init.lua")
+execute printf("luafile %s", expand('<sfile>:p:h') . "/lua/init.lua")
 " Post-Bootstrap Tweaks  (Should be absorbed "soon"(tm))  {{{1
 
 
@@ -504,7 +521,7 @@ execute printf("luafile %s", expand('<sfile>:p:h') . "/init.lua")
 "and its window is used to display the requested buffer. However, some
 "commands can be configured with the 'switchbuf' option to switch to another
 "window, possibly in another tab, if the buffer is currently displayed in
-"another window. (`:help 'switchbuf'`).  
+"another window. (`:help 'switchbuf'`).
 "
 "With the following, you can switch to the next buffer by pressing F8, or the
 "previous buffer by pressing Shift-F8. If the target buffer is already

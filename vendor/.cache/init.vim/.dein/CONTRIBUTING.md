@@ -1,28 +1,37 @@
-# Contributions
+# Contributing
 
-Contributions and pull requests are welcome.  Please take note of the following guidelines:
+If you'd like to contribute to the project, you can use the usual github pull-request flow:
 
-*  Adhere to the existing style as much as possible; notably, 2 space indents and long-form keywords.
-*  Keep the history clean!  Squash your branches before you submit a pull request.  `pull --rebase` is your friend.
-*  Any changes to the core should be tested against Vim 7.4.
+1. Fork the project
+2. Make your change/addition, preferably in a separate branch.
+3. Test the new behaviour and make sure all existing tests pass (optional, see below for more information).
+4. Issue a pull request with a description of your feature/bugfix.
 
-# Bugs
+## Testing
 
-Tracking down bugs can take a very long time due to different configurations, versions, and operating systems.  To ensure a timely response, please help me out by doing the following:
+This project uses [rspec](http://rspec.info/) and [vimrunner](https://github.com/AndrewRadev/vimrunner) to test its behaviour. Testing vimscript this way does a great job of catching regressions, since it launches a real Vim instance and drives it (almost) as if it's a real user. Tests are written in the ruby programming language, so if you're familiar with it, you should (I hope) find the tests fairly understandable and easy to get into.
 
-* the `:version` of vim
-* the commit of vim-airline you're using
-* the OS that you're using, including terminal emulator, GUI vs non-GUI
+If you're not familiar with ruby, it's okay to skip them. I'd definitely appreciate it if you could take a look at the tests and attempt to write something that describes your change. Even if you don't, TravisCI should run the tests on every pull request, so we'll know right away if there's a regression. In that case, I'll work on the tests myself and see what I can do.
 
-# Themes
+To run the test suite, provided you have ruby installed, first you need bundler:
 
-*  If you submit a theme, please create a screenshot so it can be added to the [Wiki][14].
-*  In the majority of cases, modifications to colors of existing themes will likely be rejected.  Themes are a subjective thing, so while you may prefer that a particular color be darker, another user will prefer it to be lighter, or something entirely different.  The more popular the theme, the more unlikely the change will be accepted.  However, it's pretty simple to create your own theme; copy the theme to `~/.vim/autoload/airline/themes` under a new name with your modifications, and it can be used.
+```
+$ gem install bundler
+```
 
-# Maintenance
+If you already have the `bundle` command (check it out with `which bundle`), you don't need this step. Afterwards, it should be as simple as:
 
-If you would like to take a more active role in improving vim-airline, please consider [becoming a maintainer][43].
+```
+$ bundle install
+$ bundle exec rspec spec
+```
 
+Instead of running `rspec` by hand you can also use:
 
-[14]: https://github.com/vim-airline/vim-airline/wiki/Screenshots
-[43]: https://github.com/vim-airline/vim-airline/wiki/Becoming-a-Maintainer
+```
+$ bundle exec guard
+```
+
+This will trigger `rspec` automatically every time you make a change either to a spec file like `spec/plugin/coffee_spec.rb` or one of sj's autoload files like `autoload/sj/coffee.vim`. This has the additional benefit of only running the specs for the file you are currently working one, which shortens your feedback loop considerably. E.g. when you work on `autoload/sj/sh.vim` only shell specs will be run.
+
+Depending on what kind of Vim you have installed, this may spawn a GUI Vim instance, or even several. You can read up on [vimrunner's README](https://github.com/AndrewRadev/vimrunner/blob/master/README.md) to understand how that works.

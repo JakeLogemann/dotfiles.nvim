@@ -1,19 +1,16 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report vim-polyglot bug
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-- Please read through [this section](https://github.com/haorenW1025/completion-nvim/wiki/trouble-shooting) before posting a bug report.
+<!-- Vim-polyglot is not responsible for bugs of plugins it uses. Please report only bugs that happen when plugin is used as part of vim-polyglot and doesn't happen when just install the plugin -->
 
-**My testing minimal init.vim**
-Post your init.vim to help me reproduce this issue
+**Does this bug happen when you install plugin without vim-polyglot?**
 
-**How to reproduce**
-Detailed step to reproduce this issue.
+**Describe the bug:**
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**To Reproduce:**

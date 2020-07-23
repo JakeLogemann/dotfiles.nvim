@@ -1,14 +1,8 @@
-#!/usr/bin/env rake
-
-task :default => [:test]
-
-task :ci => [:dump, :test]
-
-task :dump do
-  sh 'vim --version'
+task :default do
+  sh 'rspec spec'
 end
 
-task :test do
-  sh 'bundle exec vim-flavor test'
+desc "Prepare archive for deployment"
+task :archive do
+  sh 'zip -r ~/splitjoin.zip autoload/ doc/splitjoin.txt ftplugin/ plugin/'
 end
-

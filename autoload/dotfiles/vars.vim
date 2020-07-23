@@ -7,7 +7,6 @@ function! dotfiles#vars#init() abort
   let g:dotfiles.dirs        = get(g:dotfiles, 'dirs', {})
   let g:dotfiles.dirs.cache  = get(g:dotfiles.dirs, 'cache',  '~/.cache/nvim')
   let g:dotfiles.dirs.config = get(g:dotfiles.dirs, 'config', '~/.config/nvim')
-  let g:dotfiles.dirs.dein   = g:dotfiles.dirs.cache  .. '/dein'
   let g:dotfiles.dirs.info   = g:dotfiles.dirs.cache  .. '/info'
   let g:dotfiles.dirs.backup = g:dotfiles.dirs.cache  .. '/backup'
   let g:dotfiles.dirs.swap   = g:dotfiles.dirs.cache  .. '/swap'

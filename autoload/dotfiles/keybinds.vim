@@ -4,7 +4,7 @@
 "
 " vim: fdm=marker
 
-function! dotfiles#keybinds#init() 
+function! dotfiles#keybinds#init()
   call dotfiles#keybinds#normal()
   call dotfiles#keybinds#terminal()
   call dotfiles#keybinds#leader()
@@ -20,21 +20,22 @@ function! dotfiles#keybinds#edit()
   execute printf("tabedit %s", expand(g:dotfiles_vim_config_dir) . "/which_key.json")
 endfunction
 
-function! dotfiles#keybinds#normal() 
+function! dotfiles#keybinds#normal()
   "nnoremap                <c-h>           :SidewaysLeft<cr>
   "nnoremap                <c-l>           :SidewaysRight<cr>
+  nnoremap <silent>       <Tab>           <C-w><C-w>
   nnoremap <silent>       <C-s>           :write<cr>
   nnoremap <silent>       <C-S-p>         :Clap commands<cr>
   nnoremap <silent>       <C-Space>       :Clap files<cr>
   nnoremap <silent>       <Esc><Esc>      :noh<cr>
 endfunction
 
-function! dotfiles#keybinds#terminal() 
+function! dotfiles#keybinds#terminal()
   tnoremap                <Esc><Esc>      <C-\><C-n>
 endfunction
 
-function! dotfiles#keybinds#leader() 
-  " WhichKey-specific keybinds 
+function! dotfiles#keybinds#leader()
+  " WhichKey-specific keybinds
   nnoremap <silent>       <leader>        :<C-U>WhichKey! g:which_key_my_json.normal<CR>
   nnoremap <silent>       <localleader>   :<C-U>WhichKey! g:which_key_my_json.normal<CR>
   vnoremap <silent>       <leader>        :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
@@ -47,7 +48,7 @@ function! dotfiles#keybinds#leader()
   let g:which_key_fallback_to_native_key = 1
   let g:which_key_flatten                = 1
   let g:which_key_floating_relative_win  = 0
-  let g:which_key_hspace                 = 10 
+  let g:which_key_hspace                 = 10
   let g:which_key_run_map_on_popup       = 0
   let g:which_key_sep                    = '‣'
   let g:which_key_sort_horizontal        = 0

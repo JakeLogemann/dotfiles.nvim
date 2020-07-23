@@ -28,10 +28,10 @@ endfunction
 
 function! dotfiles#setup#dirs() abort
   " Create cache directories automatically before they're needed. {{{
-  for d in ['backup', 'dein', 'info', 'swap',  'undo'] 
+  for d in ['backup', 'info', 'swap',  'undo']
     let l:path = expand(g:dotfiles.dirs.cache .. '/' .. d)
-    if !isdirectory(l:path) 
-      call mkdir(l:path, 'p') 
+    if !isdirectory(l:path)
+      call mkdir(l:path, 'p')
     endif
   endfor "}}}
 
@@ -47,7 +47,7 @@ function! dotfiles#setup#dein() abort
   let l:dein_url    = 'https://github.com/Shougo/dein.vim'
 
   " Automatically install dein.vim when necessary.
-  if !isdirectory(l:dein_src) 
+  if !isdirectory(l:dein_src)
     call mkdir(expand(g:dotfiles.dirs.dein .. '/repos/github.com/Shougo'), 'p')
     call system('git clone '..l:dein_url..' '..l:dein_src)
   endif

@@ -1,17 +1,13 @@
-# http://EditorConfig.org
-
 root = true
 
 [*]
-charset = utf-8
 indent_style = space
 indent_size = 2
-trim_trailing_whitespace = true
+tab_width = 8
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
 
-[*.go]
-indent_style = tab
-indent_size = 4
-
-[Makefile]
+[{Makefile,**/Makefile,runtime/doc/*.txt}]
 indent_style = tab
 indent_size = 8

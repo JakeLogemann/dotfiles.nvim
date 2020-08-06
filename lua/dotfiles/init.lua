@@ -24,7 +24,7 @@ local function lsp_init()
   nvim_lsp.jsonls.setup({})
   nvim_lsp.clangd.setup({})
   nvim_lsp.solargraph.setup({})
-  nvim_lsp.sumneko_lua.setup({})
+  -- nvim_lsp.sumneko_lua.setup({})
   nvim_lsp.bashls.setup({
     settings = {
       cmd = { "bash-language-server", "start" },

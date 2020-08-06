@@ -6,32 +6,28 @@ let g:dotfiles_vim_config_file = expand('<sfile>')
 "==================================================================================================
 let g:dotfiles_vim_config_dir = expand('<sfile>:p:h')
 " |startup|    Start Up (Neo)Vim Settings    {{{1
-scriptencoding utf-8
-set nocompatible
-filetype plugin indent on  " Load plugins according to detected filetype.
-syntax on                  " Enable syntax highlighting.
 
 " Builtin Plugins {{{1
 "==================================================================================================
 let g:loaded_2html_plugin = 1
 let g:loaded_getscript = 1
 let g:loaded_getscriptPlugin = 1
-let g:loaded_gzip = 1
+let g:loaded_gzip = 0
 let g:loaded_logiPat = 1
 let g:loaded_matchit = 1
 let g:loaded_matchparen = 1
-let g:loaded_netrw = 1
-let g:loaded_netrwFileHandlers = 1
+let g:loaded_netrw = 0
+let g:loaded_netrwFileHandlers = 0
 let g:loaded_netrwPlugin = 1
-let g:loaded_netrwSettings = 1
+let g:loaded_netrwSettings = 0
 let g:loaded_rrhelper = 1
-let g:loaded_tar = 1
-let g:loaded_tarPlugin = 1
+let g:loaded_tar = 0
+let g:loaded_tarPlugin = 0
 let g:loaded_tutor_mode_plugin = 1
 let g:loaded_vimball = 1
 let g:loaded_vimballPlugin = 1
-let g:loaded_zip = 1
-let g:loaded_zipPlugin = 1
+let g:loaded_zip = 0
+let g:loaded_zipPlugin = 0
 
 " Leader & LocalLeader definition {{{1
 "==================================================================================================
@@ -49,6 +45,7 @@ if has('vim_starting')
 endif "}}}
 " General (Neo)Vim Settings {{{1
 "==================================================================================================
+set foldclose=all foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo,block
 set autoread               " Load changes automatically,
 set autowrite              " write on lose focus.
 set background  =dark
@@ -291,10 +288,12 @@ if has('gui') && has('gui_running') "{{{
 endif "}}}
 
 " Terminal-specific overrides {{{1
-if $TERM == 'xterm-kitty' || $TERM == 'alacritty' "{{{2
+if exists('$TMUX') || $TERM == 'xterm-kitty' || $TERM == 'alacritty' "{{{2
   set t_Co=256 termguicolors
   set background=dark
-  colorscheme deus
+  let g:colors_name = 'deus'
+  execute printf("colorscheme %s", g:colors_name)
+
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   let g:deus_termcolors=&t_Co
@@ -491,6 +490,7 @@ let g:dein#enable_notification = 1
 let g:dein#install_process_timeout = 30
 let g:dein#auto_recache = 1
 let g:dein#cache_directory = g:dotfiles_vendor_dir
+let g:dein#install_log_filename = g:dotfiles_vendor_dir . '/install.log'
 
 execute printf("set rtp+=%s", g:dotfiles_vendor_rtp_lib)
 
@@ -537,5 +537,11 @@ nnoremap <S-F8> :sbprevious<CR>
 " you cannot accidentally change it.
 cabbrev tabv tab sview +setlocal\ nomodifiable
 
+
 " }}} And a few vim tweaks for easier editing.
-" vim: fdm=marker fdo=all fcl=all nu ts=2 sw=2 et
+scriptencoding utf-8
+set nocompatible
+filetype plugin on  " Load filetypes according to standards.
+filetype indent on  " Load filetype indent settings according standards.
+syntax on           " Enable syntax highlighting.
+" vim: fdm=marker nu ts=2 sw=2 et

@@ -12,7 +12,7 @@ function! dotfiles#setup() abort
   call dotfiles#setup#augroup()
   call dotfiles#keybinds#init()
   call dotfiles#wiki#init()
-  call dotfiles#setup#lazy_setup()
+  " call dotfiles#setup#lazy_setup()
 endfunction
 
 function! dotfiles#json_view(prefix, keyname) abort

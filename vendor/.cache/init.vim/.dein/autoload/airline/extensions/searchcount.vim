@@ -4,18 +4,21 @@
 
 scriptencoding utf-8
 
+if !exists('*searchcount')
+  finish
+endif
 
 function! airline#extensions#searchcount#init(ext) abort
   call a:ext.add_statusline_func('airline#extensions#searchcount#apply')
 endfunction
 
 function! airline#extensions#searchcount#apply(...) abort
-  call airline#extensions#append_to_section('y', 
+  call airline#extensions#append_to_section('y',
         \ '%{v:hlsearch ? airline#extensions#searchcount#status() : ""}')
 endfunction
 
 function! airline#extensions#searchcount#status() abort
-  let result = searchcount(#{recompute: 1})
+  let result = searchcount(#{recompute: 1, maxcount: -1})
   if empty(result) || result.total ==# 0
     return ''
   endif
@@ -33,15 +36,4 @@ function! airline#extensions#searchcount#status() abort
   endif
   return printf('%s[%d/%d]', @/,
         \		result.current, result.total)
-endfunction
-
-autocmd CursorMoved *
-      \ let s:searchcount_timer = timer_start(
-      \   10, function('s:update_searchcount'))
-
-function! s:update_searchcount(timer) abort
-  if a:timer ==# s:searchcount_timer
-    call searchcount(#{
-          \ recompute: 1, maxcount: 0, timeout: 100})
-  endif
 endfunction

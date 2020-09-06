@@ -22,8 +22,10 @@ function M.sort_completion_items(items)
       return a.priority > b.priority
     elseif a.score ~= b.score and a.score ~= nil and b.score ~= nil then
       return a.score < b.score
-    elseif vim.g.completion_sorting == 'alphabet' then
+    elseif opt.get_option("sorting") == 'alphabet' then
       return a.word < b.word
+    elseif opt.get_option("sorting") == 'length_desc' then
+      return string.len(a.word) > string.len(b.word)
     else
       return string.len(a.word) < string.len(b.word)
     end
@@ -41,7 +43,7 @@ function M.addCompletionItems(item_table, item)
       info = item.info or '',
       priority = item.priority or 1,
       icase = 1,
-      dup = 1,
+      dup = item.dup or 1,
       empty = 1,
       user_data = item.user_data or {},
     })

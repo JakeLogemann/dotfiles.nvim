@@ -2,9 +2,36 @@ if exists("g:loaded_sideways") || &cp
   finish
 endif
 
-let g:loaded_sideways = '0.3.0' " version number
+let g:loaded_sideways = '0.4.0' " version number
 let s:keepcpo = &cpo
 set cpo&vim
+
+function! s:WithOverrides(definition, overrides)
+  return extend(copy(a:definition), a:overrides)
+endfunction
+
+let s:html_like_definitions = {
+      \   'tag_attributes': {
+      \     'start':                   '<\k\+\_s\+',
+      \     'end':                     '\s*/\?>',
+      \     'delimited_by_whitespace': 1,
+      \     'brackets':                ['"''', '"'''],
+      \   },
+      \   'double_quoted_class': {
+      \     'skip_syntax':             [],
+      \     'start':                   '\<class="',
+      \     'end':                     '"',
+      \     'delimited_by_whitespace': 1,
+      \     'brackets':                ['', ''],
+      \   },
+      \   'single_quoted_class': {
+      \     'skip_syntax':             [],
+      \     'start':                   '\<class=''',
+      \     'end':                     "'",
+      \     'delimited_by_whitespace': 1,
+      \     'brackets':                ['', ''],
+      \   },
+      \ }
 
 let g:sideways_definitions =
       \ [
@@ -90,12 +117,9 @@ autocmd FileType haml,slim let b:sideways_definitions = [
       \ ]
 
 autocmd FileType html let b:sideways_definitions = [
-      \   {
-      \     'start':                   '<\k\+\_s\+',
-      \     'end':                     '\s*/\?>',
-      \     'delimited_by_whitespace': 1,
-      \     'brackets':                ['"''', '"'''],
-      \   },
+      \   s:html_like_definitions.tag_attributes,
+      \   s:html_like_definitions.double_quoted_class,
+      \   s:html_like_definitions.single_quoted_class,
       \ ]
 
 autocmd FileType eruby let b:sideways_definitions = [
@@ -105,12 +129,9 @@ autocmd FileType eruby let b:sideways_definitions = [
       \     'delimiter': ',\s*',
       \     'brackets':  ['([''"', ')]''"'],
       \   },
-      \   {
-      \     'start':                   '<\k\+\_s\+',
-      \     'end':                     '\s*/\?>',
-      \     'delimited_by_whitespace': 1,
-      \     'brackets':                ['"''<', '"''>'],
-      \   },
+      \   s:WithOverrides(s:html_like_definitions.tag_attributes,      { 'brackets': ['"''<', '"''>'] }),
+      \   s:WithOverrides(s:html_like_definitions.double_quoted_class, { 'brackets': ['<', '>'] }),
+      \   s:WithOverrides(s:html_like_definitions.single_quoted_class, { 'brackets': ['<', '>'] }),
       \ ]
 
 autocmd FileType handlebars,html.handlebars let b:sideways_definitions = [
@@ -120,20 +141,26 @@ autocmd FileType handlebars,html.handlebars let b:sideways_definitions = [
       \     'delimited_by_whitespace': 1,
       \     'brackets':                ['(''"', ')''"'],
       \   },
-      \   {
-      \     'start':                   '<\k\+\_s\+',
-      \     'end':                     '\s*/\?>',
-      \     'delimited_by_whitespace': 1,
-      \     'brackets':                ['"''{', '"''}'],
-      \   },
+      \   s:WithOverrides(s:html_like_definitions.tag_attributes,      { 'brackets': ['"''{', '"''}'] }),
+      \   s:WithOverrides(s:html_like_definitions.double_quoted_class, { 'brackets': ['{', '}'] }),
+      \   s:WithOverrides(s:html_like_definitions.single_quoted_class, { 'brackets': ['{', '}'] }),
       \ ]
 
-autocmd FileType javascript.jsx,javascriptreact let b:sideways_definitions = [
+autocmd FileType javascript.jsx,javascriptreact,typescript.tsx,typescriptreact let b:sideways_definitions = [
+      \   s:WithOverrides(s:html_like_definitions.tag_attributes,      { 'brackets': ['"''{', '"''}'] }),
       \   {
-      \     'start':                   '<\k\+\_s\+',
-      \     'end':                     '\s*/\?>',
+      \     'skip_syntax':             [],
+      \     'start':                   '\<className="',
+      \     'end':                     '"',
       \     'delimited_by_whitespace': 1,
-      \     'brackets':                ['"''{', '"''}'],
+      \     'brackets':                ['{', '}'],
+      \   },
+      \   {
+      \     'skip_syntax':             [],
+      \     'start':                   '\<className=''',
+      \     'end':                     "'",
+      \     'delimited_by_whitespace': 1,
+      \     'brackets':                ['{', '}'],
       \   },
       \ ]
 
@@ -333,13 +360,18 @@ command! SidewaysRight call sideways#MoveRight() | silent! call repeat#set("\<Pl
 command! SidewaysJumpLeft  call sideways#JumpLeft()
 command! SidewaysJumpRight call sideways#JumpRight()
 
-nnoremap <silent> <Plug>SidewaysLeft :<c-u>SidewaysLeft<cr>
+nnoremap <silent> <Plug>SidewaysLeft  :<c-u>SidewaysLeft<cr>
 nnoremap <silent> <Plug>SidewaysRight :<c-u>SidewaysRight<cr>
 
 onoremap <Plug>SidewaysArgumentTextobjA :<c-u>call sideways#textobj#Argument('a')<cr>
 xnoremap <Plug>SidewaysArgumentTextobjA :<c-u>call sideways#textobj#Argument('a')<cr>
 onoremap <Plug>SidewaysArgumentTextobjI :<c-u>call sideways#textobj#Argument('i')<cr>
 xnoremap <Plug>SidewaysArgumentTextobjI :<c-u>call sideways#textobj#Argument('i')<cr>
+
+nnoremap <Plug>SidewaysArgumentInsertBefore :<c-u>call sideways#new_item#Add('i')<cr>
+nnoremap <Plug>SidewaysArgumentAppendAfter  :<c-u>call sideways#new_item#Add('a')<cr>
+nnoremap <Plug>SidewaysArgumentInsertFirst  :<c-u>call sideways#new_item#AddFirst()<cr>
+nnoremap <Plug>SidewaysArgumentAppendLast   :<c-u>call sideways#new_item#AddLast()<cr>
 
 let &cpo = s:keepcpo
 unlet s:keepcpo

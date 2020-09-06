@@ -5,12 +5,12 @@ local server_name = "dartls"
 local bin_name = "dart"
 
 local find_dart_sdk_root_path = function()
-  if vim.fn["executable"]("dart") == 1 then
-    return vim.fn["resolve"](vim.fn["exepath"]("dart"))
-  elseif vim.fn["executable"]("flutter") == 1 then
+  if vim.fn["executable"]("flutter") == 1 then
     local flutter_path = vim.fn["resolve"](vim.fn["exepath"]("flutter"))
     local flutter_bin = vim.fn["fnamemodify"](flutter_path, ":h")
     return flutter_bin.."/cache/dart-sdk/bin/dart"
+  elseif vim.fn["executable"]("dart") == 1 then
+    return vim.fn["resolve"](vim.fn["exepath"]("dart"))
   else
     return ''
   end
@@ -37,7 +37,7 @@ configs[server_name] = {
       suggestFromUnimportedLibraries = "true",
       closingLabels = "true",
       outline = "true",
-      fluttreOutline= "false"
+      flutterOutline= "false"
     };
   };
   docs = {

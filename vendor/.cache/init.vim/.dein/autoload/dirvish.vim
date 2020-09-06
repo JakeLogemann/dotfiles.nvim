@@ -42,21 +42,21 @@ function! s:parent_dir(dir) abort
 endfunction
 
 if v:version > 703
-function! s:globlist(pat) abort
-  return glob(a:pat, !s:suf(), 1)
+function! s:globlist(dir_esc, pat) abort
+  return globpath(a:dir_esc, a:pat, !s:suf(), 1)
 endfunction
 else "Vim 7.3 glob() cannot handle filenames containing newlines.
-function! s:globlist(pat) abort
-  return split(glob(a:pat, !s:suf()), "\n")
+function! s:globlist(dir_esc, pat) abort
+  return split(globpath(a:dir_esc, a:pat, !s:suf()), "\n")
 endfunction
 endif
 
 function! s:list_dir(dir) abort
-  " Escape for glob().
-  let dir_esc = escape(substitute(a:dir,'\[','[[]','g'),'{}')
-  let paths = s:globlist(dir_esc.'*')
-  "Append dot-prefixed files. glob() cannot do both in 1 pass.
-  let paths = paths + s:globlist(dir_esc.'.[^.]*')
+  " Escape for globpath().
+  let dir_esc = escape(substitute(a:dir,'\[','[[]','g'), ',;*?{}^$\')
+  let paths = s:globlist(dir_esc, '*')
+  "Append dot-prefixed files. globpath() cannot do both in 1 pass.
+  let paths = paths + s:globlist(dir_esc, '.[^.]*')
 
   if get(g:, 'dirvish_relative_paths', 0)
       \ && a:dir != s:parent_dir(getcwd()) "avoid blank CWD
@@ -108,7 +108,7 @@ function! dirvish#shdo(paths, cmd) abort
   let cmd = a:cmd =~# '\V{}' ? a:cmd : (empty(a:cmd)?'{}':(a:cmd.' {}')) "DWIM
   " Paths from argv() or non-dirvish buffers may be jagged; assume CWD then.
   let dir = !jagged && exists('b:dirvish') ? b:dirvish._dir : getcwd()
-  let tmpfile = tempname().(&sh=~?'cmd.exe'?'.bat':(&sh=~'powershell'?'.ps1':'.sh'))
+  let tmpfile = tempname().(&sh=~?'cmd.exe'?'.bat':(&sh=~'\(powershell\|pwsh\)'?'.ps1':'.sh'))
 
   for i in range(0, len(lines)-1)
     let f = substitute(lines[i], escape(s:sep,'\').'$', '', 'g') "trim slash

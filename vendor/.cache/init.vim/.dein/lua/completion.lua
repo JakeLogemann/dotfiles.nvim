@@ -68,6 +68,7 @@ end
 -- apply additionalTextEdits in LSP specs
 local function applyAddtionalTextEdits(completed_item)
   local lnum = api.nvim_win_get_cursor(0)[1]
+  if completed_item.user_data == nil then return end
   if completed_item.user_data.lsp ~= nil then
     local item = completed_item.user_data.lsp.completion_item
     -- vim-vsnip have better additional text edits...
@@ -97,6 +98,9 @@ local function hasConfirmedCompletion()
   local completed_item = api.nvim_get_vvar('completed_item')
   if completed_item.user_data.lsp ~= nil then
     applyAddtionalTextEdits(completed_item)
+    if vim.g.completion_enable_snippet == "snippets.nvim" then
+      require 'snippets'.expand_at_cursor(completed_item.user_data.actual_item, completed_item.word)
+    end
   end
   if opt.get_option('enable_auto_paren') == 1 then
     autoAddParens(completed_item)
@@ -107,6 +111,8 @@ local function hasConfirmedCompletion()
     api.nvim_input("<c-r>".."=neosnippet#expand('"..completed_item.word.."')".."<CR>")
   elseif completed_item.kind == 'vim-vsnip' then
     api.nvim_call_function('vsnip#expand', {})
+  elseif completed_item.kind == 'snippets.nvim' then
+	require'snippets'.expand_at_cursor()
   end
 end
 

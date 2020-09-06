@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
+
 *ft_rust.txt*      Filetype plugin for Rust
 
 ==============================================================================
@@ -484,3 +486,5 @@ This plugin defines mappings for |[[| and |]]| to support hanging indents.
 
 ==============================================================================
  vim:tw=78:sw=4:noet:ts=8:ft=help:norl:
+
+endif

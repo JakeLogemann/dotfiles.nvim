@@ -123,8 +123,8 @@ function! sideways#JumpRight()
   return 1
 endfunction
 
-function! sideways#AroundCursor()
-  let [_, items] = sideways#Parse()
+function! sideways#AroundCursor(parsed_items)
+  let items = a:parsed_items
   if empty(items)
     return []
   end

@@ -2,4 +2,6 @@
 --
 -- Maintainer:  Jake Logemann <jake.logemann@gmail.com>
 --
-require('dotfiles').init()
+local dotfiles = require('dotfiles')
+
+dotfiles.setup()

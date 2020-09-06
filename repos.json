@@ -36,6 +36,7 @@
   "tpope/vim-scriptease": {
     "on_cmd": ["Scriptnames", "Messages"]
   },
+  "neoclide/coc.nvim": {},
   "tpope/vim-surround": {},
   "tpope/vim-unimpaired": {},
   "tweekmonster/helpful.vim": {},

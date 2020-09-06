@@ -10,7 +10,8 @@ local ParseTable = require('libmodal/src/collections/ParseTable')
 local utils      = require('libmodal/src/utils')
 local Vars       = require('libmodal/src/Vars')
 
-local api = utils.api
+local vim = vim
+local api = vim.api
 
 --[[
 	/*
@@ -161,7 +162,7 @@ function _metaMode:_initMappings()
 	self._timeouts = Vars.new('timeouts', self._name)
 
 	-- Read the correct timeout variable.
-	if api.nvim_exists('g', self._timeouts:name())
+	if utils.api.nvim_exists('g', self._timeouts:name())
 	then self._timeouts.enabled =
 		self._timeouts:nvimGet()
 	else self._timeouts.enabled =
@@ -186,10 +187,10 @@ function _metaMode:_inputLoop()
 	end
 
 	-- Echo the indicator.
-	api.nvim_lecho(self.indicator)
+	utils.api.nvim_lecho(self.indicator)
 
 	-- Capture input.
-	local userInput = api.nvim_input()
+	local userInput = utils.api.nvim_input()
 
 	-- Return if there was a timeout event.
 	if userInput == _TIMEOUT.NR then
@@ -199,14 +200,21 @@ function _metaMode:_inputLoop()
 	-- Set the global input variable to the new input.
 	self.input:nvimSet(userInput)
 
-	-- Make sure that the user doesn't want to exit.
-	if not self.exit.supress
-	   and userInput == globals.ESC_NR then return false
-	-- If the second argument was a dict, parse it.
-	elseif type(self._instruction) == globals.TYPE_TBL then
-		self:_checkInputForMapping()
-	else -- the second argument was a function; execute it.
-		self._instruction()
+	if not self.exit.supress and userInput == globals.ESC_NR then -- The user wants to exit.
+		return false -- As in, "I don't want to continue."
+	else -- The user wants to continue.
+
+		--[[ The instruction type is determined every cycle, because the user may be assuming a more direct control
+			over the instruction and it may change over the course of execution. ]]
+		local instructionType = type(self._instruction)
+
+		if instructionType == globals.TYPE_TBL then -- The second argument was a dict. Parse it.
+			self:_checkInputForMapping()
+		elseif instructionType == globals.TYPE_STR and vim.fn then -- It is the name of a VimL function. This only works in Neovim 0.5+.
+			vim.fn[self._instruction]()
+		else -- the second argument was a function; execute it.
+			self._instruction()
+		end
 	end
 
 	return true
@@ -226,7 +234,7 @@ function _metaMode:_tearDown()
 	end
 
 	self._winState:restore()
-	api.nvim_redraw()
+	utils.api.nvim_redraw()
 end
 
 --[[

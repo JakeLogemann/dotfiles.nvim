@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'go') == -1
-
 " don't spam the user when Vim is started in Vi compatibility mode
 let s:cpo_save = &cpo
 set cpo&vim
@@ -53,6 +51,10 @@ endfunction
 
 function! go#config#TermCloseOnExit() abort
   return get(g:, 'go_term_close_on_exit', 1)
+endfunction
+
+function! go#config#TermReuse() abort
+  return get(g:, 'go_term_reuse', 0)
 endfunction
 
 function! go#config#SetTermCloseOnExit(value) abort
@@ -571,5 +573,3 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " vim: sw=2 ts=2 et
-
-endif

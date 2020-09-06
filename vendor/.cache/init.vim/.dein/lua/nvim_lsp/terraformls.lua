@@ -3,17 +3,17 @@ local util = require 'nvim_lsp/util'
 
 configs.terraformls = {
   default_config = {
-    cmd = {"terraform-lsp"};
+    cmd = {"terraform-ls"};
     filetypes = {"terraform"};
     root_dir = util.root_pattern(".terraform", ".git");
   };
   docs = {
     package_json = "https://raw.githubusercontent.com/hashicorp/vscode-terraform/master/package.json";
     description = [[
-https://github.com/juliosueiras/terraform-lsp
+https://github.com/hashicorp/terraform-ls
 
 Terraform language server
-You can use [released binary](https://github.com/juliosueiras/terraform-lsp/releases) or [build](https://github.com/juliosueiras/terraform-lsp#building) your own.
+Download a released binary from https://github.com/hashicorp/terraform-ls/releases.
 ]];
     default_config = {
       root_dir = [[root_pattern(".terraform", ".git")]];

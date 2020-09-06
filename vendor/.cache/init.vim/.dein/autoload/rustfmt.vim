@@ -1,5 +1,3 @@
-if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'rust') == -1
-
 " Author: Stephen Sugden <stephen@stephensugden.com>
 "
 " Adapted from https://github.com/fatih/vim-go
@@ -65,12 +63,12 @@ endfunction
 function! s:RustfmtConfigOptions()
     let l:rustfmt_toml = findfile('rustfmt.toml', expand('%:p:h') . ';')
     if l:rustfmt_toml !=# ''
-        return '--config-path '.fnamemodify(l:rustfmt_toml, ":p")
+        return '--config-path '.shellescape(fnamemodify(l:rustfmt_toml, ":p"))
     endif
 
     let l:_rustfmt_toml = findfile('.rustfmt.toml', expand('%:p:h') . ';')
     if l:_rustfmt_toml !=# ''
-        return '--config-path '.fnamemodify(l:_rustfmt_toml, ":p")
+        return '--config-path '.shellescape(fnamemodify(l:_rustfmt_toml, ":p"))
     endif
 
     " Default to edition 2018 in case no rustfmt.toml was found.
@@ -260,5 +258,3 @@ endfunction
 
 
 " vim: set et sw=4 sts=4 ts=8:
-
-endif

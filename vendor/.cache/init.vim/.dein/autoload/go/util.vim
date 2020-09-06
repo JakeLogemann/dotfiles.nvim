@@ -125,8 +125,11 @@ function! go#util#gomodcache() abort
   return substitute(s:exec(['go', 'env', 'GOMODCACHE'])[0], '\n', '', 'g')
 endfunction
 
-function! go#util#osarch() abort
-  return go#util#env("goos") . '_' . go#util#env("goarch")
+" hostosarch returns the OS and ARCH values that the go binary is intended for.
+function! go#util#hostosarch() abort
+  let [l:hostos, l:err] = s:exec(['go', 'env', 'GOHOSTOS'])
+  let [l:hostarch, l:err] = s:exec(['go', 'env', 'GOHOSTARCH'])
+  return [substitute(l:hostos, '\n', '', 'g'), substitute(l:hostarch, '\n', '', 'g')]
 endfunction
 
 " go#util#ModuleRoot returns the root directory of the module of the current
@@ -701,7 +704,7 @@ function! go#util#Chdir(dir) abort
   if !exists('*chdir')
     let l:olddir = getcwd()
     let cd = exists('*haslocaldir') && haslocaldir() ? 'lcd ' : 'cd '
-    execute cd . a:dir
+    execute cd . fnameescape(a:dir)
     return l:olddir
   endif
   return chdir(a:dir)

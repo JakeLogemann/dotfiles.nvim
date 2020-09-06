@@ -1,5 +1,10 @@
-tags
+**/tags
 *.log
 .swp
 .swo
 **/.git
+vendor/state_nvim.vim
+vendor/cache_nvim
+vendor/repos/**/.git/
+
+

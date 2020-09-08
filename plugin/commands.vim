@@ -13,7 +13,13 @@ command! BrowseConfigs      call dotfiles#config_browse()
 command! ReloadConfig       call dotfiles#config_reload()
 command! ViewConfig         call dotfiles#vars#view() " }}}
 
-" :ReloadPlugin   OR   :EditPlugin   {{{
+" :ReloadPlugin [name]  OR   :EditPlugin [name]  {{{
+command! -nargs=1 -complete=custom,<SID>ListLua EditLua    execute printf("tabedit %s/lua/%s.lua", g:dotfiles_vim_config_dir, <q-args>)
+function s:ListLua(A,L,P)
+  return system(printf("ls -1 %s/lua | sed 's/\.lua//g'", g:dotfiles_vim_config_dir))
+endfun " }}}
+
+" :ReloadPlugin [name]  OR   :EditPlugin [name]  {{{
 command! -nargs=1 -complete=custom,<SID>ListPlugins ReloadPlugin  execute printf("source %s/plugin/%s.vim", g:dotfiles_vim_config_dir, <q-args>)
 command! -nargs=1 -complete=custom,<SID>ListPlugins EditPlugin    execute printf("tabedit %s/plugin/%s.vim", g:dotfiles_vim_config_dir, <q-args>)
 function s:ListPlugins(A,L,P)

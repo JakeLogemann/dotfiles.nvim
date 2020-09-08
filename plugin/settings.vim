@@ -203,4 +203,57 @@ set shiftround             " Round indent to multiple of 'shiftwidth'
 set smarttab               " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set softtabstop =-1        " Tab key indents default to shiftwidth.
 set tabstop =2
+set completeopt=menuone,noinsert,noselect " Set completeopt to have a better completion experience
+set shortmess+=c                          " Avoid showing message extra message when using completion
 
+" UI/GUI Colorscheme {{{1
+"==================================================================================================
+augroup LuaHighlight "{{{
+  autocmd!
+  if has('nvim') " requires nvim 0.5.0+
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  endif
+augroup END "}}}
+
+if exists('+colorcolumn') "{{{
+  " Make current window more obvious by turning off/adjusting some features
+  " in non-current windows.
+  highlight ColorColumn ctermbg=0 guibg=#212121
+  augroup DotfilesColorRowAndColumn
+    autocmd!
+
+    " autocmd BufEnter,FocusGained,VimEnter,WinEnter *
+    "       \ let &l:colorcolumn='+' . join(range(0, 254), ',+')
+    " autocmd FocusLost,WinLeave *
+    "       \ let &l:colorcolumn=join(range(1, 255), ',')
+
+    " only show cursorline in the current window
+    if exists('+cursorline')
+      autocmd InsertLeave,VimEnter,WinEnter * setlocal cursorline
+      autocmd InsertEnter,WinLeave          * setlocal nocursorline
+    endif
+  augroup END
+endif "}}}
+
+if has('gui') && has('gui_running') "{{{
+  if exists(':GuiTabline')   | execute GuiTabline 0   | endif
+  if exists(':GuiPopupMenu') | execute GuiPopupMenu 0 | endif
+  set guifont="Noto Sans Mono Nerd Font":style=Regular:h10
+  " set guifont=NotoSansMono:style=Regular:10,NotoSansMono\ Nerd\ Font:style=Regular:10
+  " call rpcnotify(1, 'Gui', 'Font', 'Fira Code Nerd Font Complete')
+endif "}}}
+
+" Terminal-specific overrides {{{1
+if exists('$TMUX') || $TERM == 'xterm-kitty' || $TERM == 'alacritty' "{{{2
+  set t_Co=256 termguicolors
+  set background=dark
+  let g:colors_name = 'deus'
+  execute printf("colorscheme %s", g:colors_name)
+
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  let g:deus_termcolors=&t_Co
+endif "}}}1
+
+execute printf("command! -nargs=0 DR%s source %s", expand('<sfile>:t:r'), expand('<sfile>'))
+execute printf("command! -nargs=0 DE%s tabedit %s", expand('<sfile>:t:r'), expand('<sfile>'))

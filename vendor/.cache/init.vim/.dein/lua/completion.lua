@@ -68,7 +68,6 @@ end
 -- apply additionalTextEdits in LSP specs
 local function applyAddtionalTextEdits(completed_item)
   local lnum = api.nvim_win_get_cursor(0)[1]
-  if completed_item.user_data == nil then return end
   if completed_item.user_data.lsp ~= nil then
     local item = completed_item.user_data.lsp.completion_item
     -- vim-vsnip have better additional text edits...
@@ -96,6 +95,7 @@ end
 -- handle completeDone stuff here
 local function hasConfirmedCompletion()
   local completed_item = api.nvim_get_vvar('completed_item')
+  if completed_item.user_data == nil then return end
   if completed_item.user_data.lsp ~= nil then
     applyAddtionalTextEdits(completed_item)
     if vim.g.completion_enable_snippet == "snippets.nvim" then
@@ -204,6 +204,10 @@ function M.on_CompleteDone()
   end
   if hover.winnr ~= nil and api.nvim_win_is_valid(hover.winnr) then
     api.nvim_win_close(hover.winnr, true)
+  end
+  -- auto trigger signature help when we confirm completion
+  if vim.g.completion_enable_auto_signature ~= 0 then
+    vim.lsp.buf.signature_help()
   end
 end
 

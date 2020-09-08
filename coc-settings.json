@@ -1,14 +1,24 @@
 {
- "languageserver": {
-    "rust": {
-      "command": "rust-analyzer",
-      "filetypes": ["rust"],
-      "rootPatterns": ["Cargo.toml"]
+    "suggest": {
+        "enablePreselect": true,
+        "disableKind": true,
+        "disableMenu": true,
+        "echodocSupport": true,
+        "enablePreview": true
     },
-    "ruby": {
-      "command": "solargraph",
-      "filetypes": ["ruby"],
-      "rootPatterns": ["Vagrantfile", "Gemfile.lock"]
+    "diagnostic": {
+        "virtualText": true
+    },
+    "languageserver": {
+        "rust": {
+            "command": "rust-analyzer",
+            "filetypes": ["rust"],
+            "rootPatterns": ["Cargo.toml"]
+        },
+        "ruby": {
+            "command": "solargraph",
+            "filetypes": ["ruby"],
+            "rootPatterns": ["Vagrantfile", "Gemfile.lock"]
+        }
     }
-  }
 }

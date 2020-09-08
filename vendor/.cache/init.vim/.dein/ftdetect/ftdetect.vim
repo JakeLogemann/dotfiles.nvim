@@ -60,6 +60,17 @@ if !exists('g:python_highlight_all')
   call s:SetDefault('g:python_slow_sync', 1)
 endif
 
+
+" Function used for patterns that end in a star: don't set the filetype if the
+" file name matches ft_ignore_pat.
+" When using this, the entry should probably be further down below with the
+" other StarSetf() calls.
+func! s:StarSetf(ft)
+  if expand("<amatch>") !~ g:ft_ignore_pat
+    exe 'setf ' . a:ft
+  endif
+endfunc
+
 " filetypes
 
 if !has_key(s:disabled_packages, '8th')
@@ -123,7 +134,7 @@ if !has_key(s:disabled_packages, 'awk')
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au! BufRead,BufNewFile *.c,*.cpp,*.tpp
+  au! BufRead,BufNewFile *.cpp,*.tpp,*.c
 endif
 
 if !has_key(s:disabled_packages, 'cmake')
@@ -332,7 +343,9 @@ endif
 
 if !has_key(s:disabled_packages, 'ada')
   au BufNewFile,BufRead *.ada setf ada
+  au BufNewFile,BufRead *.ada_m setf ada
   au BufNewFile,BufRead *.adb setf ada
+  au BufNewFile,BufRead *.adc setf ada
   au BufNewFile,BufRead *.ads setf ada
   au BufNewFile,BufRead *.gpr setf ada
 endif
@@ -364,9 +377,19 @@ if !has_key(s:disabled_packages, 'ant')
 endif
 
 if !has_key(s:disabled_packages, 'apache')
+  au BufNewFile,BufRead */etc/apache2/*.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/conf.*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/mods-*/* call s:StarSetf('apache')
+  au BufNewFile,BufRead */etc/apache2/sites-*/* call s:StarSetf('apache')
   au BufNewFile,BufRead */etc/apache2/sites-*/*.com setf apache
   au BufNewFile,BufRead */etc/httpd/*.conf setf apache
+  au BufNewFile,BufRead */etc/httpd/conf.d/*.conf* call s:StarSetf('apache')
   au BufNewFile,BufRead {.,}htaccess setf apache
+  au BufNewFile,BufRead access.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead apache.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead apache2.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead httpd.conf* call s:StarSetf('apache')
+  au BufNewFile,BufRead srm.conf* call s:StarSetf('apache')
 endif
 
 if !has_key(s:disabled_packages, 'apiblueprint')
@@ -381,7 +404,7 @@ endif
 if !has_key(s:disabled_packages, 'aptconf')
   au BufNewFile,BufRead */.aptitude/config setf aptconf
   au BufNewFile,BufRead */etc/apt/apt.conf.d/*.conf setf aptconf
-  au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* setf aptconf
+  au BufNewFile,BufRead */etc/apt/apt.conf.d/[^.]* call s:StarSetf('aptconf')
   au BufNewFile,BufRead apt.conf setf aptconf
 endif
 
@@ -444,6 +467,7 @@ endif
 
 if !has_key(s:disabled_packages, 'awk')
   au BufNewFile,BufRead *.awk setf awk
+  au BufNewFile,BufRead *.gawk setf awk
 endif
 
 if !has_key(s:disabled_packages, 'reason')
@@ -452,16 +476,11 @@ if !has_key(s:disabled_packages, 'reason')
 endif
 
 if !has_key(s:disabled_packages, 'c/c++')
-  au BufNewFile,BufRead *.c setf c
-  au BufNewFile,BufRead *.cats setf c
-  au BufNewFile,BufRead *.h setf c
-  au BufNewFile,BufRead *.idc setf c
   au BufNewFile,BufRead *.c++ setf cpp
   au BufNewFile,BufRead *.cc setf cpp
   au BufNewFile,BufRead *.cp setf cpp
   au BufNewFile,BufRead *.cpp setf cpp
   au BufNewFile,BufRead *.cxx setf cpp
-  au BufNewFile,BufRead *.h setf cpp
   au BufNewFile,BufRead *.h++ setf cpp
   au BufNewFile,BufRead *.hh setf cpp
   au BufNewFile,BufRead *.hpp setf cpp
@@ -469,8 +488,14 @@ if !has_key(s:disabled_packages, 'c/c++')
   au BufNewFile,BufRead *.inc setf cpp
   au BufNewFile,BufRead *.inl setf cpp
   au BufNewFile,BufRead *.ipp setf cpp
+  au BufNewFile,BufRead *.moc setf cpp
   au BufNewFile,BufRead *.tcc setf cpp
   au BufNewFile,BufRead *.tpp setf cpp
+  au BufNewFile,BufRead *.c setf c
+  au BufNewFile,BufRead *.cats setf c
+  au BufNewFile,BufRead *.idc setf c
+  au BufNewFile,BufRead *.qc setf c
+  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
 endif
 
 if !has_key(s:disabled_packages, 'caddyfile')
@@ -515,9 +540,6 @@ if !has_key(s:disabled_packages, 'coffee-script')
   au BufNewFile,BufRead *.litcoffee setf litcoffee
 endif
 
-if !has_key(s:disabled_packages, 'cjsx')
-endif
-
 if !has_key(s:disabled_packages, 'cryptol')
   au BufNewFile,BufRead *.cry setf cryptol
   au BufNewFile,BufRead *.cyl setf cryptol
@@ -548,6 +570,7 @@ endif
 
 if !has_key(s:disabled_packages, 'dart')
   au BufNewFile,BufRead *.dart setf dart
+  au BufNewFile,BufRead *.drt setf dart
 endif
 
 if !has_key(s:disabled_packages, 'dhall')
@@ -574,7 +597,7 @@ if !has_key(s:disabled_packages, 'dockerfile')
   au BufNewFile,BufRead *.dock setf Dockerfile
   au BufNewFile,BufRead *.dockerfile setf Dockerfile
   au BufNewFile,BufRead Dockerfile setf Dockerfile
-  au BufNewFile,BufRead Dockerfile* setf Dockerfile
+  au BufNewFile,BufRead Dockerfile* call s:StarSetf('Dockerfile')
   au BufNewFile,BufRead dockerfile setf Dockerfile
   au BufNewFile,BufRead docker-compose*.yaml setf yaml.docker-compose
   au BufNewFile,BufRead docker-compose*.yml setf yaml.docker-compose
@@ -663,7 +686,7 @@ if !has_key(s:disabled_packages, 'git')
   au BufNewFile,BufRead {.,}gitconfig setf gitconfig
   au BufNewFile,BufRead {.,}gitmodules setf gitconfig
   au BufNewFile,BufRead git-rebase-todo setf gitrebase
-  au BufNewFile,BufRead {.,}gitsendemail.* setf gitsendemail
+  au BufNewFile,BufRead {.,}gitsendemail.* call s:StarSetf('gitsendemail')
   au BufNewFile,BufRead *.git/{,modules/**/,worktrees/*/}{COMMIT_EDIT,TAG_EDIT,MERGE_,}MSG setf gitcommit
 endif
 
@@ -741,7 +764,7 @@ endif
 
 if !has_key(s:disabled_packages, 'haproxy')
   au BufNewFile,BufRead *.cfg setf haproxy
-  au BufNewFile,BufRead haproxy*.c* setf haproxy
+  au BufNewFile,BufRead haproxy*.c* call s:StarSetf('haproxy')
   au BufNewFile,BufRead haproxy.cfg setf haproxy
 endif
 
@@ -812,9 +835,6 @@ if !has_key(s:disabled_packages, 'ion')
   au BufNewFile,BufRead ~/.config/ion/initrc setf ion
 endif
 
-if !has_key(s:disabled_packages, 'javascript-sql')
-endif
-
 if !has_key(s:disabled_packages, 'javascript')
   au BufNewFile,BufRead *._js setf javascript
   au BufNewFile,BufRead *.bones setf javascript
@@ -845,7 +865,7 @@ if !has_key(s:disabled_packages, 'jenkins')
   au BufNewFile,BufRead *.Jenkinsfile setf Jenkinsfile
   au BufNewFile,BufRead *.jenkinsfile setf Jenkinsfile
   au BufNewFile,BufRead Jenkinsfile setf Jenkinsfile
-  au BufNewFile,BufRead Jenkinsfile* setf Jenkinsfile
+  au BufNewFile,BufRead Jenkinsfile* call s:StarSetf('Jenkinsfile')
 endif
 
 if !has_key(s:disabled_packages, 'jinja')
@@ -1028,9 +1048,9 @@ if !has_key(s:disabled_packages, 'nginx')
   au BufNewFile,BufRead *.nginx setf nginx
   au BufNewFile,BufRead *.nginxconf setf nginx
   au BufNewFile,BufRead *.vhost setf nginx
-  au BufNewFile,BufRead */etc/nginx/* setf nginx
+  au BufNewFile,BufRead */etc/nginx/* call s:StarSetf('nginx')
   au BufNewFile,BufRead */nginx/*.conf setf nginx
-  au BufNewFile,BufRead */usr/local/nginx/conf/* setf nginx
+  au BufNewFile,BufRead */usr/local/nginx/conf/* call s:StarSetf('nginx')
   au BufNewFile,BufRead *nginx.conf setf nginx
   au BufNewFile,BufRead nginx*.conf setf nginx
   au BufNewFile,BufRead nginx.conf setf nginx
@@ -1050,7 +1070,7 @@ if !has_key(s:disabled_packages, 'nix')
 endif
 
 if !has_key(s:disabled_packages, 'objc')
-  au BufNewFile,BufRead *.h setf objc
+  au! BufNewFile,BufRead *.h call polyglot#DetectHFiletype()
   au! BufNewFile,BufRead *.m call polyglot#DetectMFiletype()
 endif
 
@@ -1204,12 +1224,6 @@ if !has_key(s:disabled_packages, 'python')
   au BufNewFile,BufRead wscript setf python
 endif
 
-if !has_key(s:disabled_packages, 'python-indent')
-endif
-
-if !has_key(s:disabled_packages, 'python-compiler')
-endif
-
 if !has_key(s:disabled_packages, 'requirements')
   au BufNewFile,BufRead *.pip setf requirements
   au BufNewFile,BufRead *require.{txt,in} setf requirements
@@ -1340,7 +1354,7 @@ if !has_key(s:disabled_packages, 'ruby')
   au BufNewFile,BufRead Snapfile setf ruby
   au BufNewFile,BufRead Thorfile setf ruby
   au BufNewFile,BufRead Vagrantfile setf ruby
-  au BufNewFile,BufRead [Rr]akefile* setf ruby
+  au BufNewFile,BufRead [Rr]akefile* call s:StarSetf('ruby')
   au BufNewFile,BufRead buildfile setf ruby
   au BufNewFile,BufRead vagrantfile setf ruby
   au BufNewFile,BufRead *.erb setf eruby
@@ -1350,9 +1364,6 @@ endif
 
 if !has_key(s:disabled_packages, 'rspec')
   au BufNewFile,BufRead *_spec.rb if !did_filetype() | set ft=ruby syntax=rspec | endif
-endif
-
-if !has_key(s:disabled_packages, 'yard')
 endif
 
 if !has_key(s:disabled_packages, 'brewfile')
@@ -1420,9 +1431,6 @@ if !has_key(s:disabled_packages, 'sh')
   au BufNewFile,BufRead {.,}zshrc setf zsh
 endif
 
-if !has_key(s:disabled_packages, 'zinit')
-endif
-
 if !has_key(s:disabled_packages, 'slim')
   au BufNewFile,BufRead *.slim setf slim
 endif
@@ -1451,9 +1459,6 @@ endif
 
 if !has_key(s:disabled_packages, 'svg')
   au BufNewFile,BufRead *.svg setf svg
-endif
-
-if !has_key(s:disabled_packages, 'svg-indent')
 endif
 
 if !has_key(s:disabled_packages, 'swift')
@@ -1677,13 +1682,10 @@ if !has_key(s:disabled_packages, 'xsl')
   au BufNewFile,BufRead *.xslt setf xsl
 endif
 
-if !has_key(s:disabled_packages, 'yaml-extras')
-endif
-
 if !has_key(s:disabled_packages, 'ansible')
-  au BufNewFile,BufRead group_vars/* setf yaml.ansible
+  au BufNewFile,BufRead group_vars/* call s:StarSetf('yaml.ansible')
   au BufNewFile,BufRead handlers.*.y{a,}ml setf yaml.ansible
-  au BufNewFile,BufRead host_vars/* setf yaml.ansible
+  au BufNewFile,BufRead host_vars/* call s:StarSetf('yaml.ansible')
   au BufNewFile,BufRead local.y{a,}ml setf yaml.ansible
   au BufNewFile,BufRead main.y{a,}ml setf yaml.ansible
   au BufNewFile,BufRead playbook.y{a,}ml setf yaml.ansible
@@ -1734,6 +1736,22 @@ endif
 
 if !has_key(s:disabled_packages, 'trasys')
   au! BufNewFile,BufRead *.inp call polyglot#DetectInpFiletype()
+endif
+
+if !has_key(s:disabled_packages, 'basic')
+  au BufNewFile,BufRead *.basic setf basic
+endif
+
+if !has_key(s:disabled_packages, 'visual-basic')
+  au BufNewFile,BufRead *.cls setf vb
+  au BufNewFile,BufRead *.ctl setf vb
+  au BufNewFile,BufRead *.dsm setf vb
+  au BufNewFile,BufRead *.frm setf vb
+  au BufNewFile,BufRead *.frx setf vb
+  au BufNewFile,BufRead *.sba setf vb
+  au BufNewFile,BufRead *.vba setf vb
+  au BufNewFile,BufRead *.vbs setf vb
+  au! BufNewFile,BufRead *.bas call polyglot#DetectBasFiletype()
 endif
 
 

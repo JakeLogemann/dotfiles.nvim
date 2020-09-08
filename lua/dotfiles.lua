@@ -1,6 +1,7 @@
 local M          = {}
 local lsp        = require('nvim_lsp')
 local completion = require('completion')
+local libmodal   = require('libmodal')
 local diagnostic = require('diagnostic')
 
 -- Initialize Language Servers
@@ -42,18 +43,26 @@ function M.setup_colorizer()
 end
 
 
-function M.example_mode()
-  local modal = require('libmodal')
-  local win = vim.api.nvim_open_win(0, false, {
+function M.new_win()
+  vim.api.nvim_open_win(0, false, {
     relative='win',
     width=12,
     height=3,
     bufpos={100,10}
   })
+end
 
-  modal.mode.enter('Dotfiles', {
-      ['q'] = 'lua FooMode()'
-  })
+M["commands"] = {}
+M["mappings"] = {}
+
+M["mappings"]['q'] = 'lua FooMode()'
+M["mappings"]['?'] = 'lua require("dotfiles")["mappings_help"]:show()'
+M["commands"]['close'] = 'tabclose'
+M["mappings_help"] = libmodal.utils.Help.new(M.mappings, 'MAPS')
+M["commands_help"] = libmodal.utils.Help.new(M.commands, 'COMMANDS')
+
+function M.dotfiles_mode()
+  libmodal.mode.enter('Dotfiles', M.mappings_table)
 end
 
 -- Main Setup Function

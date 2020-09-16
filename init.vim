@@ -8,7 +8,7 @@ let g:vim_config_dir  = expand('<sfile>:p:h')
 let g:vim_config_file  = g:vim_config_dir . '/init.vim'
 let g:vim_local_dir  = g:vim_config_dir . '/local'
 let g:vim_lua_dir  = g:vim_config_dir . '/lua'
-let g:vim_lua_init = g:vim_lua_dir . '/init.lua'
+let g:vim_lua_init = g:vim_config_dir . '/init.lua'
 
 let g:vim_plugins_dir = g:vim_local_dir . '/plugins'
 let g:vim_plugin_repos_dir = g:vim_plugins_dir . '/repos'
@@ -64,13 +64,11 @@ let g:dein#install_process_timeout = 30
 let g:dein#auto_recache = 1
 let g:dein#install_log_filename = g:vim_config_dir . '/local/dein.log'
 let g:dein#cache_directory = g:vim_plugins_dir
-
 " ensure the cache directory exists.
-if !isdirectory(expand(g:dein#cache_directory))
+if !isdirectory(expand(g:dein#cache_directory)) "{{{
   call mkdir(expand(g:dein#cache_directory), "p")
-endif
-
-if dein#load_state(g:vim_plugins_dir)
+endif "}}}
+if dein#load_state(g:vim_plugins_dir) "{{{
   call dein#begin(g:vim_plugins_dir)
   call dein#add(g:dein_rtp)
 
@@ -87,8 +85,7 @@ if dein#load_state(g:vim_plugins_dir)
   call dein#load_dict(json_decode(readfile(g:vim_config_dir . "/repos.json")))
   call dein#end()
   call dein#save_state()
-endif
-
+endif "1}}}
 " Command Abbreviations {{{1
 cabbrev sord sort
 
@@ -517,7 +514,6 @@ endif "}}}
 " Custom Command Definitions {{{1
 command! ReloadBufTabLine   call buftabline#update(0)
 command! SudoTee            write !sudo tee % > /dev/null
-command! ExecLuaConfig      execute printf("luafile %s", g:vim_lua_init)
 
 command! -nargs=1 -complete=file DE tabedit <args>
 command! -nargs=1 -complete=help Vhelp vertical help <args>
@@ -626,6 +622,7 @@ vnoremap <silent>       <leader>        :<C-U>WhichKeyVisual! g:which_key_my_jso
 " vnoremap <silent>       <localleader>   :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
 
 " Final Setup & Cleanup {{{1
+execute printf("luafile %s", g:vim_lua_init)
 " call dotfiles#setup()
 " ExecLuaConfig
 scriptencoding utf-8

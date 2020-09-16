@@ -18,11 +18,11 @@
     },
     "b": {
       "name": "buffer",
-      "F": [ ":Clap filetypes", "filetype" ],
+      "F": [ ":Denite filetype", "filetype" ],
       "X": [ "bdestroy", "destroy buf" ],
-      "b": [ ":Clap buffers", "find buf" ],
+      "b": [ ":Denite buffer", "find buf" ],
       "c": [ "enew", "new buf" ],
-      "l": [ ":Clap blines", "find line" ],
+      "l": [ ":Denite line", "find line" ],
       "n": [ "bnext", "next buf" ],
       "o": [ "only", "only" ],
       "p": [ "bprev", "previous" ],
@@ -30,14 +30,14 @@
     },
     "/": {
       "name": "search",
-      "m": [":Clap marks", "marks" ],
-      "b": [":Clap buffers", "buffers" ],
-      "y": [":Clap yanks", "yanks" ],
-      "r": [":Clap registers", "registers" ],
-      "f": [":Clap files", "files"],
-      "H": [ ":Clap help_tags", "help" ],
-      "t": [":Clap tags", "tags" ],
-      "w": [":Clap windows", "windows" ]
+      "m": [":Denite mark", "marks" ],
+      "b": [":Denite buffer", "buffers" ],
+      "y": [":Denite yanks", "yanks" ],
+      "r": [":Denite register", "registers" ],
+      "f": [":Denite file/rec", "files"],
+      "H": [ ":Denite help", "help" ],
+      "t": [":Denite tag", "tags" ],
+      "w": [":Denite windows", "windows" ]
     },
     "g": {
       "name": "git",

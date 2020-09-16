@@ -1,0 +1,3 @@
+[submodule "vendor/repos/github.com/Shougo/dein.vim"]
+	path = vendor/repos/github.com/Shougo/dein.vim
+	url = https://github.com/Shougo/dein.vim

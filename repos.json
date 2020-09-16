@@ -9,7 +9,7 @@
   "RRethy/vim-illuminate": {},
   "hkupty/impromptu.nvim": {},
   "hkupty/iron.nvim": {},
-  "ncm/float-preview.nvim": {},
+  "ncm2/float-preview.nvim": {},
   "jacoborus/tender.vim": {},
   "jamessan/vim-gnupg": {},
   "junegunn/goyo.vim": {"on_cmd": ["Goyo"]},
@@ -38,7 +38,6 @@
   "tpope/vim-scriptease": {
     "on_cmd": ["Scriptnames", "Messages"]
   },
-  "neoclide/coc.nvim": {},
   "tpope/vim-surround": {},
   "tpope/vim-unimpaired": {},
   "tweekmonster/helpful.vim": {},

@@ -3,8 +3,7 @@
 .swp
 .swo
 **/.git
-vendor/state_nvim.vim
-vendor/cache_nvim
-vendor/repos/**/.git/
+/vendor/
+!/vendor/repos/github.com/Shougo/dein.vim/
 
 

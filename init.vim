@@ -8,7 +8,7 @@ let g:vim_config_dir  = expand('<sfile>:p:h')
 let g:vim_config_file  = g:vim_config_dir . '/init.vim'
 let g:vim_local_dir  = g:vim_config_dir . '/local'
 let g:vim_lua_dir  = g:vim_config_dir . '/lua'
-let g:vim_lua_init = g:vim_config_dir . '/init.lua'
+let g:vim_lua_init = g:vim_lua_dir . '/init.lua'
 
 let g:vim_plugins_dir = g:vim_local_dir . '/plugins'
 let g:vim_plugin_repos_dir = g:vim_plugins_dir . '/repos'
@@ -121,73 +121,6 @@ augroup END
 
 " General (Neo)Vim Settings {{{1
 "==================================================================================================
-set foldclose=all foldopen=hor,insert,jump,mark,percent,quickfix,search,tag,undo,block
-set autoread               " Load changes automatically,
-set autowrite              " write on lose focus.
-set background  =dark
-set backspace   =indent,eol,start  " Make backspace work as you would expect.
-set backup
-set backupext   =-vimbackup
-set backupskip  =
-set clipboard+=unnamedplus
-set complete=.,w,b,k       " C-n completion: Scan buffers, windows and dictionary
-set completeopt=menu,menuone,noselect,noinsert
-set cursorline             " Find the current line quickly.
-set diffopt=vertical,iwhite,hiddenoff,filler
-set display     =lastline  " Show as much as possible of the last line.
-set fillchars+=vert:\|  " add a bar for vertical splits
-set fcs=eob:\              " hide ~ tila
-set hidden                 " Switch between buffers without having to save first.
-set history     =1000      " change history to 1000
-set hlsearch               " Keep matches highlighted.
-set incsearch              " Highlight while searching with / or ?.
-set infercase              " infer case by first match resutl
-set isfname-==             " Remove =, detects filename in var=/foo/bar
-set laststatus  =2         " Always show statusline.
-set linespace=0            " No extra spaces between rows
-set helpheight=12          " Minimum help window height
-set noequalalways          " Don't resize windows on split or close
-set cmdwinheight=5 cmdheight=2 " Command-line lines
-set list                   " Show non-printable characters.
-set magic
-set mat=5                  " how many tenths of a second to blink
-set matchpairs=(:),{:},[:],<:>  " Defines targets of the % motion.
-set matchtime=5            " Show matching time
-set noerrorbells
-set nolazyredraw           " redraw only when necessary.
-set noshowmode             " don't show which mode disabled for PowerLine
-set previewheight=12       " Completion preview height
-set pumheight=20           " Avoid the pop up menu occupying the whole screen
-set number norelativenumber
-set report=0               " Always report changed lines
-set shortmess=filmnrwxsAIqtToOc
-set showbreak=…            " show ellipsis at breaking
-set showcmd                " Show already typed keys when more are expected.
-set showmatch              " show matching braces
-set showmode               " Show current mode in command-line.
-set smartcase
-set scrolloff=2            " keep at least N lines on screen when scrolling up/down.
-set nospell spelllang=en spellsuggest=best
-set splitbelow splitright  " Open new windows below-right of the current window.
-set switchbuf=useopen,vsplit    " Jump to the first open window
-set synmaxcol   =2500      " Only highlight columns to N.
-set t_ut=                  " http://stackoverflow.com/questions/6427650/vim-in-tmux-background-color-changes-when-paging/15095377#15095377
-set t_vb        =
-set ttyfast                " Faster redrawing.
-set undofile
-set updatecount =100
-set visualbell
-set winminheight=1 winminwidth=10 " minimum size for inactive window.
-" Text Wrapping {{{2
-set whichwrap+=<,>,h,l  " Allow backspace and cursor keys to cross line boundaries
-set nowrap              " turn off line wrapping
-set linebreak           " set soft wrapping
-set wrapmargin=8        " wrap lines when coming within n characters from side
-set wrapscan            " Searches wrap around end-of-file.
-" }}}
-
-" Always show signs column.
-if has('nvim-0.4') | set signcolumn=yes:1 | else | set signcolumn=yes | endif
 
 if executable('rg') "{{{
   set grepformat=%f:%l:%m
@@ -235,14 +168,6 @@ endif "}}}
 if exists('+previewpopup') " {{{
   set previewpopup=height:10,width:60
 endif " }}}
-if exists('+inccommand') " {{{
-  " requires nvim 0.4.0+
-  set inccommand=split
-endif "}}}
-if has('patch-8.1.0360') || has('nvim-0.4') "{{{
-  set diffopt+=internal,algorithm:patience
-  " set diffopt=indent-heuristic,algorithm:patience
-endif "}}}
 if has("termguicolors") "{{{
   set termguicolors
   if exists('&pumblend') "{{{
@@ -263,10 +188,6 @@ let &g:titlestring="
       \ %{expand('%:p:~:.')}%(%m%r%w%)
       \ %<\[%{fnamemodify(getcwd(), ':~')}\] - Neovim"
 " }}}
-
-" What to save for views and sessions:
-set viewoptions=folds,cursor,curdir,slash,unix
-set sessionoptions=curdir,help,tabpages,winsize
 
 " Use a modern file/terminal encoding by default.
 set termencoding=utf-8
@@ -601,7 +522,6 @@ nnoremap <silent>       <Tab>           <C-w><C-w>
 nnoremap <silent>       <C-s>           :write<cr>
 nnoremap <silent>       <C-S-p>         :Denite command<cr>
 nnoremap <silent>       <C-Space>       :Denite file/rec<cr>
-nnoremap <silent>       <Esc><Esc>      :noh<cr>
 tnoremap                <Esc><Esc>      <C-\><C-n>
 
 " NeoVim Lua Completion Lib (DISABLED) {{{

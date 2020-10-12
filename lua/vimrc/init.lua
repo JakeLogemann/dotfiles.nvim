@@ -9,7 +9,7 @@ require('vimrc/plugins/wordy')
 require('vimrc/plugins/gutentags')
 require('vimrc/plugins/rust')
 require('vimrc/plugins/vista')
-require('vimrc/lsp').setup_language_servers()
+require('vimrc/plugins/lsp')
 
 vimp.add_chord_cancellations('n', '<leader>')
 

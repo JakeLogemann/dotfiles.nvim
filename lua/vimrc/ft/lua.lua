@@ -7,7 +7,4 @@ function M.setup()
   end)
 end
 
--- automatically call the setup function on lua filetypes.
-vim.cmd('autocmd FileType lua lua require("vimrc/ft/lua").setup()')
-
 return M

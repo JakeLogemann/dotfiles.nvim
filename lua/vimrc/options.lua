@@ -1,5 +1,6 @@
 -- vim.o.inccomand='split'
 -- vim.o.termencoding='utf-8'
+vim.g.completion_enable_snippet = 'neosnippet'
 vim.g.colors_name       = 'deus'
 vim.g.deus_termcolors   = vim.o.t_Co
 vim.g.mapleader         = " "

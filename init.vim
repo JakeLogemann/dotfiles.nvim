@@ -105,7 +105,8 @@ augroup dotfiles_global
   au InsertLeave,VimEnter,WinEnter * setlocal cursorline
   au InsertEnter,WinLeave          * setlocal nocursorline
   " Use completion-nvim in every buffer
-  au BufEnter * lua require'completion'.on_attach()
+  au BufEnter *   lua require('completion').on_attach()
+  au FileType lua lua require("vimrc/ft/lua").setup()
 augroup END
 
 " General (Neo)Vim Settings {{{1
@@ -238,22 +239,26 @@ let g:iris_emails_chunk_size = 50
 let g:iris_download_dir = "~/Downloads"
 
 " Plugin: WhichKey {{{2
-let g:WhichKeyFormatFunc               = function('which_key#util#format')
-let g:which_key_align_by_seperator     = 1
-let g:which_key_default_group_name     = '.'
-let g:which_key_disable_default_offset = 1
-let g:which_key_display_names          = {'<CR>': '↵', '<TAB>': '→'}
-let g:which_key_fallback_to_native_key = 1
-let g:which_key_flatten                = 1
-let g:which_key_floating_relative_win  = 0
-let g:which_key_hspace                 = 10
-let g:which_key_my_json                = json_decode(readfile(expand(g:vim_config_dir) . "/which_key.json"))
-let g:which_key_run_map_on_popup       = 0
-let g:which_key_sep                    = '‣'
-let g:which_key_sort_horizontal        = 0
-let g:which_key_timeout                = 1
-let g:which_key_use_floating_win       = 1
-let g:which_key_vertical               = 1
+" let g:WhichKeyFormatFunc               = function('which_key#util#format')
+" let g:which_key_align_by_seperator     = 1
+" let g:which_key_default_group_name     = '.'
+" let g:which_key_disable_default_offset = 1
+" let g:which_key_display_names          = {'<CR>': '↵', '<TAB>': '→'}
+" let g:which_key_fallback_to_native_key = 1
+" let g:which_key_flatten                = 1
+" let g:which_key_floating_relative_win  = 0
+" let g:which_key_hspace                 = 10
+" let g:which_key_my_json                = json_decode(readfile(expand(g:vim_config_dir) . "/which_key.json"))
+" let g:which_key_run_map_on_popup       = 0
+" let g:which_key_sep                    = '‣'
+" let g:which_key_sort_horizontal        = 0
+" let g:which_key_timeout                = 1
+" let g:which_key_use_floating_win       = 1
+" let g:which_key_vertical               = 1
+" nnoremap <silent>       <leader>        :<C-U>WhichKey! g:which_key_my_json.normal<CR>
+" vnoremap <silent>       <leader>        :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
+" nnoremap <silent>       <localleader>   :<C-U>WhichKey! g:which_key_my_json.normal<CR>
+" vnoremap <silent>       <localleader>   :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
 
 " Statusline configuration {{{2
 let g:airline#extensions#tabline#enabled = 1
@@ -365,10 +370,6 @@ inoremap <silent><expr> <C-Space>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ completion#trigger_completion()
 
-nnoremap <silent>       <leader>        :<C-U>WhichKey! g:which_key_my_json.normal<CR>
-vnoremap <silent>       <leader>        :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
-" nnoremap <silent>       <localleader>   :<C-U>WhichKey! g:which_key_my_json.normal<CR>
-" vnoremap <silent>       <localleader>   :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
 
 " Final Setup & Cleanup {{{1
 lua require('vimrc')

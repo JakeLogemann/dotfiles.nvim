@@ -9,12 +9,22 @@ M['unload_lua_namespace'] = function(prefix)
   end
 end
 
-M['check_back_space'] = function()
+function M.check_back_space()
   local col = vim.fn.col('.') - 1
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
 -- Turn some special character value into a character code.
-M['to_char'] = function(val) return eval('"\\'..val..'"') end
+function M.to_char(val) return eval('"\\'..val..'"') end
+
+function M.new_win()
+  vim.api.nvim_open_win(0, false, {
+    relative='win',
+    width=12,
+    height=3,
+    bufpos={100,10}
+  })
+end
+
 
 return M

@@ -20,7 +20,9 @@ vimp.rbind('nx', {"override"}, {'<C-s>'}, ':write<cr>')
 vimp.rbind('nx', {"override"}, {'<Esc><Esc>'}, ':noh<cr>')
 vimp.rbind('t',  {"override"}, {'<Esc><Esc>'}, '<C-\\><C-n>')
 vimp.rbind('nx', {"override"}, {'<leader>r'}, ':ReloadLuaVimrc<cr>')
-
+vimp.rbind('i', {"override", "expr"}, {'<Tab>'}, 'pumvisible() ? "\\<C-n>" : "\\<Tab>"')
+vimp.rbind('i', {"override", "expr"}, {'<S-Tab>'}, 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"')
+vimp.rbind('i', {"override", "silent"}, {'<C-Space>'}, '<Plug>(completion_trigger)')
 vimp.rbind('nx', {"override"}, {'gd'}, "<cmd>lua vim.lsp.buf.declaration()<cr>")
 vimp.rbind('nx', {"override"}, {'gD'}, "<cmd>lua vim.lsp.buf.implementation()<cr>")
 vimp.rbind('nx', {"override"}, {'K'}, "<cmd>lua vim.lsp.buf.hover()<cr>")
@@ -31,7 +33,7 @@ vimp.rbind('nx', {"override"}, {'gr'}, "<cmd>lua vim.lsp.buf.references()<cr>")
 vimp.rbind('nx', {"override"}, {'g0'}, "<cmd>lua vim.lsp.buf.document_symbol()<cr>")
 vimp.rbind('nx', {"override"}, {'gW'}, "<cmd>lua vim.lsp.buf.workspace_symbol()<cr>")
 
-vimp.nnoremap('<leader>b', function() 
+vimp.nnoremap('<leader>b', function()
       require('libmodal').mode.enter('BUFFER', {
         ['n']   = 'bNext',
         ['f']   = "<cmd>lua require'telescope.builtin'.buffers()<cr>",
@@ -40,7 +42,5 @@ vimp.nnoremap('<leader>b', function()
         ['c']  = 'enew',
         ['exit'] = libmodal.utils.api.mode_exit
       }) end)
-
-
 
 -- vim: ft=lua

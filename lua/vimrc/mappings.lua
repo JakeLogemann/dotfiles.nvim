@@ -9,12 +9,13 @@ vimp.rbind('nx', {"override"}, {'<C-s>'}, ':write<cr>')
 vimp.rbind('nx', {"override"}, {'<C-h>'}, '<C-w>h')
 vimp.rbind('nx', {"override"}, {'<C-l>'}, '<C-w>l')
 vimp.rbind('nx', {"override"}, {'<leader>ff'}, "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fh'}, "<cmd>lua require'telescope.builtin'.help_tags(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
 vimp.rbind('nx', {"override"}, {'<leader>fr'}, "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
 vimp.rbind('nx', {"override"}, {'<leader>fs'}, "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
 vimp.rbind('nx', {"override"}, {'<leader>fS'}, "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
-vimp.rbind('nx', {"override"}, {'<leader>fg'}, "<cmd>lua require'telescope.builtin'.live_grep()<cr>")
-vimp.rbind('nx', {"override"}, {'<leader>fc'}, "<cmd>lua require'telescope.builtin'.command_history()<cr>")
-vimp.rbind('nx', {"override"}, {'<leader>fb'}, "<cmd>lua require'telescope.builtin'.buffers()<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fg'}, "<cmd>lua require'telescope.builtin'.live_grep(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fc'}, "<cmd>lua require'telescope.builtin'.command_history(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fb'}, "<cmd>lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
 vimp.rbind('nx', {"override","silent"}, {'<leader>t'}, ':Vista!!<cr>')
 vimp.rbind('nx', {"override"}, {'<C-s>'}, ':write<cr>')
 vimp.rbind('nx', {"override"}, {'<Esc><Esc>'}, ':noh<cr>')
@@ -42,5 +43,17 @@ vimp.nnoremap('<leader>b', function()
         ['c']  = 'enew',
         ['exit'] = libmodal.utils.api.mode_exit
       }) end)
+
+vimp.nnoremap('<leader>v', function()
+  local cur_buf = vim.api.nvim_get_current_buffer()
+  dbg(cur_buf)
+
+  -- vim.api.nvim_open_win(0, false, {
+  --   relative='win',
+  --   width=12,
+  --   height=3,
+  --   bufpos={100,10}
+  -- })
+end)
 
 -- vim: ft=lua

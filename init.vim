@@ -239,26 +239,6 @@ let g:echodoc#type="floating"
 
 let g:vim_json_syntax_conceal = 0
 
-" Plugin: Gutentags {{{2
-let g:gutentags_dont_load=0
-let g:gutentags_enabled=0
-let g:gutentags_generate_on_empty_buffer = 0
-let g:gutentags_generate_on_missing = 0
-let g:gutentags_generate_on_new = 0
-let g:gutentags_generate_on_write = 0
-
-" Plugin: Rust Configuration {{{2
-let g:cargo_makeprg_params = 'build'
-let g:cargo_shell_command_runner = '!'  " use exec instead of :terminal (?)
-let g:rust_conceal = 1
-let g:rust_conceal_mod_path = 0
-let g:rust_conceal_pub = 1
-let g:rust_fold = 1
-let g:rust_recommended_style = 0
-let g:rustfmt_autosave = 1
-let g:rustfmt_autosave_if_config_present = 1
-let g:rustfmt_fail_silently = 1
-
 " Plugin: Iris (Minimal Email Client) {{{2
 let g:iris_name  = "Jake Logemann"
 let g:iris_mail = "jake.logemann@gmail.com"
@@ -287,21 +267,6 @@ let g:which_key_sort_horizontal        = 0
 let g:which_key_timeout                = 1
 let g:which_key_use_floating_win       = 1
 let g:which_key_vertical               = 1
-"
-" Wordy: bad grammar/writer patterns matcher {{{2
-let g:wordy#ring = [
-  \ 'weak',
-  \ ['being', 'passive-voice', ],
-  \ 'business-jargon',
-  \ 'weasel',
-  \ 'puffery',
-  \ ['problematic', 'redundant', ],
-  \ ['colloquial', 'idiomatic', 'similies', ],
-  \ 'art-jargon',
-  \ ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
-  \ 'adjectives',
-  \ 'adverbs',
-  \ ]
 
 " Statusline configuration {{{2
 let g:airline#extensions#tabline#enabled = 1

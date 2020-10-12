@@ -1,0 +1,21 @@
+-- Wordy: bad grammar/writer patterns matcher.
+vim.g['wordy#ring'] = {
+  'adjectives',
+  'adverbs',
+  'art-jargon',
+  'being',
+  'business-jargon',
+  'colloquial', 
+  'contractions', 
+  'idiomatic', 
+  'opinion', 
+  'passive-voice',
+  'problematic', 
+  'puffery',
+  'redundant',
+  'said-synonyms',
+  'similies',
+  'vague-time', 
+  'weak',
+  'weasel',
+}

@@ -9,4 +9,12 @@ M['unload_lua_namespace'] = function(prefix)
   end
 end
 
+M['check_back_space'] = function()
+  local col = vim.fn.col('.') - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
+end
+
+-- Turn some special character value into a character code.
+M['to_char'] = function(val) return eval('"\\'..val..'"') end
+
 return M

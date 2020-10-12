@@ -52,19 +52,6 @@ function M.new_win()
   })
 end
 
-M["commands"] = {}
-M["mappings"] = {}
-
-M["mappings"]['q'] = 'lua FooMode()'
-M["mappings"]['?'] = 'lua require("dotfiles")["mappings_help"]:show()'
-M["commands"]['close'] = 'tabclose'
-M["mappings_help"] = libmodal.utils.Help.new(M.mappings, 'MAPS')
-M["commands_help"] = libmodal.utils.Help.new(M.commands, 'COMMANDS')
-
-function M.dotfiles_mode()
-  libmodal.mode.enter('Dotfiles', M.mappings_table)
-end
-
 -- Main Setup Function
 function M.setup()
 end

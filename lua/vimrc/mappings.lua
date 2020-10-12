@@ -1,33 +1,32 @@
-require('vimp') -- vimpeccable, not vim.api
-util = require('vimrc.util')
+local vimp = require('vimp') -- vimpeccable, not vim.api
+local util = require('vimrc.util')
 
--- Remove all previously added vimpeccable maps
-vimp.unmap_all()
-
--- vimp.rbind('nx', {'<leader>c', 'gc'}, '<plug>Commentary')
-
--- use Control+{h,j,k,l} to navigate windows.
-vimp.rbind('nx', {'<C-j>'}, '<C-w>j')
-vimp.rbind('nx', {'<C-k>'}, '<C-w>k')
-vimp.rbind('nx', {'<C-h>'}, '<C-w>h')
-vimp.rbind('nx', {'<C-l>'}, '<C-w>l')
-vimp.rbind('nx', {'<Esc><Esc>'}, ':noh<cr>')
--- vimp.rbind('nx', {'<C-s>'}, ':write<cr>')
-
--- r = reload vimrc plugin
-vimp.nnoremap('<leader>r', function()
-  vim.cmd('ReloadLuaVimrc')
-end)
+vimp.rbind('nx', {"override"}, {'<C-j>'}, '<C-w>j')
+vimp.rbind('nx', {"override"}, {'<C-k>'}, '<C-w>k')
+vimp.rbind('nx', {"override"}, {'<C-h>'}, '<C-w>h')
+vimp.rbind('nx', {"override"}, {'<C-l>'}, '<C-w>l')
+vimp.rbind('nx', {"override"}, {'<leader>ff'}, "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fr'}, "<cmd>lua require'telescope.builtin'.lsp_references(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fs'}, "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fS'}, "<cmd>lua require'telescope.builtin'.lsp_document_symbols(require('telescope.themes').get_dropdown({ winblend = 5 }))<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fg'}, "<cmd>lua require'telescope.builtin'.live_grep()<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fc'}, "<cmd>lua require'telescope.builtin'.command_history()<cr>")
+vimp.rbind('nx', {"override"}, {'<leader>fb'}, "<cmd>lua require'telescope.builtin'.buffers()<cr>")
+vimp.rbind('nx', {"override"}, {'<C-s>'}, ':write<cr>')
+vimp.rbind('nx', {"override"}, {'<Esc><Esc>'}, ':noh<cr>')
+vimp.rbind('t',  {"override"}, {'<Esc><Esc>'}, '<C-\\><C-n>')
+vimp.rbind('nx', {"override"}, {'<leader>r'}, ':ReloadLuaVimrc<cr>')
 
 -- b = buffer mode
-vimp.nnoremap('<leader>b', function()
-  require('libmodal').prompt.enter('FOO', {
-      ['new']   = 'tabnew',
-      ['close'] = 'tabclose',
-      ['last']  = 'tablast',
-      ['exit'] = libmodal.utils.api.mode_exit
-    })
-  end)
+vimp.nnoremap('<leader>b', function() 
+      require('libmodal').mode.enter('BUFFER', {
+        ['n']   = 'bNext',
+        ['f']   = "<cmd>lua require'telescope.builtin'.buffers()<cr>",
+        ['x'] = 'bclose',
+        ['p'] = 'bprevious',
+        ['c']  = 'enew',
+        ['exit'] = libmodal.utils.api.mode_exit
+      }) end)
 
 
 -- vim: ft=lua

@@ -12,10 +12,10 @@ end)
 vimp.map_command('ReloadLuaVimrc', function()
   -- Remove all previously added vimpeccable maps
   vimp.unmap_all()
-  -- Unload the lua namespace so that the next time require('vimrc') or require('vimrc.X') is called
-  -- it will reload the file
-  -- By default, require() will only load the lua file the first time it is called and thereafter
-  -- pull it from a cache
+  -- Unload the lua namespace so that the next time require('vimrc') or
+  -- require('vimrc.X') is called it will reload the file By default, require()
+  -- will only load the lua file the first time it is called and thereafter
+  -- pull it from a cache.
   util.unload_lua_namespace('vimrc')
   -- Make sure all open buffers are saved
   vim.cmd('silent wa')
@@ -23,6 +23,10 @@ vimp.map_command('ReloadLuaVimrc', function()
   require('vimrc')
 
   print("Reloaded vimrc!")
+end)
+
+vimp.map_command('EditConfigs', function()
+  vim.cmd('silent tabedit ~/.config/nvim/init.vim')
 end)
 
 

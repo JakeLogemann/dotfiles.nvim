@@ -2,6 +2,8 @@ local vimp = require('vimp') -- vimpeccable, not vim.api
 local util = require('vimrc.util')
 
 vimp.rbind('nx', {"override"}, {'<C-j>'}, '<C-w>j')
+vimp.rbind('nx', {"override"}, {'<F8>'}, ':sbnext<cr>')
+vimp.rbind('nx', {"override"}, {'<S-F8>'}, ':sbprev<cr>')
 vimp.rbind('nx', {"override"}, {'<C-k>'}, '<C-w>k')
 vimp.rbind('nx', {"override"}, {'<C-h>'}, '<C-w>h')
 vimp.rbind('nx', {"override"}, {'<C-l>'}, '<C-w>l')
@@ -17,7 +19,7 @@ vimp.rbind('nx', {"override"}, {'<Esc><Esc>'}, ':noh<cr>')
 vimp.rbind('t',  {"override"}, {'<Esc><Esc>'}, '<C-\\><C-n>')
 vimp.rbind('nx', {"override"}, {'<leader>r'}, ':ReloadLuaVimrc<cr>')
 
--- b = buffer mode
+
 vimp.nnoremap('<leader>b', function() 
       require('libmodal').mode.enter('BUFFER', {
         ['n']   = 'bNext',
@@ -27,6 +29,7 @@ vimp.nnoremap('<leader>b', function()
         ['c']  = 'enew',
         ['exit'] = libmodal.utils.api.mode_exit
       }) end)
+
 
 
 -- vim: ft=lua

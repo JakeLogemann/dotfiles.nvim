@@ -13,15 +13,6 @@ let g:vim_lua_init = g:vim_lua_dir . '/init.lua'
 let g:vim_plugins_dir = g:vim_local_dir . '/plugins'
 let g:vim_plugin_repos_dir = g:vim_plugins_dir . '/repos'
 
-" Avoid search where path is known, speeding up start-up.
-let g:python3_host_prog = filereadable('/usr/bin/python3') ? '/usr/bin/python3' : null
-let g:ruby_host_prog = filereadable('/usr/bin/ruby') ? '/usr/bin/ruby' : null
-let g:node_host_prog = filereadable('/usr/bin/node') ? '/usr/bin/node' : null
-
-" Required before loading plugins, to allow sane keybindings!
-let g:mapleader="\<Space>"
-let g:maplocalleader = '\'
-
 " Backups, Swapfiles & Undo files {{{
 execute "set shadafile=" . expand(g:vim_config_dir) . "/local/main.shada"
 execute 'set backup backupdir=' . expand(g:vim_config_dir) . '/local/backup/'
@@ -79,7 +70,6 @@ if dein#load_state(g:vim_plugins_dir) "{{{
   endif
 
   call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/denite.nvim')
   call dein#add('Shougo/neosnippet-snippets')
 
   call dein#load_dict(json_decode(readfile(g:vim_config_dir . "/repos.json")))
@@ -95,28 +85,25 @@ cabbrev sord sort
 cabbrev tabv tab sview +setlocal\ nomodifiable
 " Auto Commands {{{1
 "==================================================================================================
-augroup dotfiles_auto_format
-  au!
-  au BufWritePre *.vim %s/\s\+$//e
-augroup END
-
 augroup dotfiles_global
-  autocmd!
+  au!
   " http://vim.wikia.com/wiki/Detect_window_creation_with_WinEnter
-  autocmd VimEnter * autocmd WinEnter * let w:created=1
-  autocmd VimEnter * let w:created=1
+  au VimEnter * autocmd WinEnter * let w:created=1
+  au VimEnter * let w:created=1
   " Disable paste mode on leaving insert mode.
-  autocmd InsertLeave * set nopaste
+  au InsertLeave * set nopaste
   " automatically clear those fckn search highlights.
-  autocmd InsertEnter * noh
-augroup END
-
-" Completion {{{1
-
-augroup CompletionTriggerCharacter
-  autocmd!
-  autocmd BufEnter * let g:completion_trigger_character = ['.']
-  autocmd BufEnter *.rs,*.c,*.cpp let g:completion_trigger_character = ['.', '::']
+  au InsertEnter * noh
+  " Force write shada on leaving nvim
+  au VimLeave * if has('nvim') | wshada! | else | wviminfo! | endif
+  " Check if file changed when its window is focus, more eager than 'autoread'
+  au FocusGained * checktime
+  " Automatically set read-only for files being edited elsewhere
+  au SwapExists * nested let v:swapchoice = 'o'
+  au TextYankPost * silent! lua require'vim.highlight'.on_yank()  " requires nvim 0.5.0+
+  au BufWritePre *.vim %s/\s\+$//e  " strip trailing spaces in vim files.
+  au InsertLeave,VimEnter,WinEnter * setlocal cursorline
+  au InsertEnter,WinLeave          * setlocal nocursorline
 augroup END
 
 " General (Neo)Vim Settings {{{1
@@ -129,45 +116,20 @@ elseif executable('ag')
   set grepformat=%f:%l:%m
   let &grepprg = 'ag --vimgrep' . (&smartcase ? ' --smart-case' : '')
 endif "}}}
-if has('conceal') && v:version >= 703 "{{{
-  set conceallevel=2 concealcursor=niv
-endif "}}}
+
 if exists('+inccommand') "{{{
   set inccommand=nosplit
 endif "}}}
-if has('wildmenu') "{{{
-  " Wildmenu
-  " --------
-  " enhanced command line completion.
-  if ! has('nvim')
-    " set wildmode=list:longest
-    set wildmode=list:longest,full
-  endif
-  " if has('nvim')
-  "   set wildoptions=pum
-  " else
-  "   set nowildmenu
-  "   set wildmode=list:longest,full
-  "   set wildoptions=tagfile
-  " endif
-  set wildignorecase
-  set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-  set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
-  set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-  set wildignore+=*swp,*.class,*.pyc,*.png,*.jpg,*.gif,*.zip
-  set wildignore+=*/tmp/*,*.o,*.obj,*.so     " Unix
-  set wildignore+=*\\tmp\\*,*.exe            " Windows
-  set wildignore+=application/vendor/**,**/vendor/ckeditor/**,media/vendor/**
-  set wildignore+=__pycache__,*.egg-info,.pytest_cache,.mypy_cache/**
-  set wildcharm=<C-z>  " substitue for 'wildchar' (<Tab>) in macros
-endif  " }}}
+
 if exists('+completepopup') "{{{
   set completeopt+=popup
   set completepopup=height:4,width:60,highlight:InfoPopup
 endif "}}}
+
 if exists('+previewpopup') " {{{
   set previewpopup=height:10,width:60
 endif " }}}
+
 if has("termguicolors") "{{{
   set termguicolors
   if exists('&pumblend') "{{{
@@ -179,11 +141,9 @@ if has("termguicolors") "{{{
     set winblend=5
   endif "}}}
 endif "}}}
-if &termguicolors "{{{
-endif "}}}
+
 " Window/Terminal Title {{{
 "==================================================================================================
-set title titlelen=95
 let &g:titlestring="
       \ %{expand('%:p:~:.')}%(%m%r%w%)
       \ %<\[%{fnamemodify(getcwd(), ':~')}\] - Neovim"
@@ -201,9 +161,6 @@ set formatoptions-=o         " Disable comment-continuation (normal 'o'/'O')
 if has('patch-7.3.541')
   set formatoptions+=j       " Remove comment leader when joining lines
 endif "}}}
-if has('mouse')  "{{{
-  set mouse=nv
-endif "}}}
 if &shell =~# 'fish$'  "{{{
   set shell=/bin/bash
 endif " }}}
@@ -215,68 +172,8 @@ else
   let &listchars = 'tab:> ,extends:>,precedes:<,nbsp:.'
 endif
 
-if exists('&backupskip') "{{{
-  " Secure sensitive information, disable backup files in temp directories
-  set backupskip+=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*
-  set backupskip+=.vault.vim
-endif "}}}
-" Force write shada on leaving nvim
-autocmd VimLeave * if has('nvim') | wshada! | else | wviminfo! | endif
-" Check if file changed when its window is focus, more eager than 'autoread'
-autocmd FocusGained * checktime
-" Automatically set read-only for files being edited elsewhere
-autocmd SwapExists * nested let v:swapchoice = 'o'
-" Timeouts & Delays {{{1
-" --------
-set updatetime=5000           " time before "write swap" & CursorHold.
-set timeout  timeoutlen=1000  " timeout on mappings
-set ttimeout ttimeoutlen=10   " timeout on keycodes
-set redrawtime=1500           " Maximum time to allow redraw to run before canceling.
-
-" Tabs & Indent {{{1
-" --------
-if exists('&breakindent') "{{{
-  set breakindentopt=shift:2,min:20
-endif "}}}
-set shiftwidth  =2         " >> indents by N spaces.
-set autoindent             " Indent according to previous line.
-set expandtab              " Use spaces instead of tabs.
-set shiftround             " Round indent to multiple of 'shiftwidth'
-set smarttab               " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-set softtabstop =-1        " Tab key indents default to shiftwidth.
-set tabstop =2
-set completeopt=menuone,noinsert,noselect " Set completeopt to have a better completion experience
-set shortmess+=c                          " Avoid showing message extra message when using completion
-
 " UI/GUI Colorscheme {{{1
 "==================================================================================================
-augroup LuaHighlight "{{{
-  autocmd!
-  if has('nvim') " requires nvim 0.5.0+
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-  endif
-augroup END "}}}
-
-if exists('+colorcolumn') "{{{
-  " Make current window more obvious by turning off/adjusting some features
-  " in non-current windows.
-  highlight ColorColumn ctermbg=0 guibg=#212121
-  augroup DotfilesColorRowAndColumn
-    autocmd!
-
-    " autocmd BufEnter,FocusGained,VimEnter,WinEnter *
-    "       \ let &l:colorcolumn='+' . join(range(0, 254), ',+')
-    " autocmd FocusLost,WinLeave *
-    "       \ let &l:colorcolumn=join(range(1, 255), ',')
-
-    " only show cursorline in the current window
-    if exists('+cursorline')
-      autocmd InsertLeave,VimEnter,WinEnter * setlocal cursorline
-      autocmd InsertEnter,WinLeave          * setlocal nocursorline
-    endif
-  augroup END
-endif "}}}
-
 if has('gui') && has('gui_running') "{{{
   if exists(':GuiTabline')   | execute GuiTabline 0   | endif
   if exists(':GuiPopupMenu') | execute GuiPopupMenu 0 | endif
@@ -510,30 +407,22 @@ xnoremap \        <Nop>
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-nnoremap        <F8>    :sbnext<CR>
-nnoremap        <S-F8>  :sbprevious<CR>
 
 inoremap <silent><expr> <C-Space>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
-nnoremap <silent>       <Tab>           <C-w><C-w>
-nnoremap <silent>       <C-s>           :write<cr>
-nnoremap <silent>       <C-S-p>         :Denite command<cr>
-nnoremap <silent>       <C-Space>       :Denite file/rec<cr>
-tnoremap                <Esc><Esc>      <C-\><C-n>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ completion#trigger_completion()
 
 " NeoVim Lua Completion Lib (DISABLED) {{{
-"nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-"nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-"nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-"nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-"nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-"nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-"nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-"nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-"nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " }}}
 
 nnoremap <silent>       <leader>        :<C-U>WhichKey! g:which_key_my_json.normal<CR>

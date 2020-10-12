@@ -104,12 +104,5 @@
       "w": [ ":setlocal wrap!", "wrap" ]
     }
   },
-  "visual": {
-    "c": {
-      "l": [
-        ":Commentary",
-        "comment selected"
-      ]
-    }
-  }
+  "visual": {}
 }

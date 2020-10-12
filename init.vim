@@ -104,6 +104,8 @@ augroup dotfiles_global
   au BufWritePre *.vim %s/\s\+$//e  " strip trailing spaces in vim files.
   au InsertLeave,VimEnter,WinEnter * setlocal cursorline
   au InsertEnter,WinLeave          * setlocal nocursorline
+  " Use completion-nvim in every buffer
+  au BufEnter * lua require'completion'.on_attach()
 augroup END
 
 " General (Neo)Vim Settings {{{1
@@ -182,22 +184,13 @@ if has('gui') && has('gui_running') "{{{
   " call rpcnotify(1, 'Gui', 'Font', 'Fira Code Nerd Font Complete')
 endif "}}}
 
-" Terminal-specific overrides {{{1
-if exists('$TMUX') || $TERM == 'xterm-kitty' || $TERM == 'alacritty' "{{{2
-  set t_Co=256 termguicolors
-  set background=dark
-  let g:colors_name = 'deus'
-  execute printf("colorscheme %s", g:colors_name)
-
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  let g:deus_termcolors=&t_Co
-endif "}}}1
-
 " Plugin Configurations {{{1
 " =====================
 
 " Plugin: Floating Window {{{2
+let g:float_preview#docked     = 1  " default =  1
+let g:float_preview#max_width  = 50 " default = 50
+let g:float_preview#auto_close = 1  " default =  1
 autocmd User FloatPreviewWinOpen call <SID>DisableExtras()
 function! s:DisableExtras()
   call nvim_win_set_option(g:float_preview#win, 'number', v:false)
@@ -205,15 +198,9 @@ function! s:DisableExtras()
   call nvim_win_set_option(g:float_preview#win, 'cursorline', v:false)
 endfunction
 
-let g:float_preview#docked     = 1  " default =  1
-let g:float_preview#max_width  = 50 " default = 50
-let g:float_preview#auto_close = 1  " default =  1
-
 " Plugin: Illuminate {{{2
 let g:Illuminate_ftblacklist = ['dirvish']
-
-" Time in milliseconds (default 250)
-let g:Illuminate_delay = 250
+let g:Illuminate_delay = 250 "milliseconds (default 250)
 
 " Plugin: Completion {{{2
 let g:completion_trigger_keyword_length = 3 " default = 1
@@ -378,25 +365,13 @@ inoremap <silent><expr> <C-Space>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ completion#trigger_completion()
 
-" NeoVim Lua Completion Lib (DISABLED) {{{
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" }}}
-
 nnoremap <silent>       <leader>        :<C-U>WhichKey! g:which_key_my_json.normal<CR>
 vnoremap <silent>       <leader>        :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
 " nnoremap <silent>       <localleader>   :<C-U>WhichKey! g:which_key_my_json.normal<CR>
 " vnoremap <silent>       <localleader>   :<C-U>WhichKeyVisual! g:which_key_my_json.visual<CR>
 
 " Final Setup & Cleanup {{{1
-execute printf("luafile %s", g:vim_lua_init)
+lua require('vimrc')
 " call dotfiles#setup()
 " ExecLuaConfig
 scriptencoding utf-8

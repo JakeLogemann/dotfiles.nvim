@@ -1,13 +1,16 @@
 -- vim.o.inccomand='split'
 -- vim.o.termencoding='utf-8'
-vim.g.python3_host_prog = '/usr/bin/python3'
-vim.g.ruby_host_prog    = '/usr/bin/ruby'
-vim.g.node_host_prog    = '/usr/bin/node'
+vim.g.colors_name       = 'deus'
+vim.g.deus_termcolors   = vim.o.t_Co
 vim.g.mapleader         = " "
 vim.g.maplocalleader    = "\\"
+vim.g.node_host_prog    = '/usr/bin/node'
+vim.g.python3_host_prog = '/usr/bin/python3'
+vim.g.ruby_host_prog    = '/usr/bin/ruby'
 vim.o.autoindent        = true    -- Indent according to previous line.
 vim.o.autoread          = true           -- Load changes automatically,
 vim.o.autowrite         = true          -- write on lose focus.
+vim.o.background        = 'dark'
 vim.o.background        = 'dark'
 vim.o.backspace         = 'indent,eol,start'  -- Make backspace work as you would expect.
 vim.o.backup            = true
@@ -16,10 +19,10 @@ vim.o.breakindentopt    = 'shift:2,min:20'
 vim.o.clipboard         = 'unnamedplus'
 vim.o.cmdheight         = 2
 vim.o.cmdwinheight      = 5
-vim.o.concealcursor     = 'niv'
-vim.o.conceallevel      = 2
 vim.o.complete          = '.,w,b,k'       -- C-n completion: Scan buffers, windows and dictionary
 vim.o.completeopt       = 'menu,menuone,noinsert,noselect' -- Set completeopt to have a better completion experience
+vim.o.concealcursor     = 'niv'
+vim.o.conceallevel      = 2
 vim.o.cursorline        = true             -- Find the current line quickly.
 vim.o.diffopt           = 'vertical,iwhite,hiddenoff,filler,internal,algorithm:patience'
 vim.o.display           = 'lastline'  -- Show as much as possible of the last line.
@@ -76,9 +79,13 @@ vim.o.splitbelow        = true
 vim.o.splitright        = true
 vim.o.switchbuf         = 'useopen,vsplit' -- Jump to the first open window
 vim.o.synmaxcol         = 2500      -- Only highlight columns to N.
+vim.o.t_8b              = "\\<Esc>[48;2;%lu;%lu;%lum"
+vim.o.t_8f              = "\\<Esc>[38;2;%lu;%lu;%lum"
+vim.o.t_Co              = '256' -- default to 256 Colors.
 vim.o.t_ut              = ''                 -- http://stackoverflow.com/questions/6427650/vim-in-tmux-background-color-changes-when-paging/15095377#15095377
 vim.o.t_vb              = ''
 vim.o.tabstop           = vim.o.shiftwidth
+vim.o.termguicolors     = true
 vim.o.timeout           = true
 vim.o.timeoutlen        = 1000
 vim.o.title             = true
@@ -105,6 +112,7 @@ vim.o.wrapscan          = true            -- Searches wrap around end-of-file.
 
 -- Long list items:
 -----------------------------------------------------------------------------
+vim.cmd('colorscheme '.. vim.g.colors_name)
 vim.o.backupskip = table.concat({
     "$TEMP/*",
     "$TMP/*",

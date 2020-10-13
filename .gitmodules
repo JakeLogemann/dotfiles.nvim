@@ -19,3 +19,15 @@
 [submodule "pack/packer/start/diagnostic.nvim"]
 	path = pack/packer/start/diagnostic.nvim
 	url = https://github.com/nvim-lua/diagnostic-nvim
+[submodule "pack/packer/start/iron.nvim"]
+	path = pack/packer/start/iron.nvim
+	url = https://github.com/hkupty/iron.nvim
+[submodule "pack/packer/start/impromptu.nvim"]
+	path = pack/packer/start/impromptu.nvim
+	url = https://github.com/hkupty/impromptu.nvim
+[submodule "pack/packer/start/libmodal.nvim"]
+	path = pack/packer/start/libmodal.nvim
+	url = https://github.com/Iron-E/nvim-libmodal
+[submodule "pack/packer/start/nvim_lsp.nvim"]
+	path = pack/packer/start/nvim_lsp.nvim
+	url = https://github.com/neovim/nvim-lsp

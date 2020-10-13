@@ -52,7 +52,6 @@ use {'wbthomason/packer.nvim', opt = true}
 use 'nvim-lua/telescope.nvim'
 use 'nvim-lua/plenary.nvim'
 use {'rafcamlet/nvim-luapad', cmd = 'LuaPad'}
-use {'rafcamlet/nvim-luapad', cmd = 'LuaPad'}
 use "svermeulen/vimpeccable"
 use {"tjdevries/express_line.nvim", as = "statusline.nvim"}
 use 'nvim-lua/popup.nvim'

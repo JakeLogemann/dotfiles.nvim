@@ -287,6 +287,23 @@ function! ShowSpaces(...)
 endfunction
 command! -bar -nargs=? ShowSpaces call ShowSpaces(<args>) "}}}
 
+
+" :Jq [dictobj] - pretty print as json {{{
+" nnoremap <F12>     :ShowSpaces 1<CR>
+function! Jq(dictobj) abort
+  tabnew
+  setlocal ft=json5 buftype=nofile bufhidden=wipe noswapfile nobuflisted nomodified
+  setlocal nonumber norelativenumber nocursorline nolist
+  " silent put='// Vim variables '. a:prefix . a:keyname
+  let message = system('jq -Ser "."', json_encode(a:dictobj))
+  silent put=message
+  normal ggdd
+  setlocal nomodifiable readonly
+  autocmd BufLeave <buffer> bdelete
+endfunction
+command! -bar -nargs=1 -complete=var Jq call Jq(<args>) "}}}
+
+
 function s:AutoMkdirIfNotExists() "{{{
   let dir = expand('%:p:h')
   if dir =~ '://' | return | endif

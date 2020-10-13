@@ -82,6 +82,7 @@ vim.o.relativenumber            = false
 vim.o.report                    = 2          -- report changed lines?
 vim.o.scrolloff                 = 2          -- keep at least N lines on screen when scrolling up/down.
 vim.o.sessionoptions            = 'curdir,help,tabpages,winsize'
+vim.o.shada                     = "!,%,h,'100,f1,<50,s10240"
 vim.o.shiftround                = true    -- Round indent to multiple of 'shiftwidth'
 vim.o.shiftwidth                = 2 -- >> indents by N spaces.
 vim.o.shortmess                 = 'filmnrwxsAIqtToOc'

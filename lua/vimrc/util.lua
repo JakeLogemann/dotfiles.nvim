@@ -9,6 +9,11 @@ M['unload_lua_namespace'] = function(prefix)
   end
 end
 
+function M.autodelete_bufnr_on_leave(bufnr)
+  -- autocommand to automatically close/delete a buffer when its left.
+  vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. bufnr .."'")
+end
+
 function M.check_back_space()
   local col = vim.fn.col('.') - 1
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')

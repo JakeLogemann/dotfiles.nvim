@@ -4,6 +4,7 @@ vim.api.nvim_set_var('libmodalTimeouts', true) -- enable modal timeouts!
 
 _G['vimp'] = require('vimp')
 _G['libmodal'] = require('libmodal')
+_G['plenary'] = require('plenary')
 
 vim.cmd [[ cabbrev lua Lua ]]
 

@@ -6,7 +6,7 @@ local plugins = {
     loaded = false,
     only_sequence = false,
     only_setup = false,
-    path = "/home/jake/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+    path = "/home/jake/.config/nvim/pack/packer/opt/packer.nvim"
   }
 }
 

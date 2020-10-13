@@ -1,6 +1,7 @@
 package.loaded['vimrc.packages'] = nil -- always reload this file on require()
 vim.cmd [[packadd packer.nvim]] -- lazily load packer.
-local packer = require('packer')
+_G['packer'] = require('packer')
+local use = packer.use
 
 -- Initialize Packer.
 packer.init({
@@ -47,7 +48,16 @@ packer.init({
 -- You can alias plugin names
 -- use {'dracula/vim', as = 'dracula'}
 ---------------------------------------------------------------------------
-packer.use {'wbthomason/packer.nvim', opt = true} -- Packer can manage itself.
-packer.use {'nvim-lua/telescope.nvim', opt = false} -- Minimal LUA "fuzzy finder":
-packer.use {'nvim-lua/plenary.nvim', opt = false} -- Lua utilities library.
-packer.use {'nvim-lua/popup.nvim', opt = false} -- Lua utilities library.
+use {'wbthomason/packer.nvim', opt = true} 
+use 'nvim-lua/telescope.nvim'
+use 'nvim-lua/plenary.nvim'
+use {'rafcamlet/nvim-luapad', cmd = 'LuaPad'}
+use {'rafcamlet/nvim-luapad', cmd = 'LuaPad'}
+use "svermeulen/vimpeccable"
+use {"tjdevries/express_line.nvim", as = "statusline.nvim"}
+use 'nvim-lua/popup.nvim'
+use {'askinsho/nvim-bufferline.lua', as = 'bufferline.nvim'}
+use {'nvim-lua/diagnostic-nvim', as = 'diagnostic.nvim'} 
+use {'nvim-lua/completion-nvim', as = 'completion.nvim'}
+use {'Iron-E/nvim-libmodal', as = 'libmodal.nvim' } 
+use {'neovim/nvim-lsp', as = 'nvim_lsp.nvim' } 

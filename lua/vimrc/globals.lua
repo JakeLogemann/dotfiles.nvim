@@ -1,6 +1,7 @@
 _G['vimp'] = require('vimp') -- install vimpeccable globally..
 
 vim.env.GIT_ASKPASS = "true"
+vim.cmd [[ cabbrev lua Lua ]]
 
 require'nvim-web-devicons'.setup()
 require('bufferline').setup()

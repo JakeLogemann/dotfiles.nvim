@@ -31,3 +31,12 @@
 [submodule "pack/packer/start/nvim_lsp.nvim"]
 	path = pack/packer/start/nvim_lsp.nvim
 	url = https://github.com/neovim/nvim-lsp
+[submodule "pack/packer/start/bufferline.nvim"]
+	path = pack/packer/start/bufferline.nvim
+	url = https://github.com/akinsho/nvim-bufferline.lua
+[submodule "pack/packer/start/vimpeccable"]
+	path = pack/packer/start/vimpeccable
+	url = https://github.com/svermeulen/vimpeccable
+[submodule "pack/packer/start/statusline.nvim"]
+	path = pack/packer/start/statusline.nvim
+	url = https://github.com/tjdevries/express_line.nvim

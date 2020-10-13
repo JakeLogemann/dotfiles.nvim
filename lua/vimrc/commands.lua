@@ -1,9 +1,12 @@
+package.loaded['vimrc.commands'] = nil -- always reload this file on require()
 require('vimp') -- vimpeccable, not vim.api
 local util = require('vimrc.util')
 
 vimp.map_command('SvOpenFileOnGithub', function()
   print("Todo - Open the URL on github for current file on current line")
 end)
+
+vimp.map_command('DeleteFile', function() vim.cmd('silent !rm -f %') end)
 
 vimp.map_command('SvRename', function(newName)
   print("Todo - rename current file to " .. newName)
@@ -25,8 +28,7 @@ vimp.map_command('ReloadLuaVimrc', function()
   print("Reloaded vimrc!")
 end)
 
-vimp.map_command('EditConfigs', function()
-  vim.cmd('silent tabedit ~/.config/nvim/init.vim')
-end)
-
-
+vim.cmd [[ command! -nargs=1 -complete=file TabView tab sview +setlocal\ nomodifiable <args> ]]
+vim.cmd [[ command! -nargs=1 -complete=file DE tabedit <args> ]]
+vim.cmd [[ command! -nargs=1 -complete=help Vhelp vertical help <args> ]]
+vim.cmd [[ command! -nargs=1 -complete=help Thelp tab help <args> ]]

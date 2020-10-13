@@ -6,6 +6,9 @@ local default_lsp_settings = {
   end
 }
 
+vim.g.completion_trigger_keyword_length = 2
+vim.g.completion_enable_snippet = 'neosnippet'
+vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
 vim.g.vista_sidebar_position = 'left'
 vim.g.vista_sidebar_width = 30
 vim.g.vista_sidebar_keepalt = 1
@@ -23,6 +26,8 @@ lsp.cssls.setup(default_lsp_settings)
 lsp.jsonls.setup(default_lsp_settings)
 lsp.clangd.setup(default_lsp_settings)
 lsp.solargraph.setup(default_lsp_settings)
-lsp.sumneko_lua.setup(default_lsp_settings)
+lsp.sumneko_lua.setup(vim.tbl_extend("error", default_lsp_settings, { 
+    cmd = {"/usr/local/src/lua_lsp/bin/Linux/lua-language-server", "-E", "/usr/local/src/lua_lsp/main.lua"}
+  }))
 lsp.bashls.setup(default_lsp_settings)
 

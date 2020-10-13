@@ -1,3 +1,6 @@
 [submodule "vendor/repos/github.com/Shougo/dein.vim"]
 	path = vendor/repos/github.com/Shougo/dein.vim
 	url = https://github.com/Shougo/dein.vim
+[submodule "pack/packer/opt/packer.nvim"]
+	path = pack/packer/opt/packer.nvim
+	url = https://github.com/wbthomason/packer.nvim

@@ -13,27 +13,21 @@ let g:vim_lua_init = g:vim_lua_dir . '/init.lua'
 let g:vim_plugins_dir = g:vim_local_dir . '/plugins'
 let g:vim_plugin_repos_dir = g:vim_plugins_dir . '/repos'
 
-" Backups, Swapfiles & Undo files {{{
-execute "set shadafile=" . expand(g:vim_config_dir) . "/local/main.shada"
-execute 'set backup backupdir=' . expand(g:vim_config_dir) . '/local/backup/'
-if !isdirectory(expand(&backupdir))
-  call mkdir(expand(&backupdir), "p")
-endif
-execute 'set swapfile directory=' . expand(g:vim_config_dir) . '/local/swap//'
-if !isdirectory(expand(&directory))
-  call mkdir(expand(&directory), "p")
-endif
-execute 'set undofile undodir=' . expand(g:vim_config_dir) . '/local/undo/'
-if !isdirectory(expand(&undodir))
-  call mkdir(expand(&undodir), "p")
-endif "}}}
-
-" Dotfiles Bootstrapping {{{1
-" Ignore system "paths", use only what we provide. {{{
+" Ignore system "paths", use only what we provide. {{{1
 for p in ['~/.local/share/nvim/site','/etc/xdg/nvim','/usr/local/share/nvim/site','/usr/share/nvim/site']
   execute printf("set path-=%s path-=%s/after packpath-=%s rtp-=%s", p, p, p ,p)
 endfor
-packloadall
+
+" Vim packages ("packpath") configuration {{{1
+let g:vimrc_packpath = expand('<sfile>:p:h') . "/pack"
+let g:vimrc_default_packpath = expand('<sfile>:p:h') . "/pack/vimrc"
+
+for p in [g:vimrc_packpath, g:vimrc_default_packpath."/opt", g:vimrc_default_packpath."/start"]
+  !isdirectory(expand(p)) ?  call mkdir(expand(p), "p") : v:true
+endfor
+
+execute "set packpath+=" . g:vimrc_packpath
+packloadall " load all packages, after everything is setup.
 " Vendored Plugins Setup {{{1
 
 " include dein in the runtime path.
@@ -76,13 +70,6 @@ if dein#load_state(g:vim_plugins_dir) "{{{
   call dein#end()
   call dein#save_state()
 endif "1}}}
-" Command Abbreviations {{{1
-cabbrev sord sort
-
-" The following command abbreviation allows typing :tabv myfile.txt to view
-" the specified file in a new tab; the buffer is read-only and nomodifiable so
-" you cannot accidentally change it.
-cabbrev tabv tab sview +setlocal\ nomodifiable
 " Auto Commands {{{1
 "==================================================================================================
 augroup dotfiles_global
@@ -97,7 +84,7 @@ augroup dotfiles_global
   " Force write shada on leaving nvim
   au VimLeave * if has('nvim') | wshada! | else | wviminfo! | endif
   " Check if file changed when its window is focus, more eager than 'autoread'
-  au FocusGained * checktime
+  " au FocusGained * checktime
   " Automatically set read-only for files being edited elsewhere
   au SwapExists * nested let v:swapchoice = 'o'
   au TextYankPost * silent! lua require'vim.highlight'.on_yank()  " requires nvim 0.5.0+
@@ -112,45 +99,15 @@ augroup END
 " General (Neo)Vim Settings {{{1
 "==================================================================================================
 
-if executable('rg') "{{{
-  set grepformat=%f:%l:%m
-  let &grepprg = 'rg --vimgrep' . (&smartcase ? ' --smart-case' : '')
-elseif executable('ag')
-  set grepformat=%f:%l:%m
-  let &grepprg = 'ag --vimgrep' . (&smartcase ? ' --smart-case' : '')
-endif "}}}
-
-if exists('+inccommand') "{{{
-  set inccommand=nosplit
-endif "}}}
-
-if exists('+completepopup') "{{{
-  set completeopt+=popup
-  set completepopup=height:4,width:60,highlight:InfoPopup
-endif "}}}
-
-if exists('+previewpopup') " {{{
-  set previewpopup=height:10,width:60
-endif " }}}
-
-if has("termguicolors") "{{{
-  set termguicolors
-  if exists('&pumblend') "{{{
-    " Pseudo-transparency for completion menu.
-    set pumblend=5
-  endif "}}}
-  if exists('&winblend') "{{{
-    " Pseudo-transparency for floating window.
-    set winblend=5
-  endif "}}}
-endif "}}}
+if exists('+inccommand')    |  set inccommand=nosplit | endif
+if exists('+completepopup') |  set completeopt+=popup completepopup=height:4,width:60,highlight:InfoPopup | endif
+if exists('+previewpopup')  |  set previewpopup=height:10,width:60 | endif
+if has("termguicolors")     |  set termguicolors | endif
+if exists('&pumblend')      |  set pumblend=5 | endif " Pseudo-transparency for completion menu.
+if exists('&winblend')      |  set winblend=5 | endif " Pseudo-transparency for floating window.
 
 " Window/Terminal Title {{{
 "==================================================================================================
-let &g:titlestring="
-      \ %{expand('%:p:~:.')}%(%m%r%w%)
-      \ %<\[%{fnamemodify(getcwd(), ':~')}\] - Neovim"
-" }}}
 
 " Use a modern file/terminal encoding by default.
 set termencoding=utf-8
@@ -290,21 +247,14 @@ endif "}}}
 command! ReloadBufTabLine   call buftabline#update(0)
 command! SudoTee            write !sudo tee % > /dev/null
 
-command! -nargs=1 -complete=file DE tabedit <args>
-command! -nargs=1 -complete=help Vhelp vertical help <args>
-command! -nargs=1 -complete=help Thelp tab help <args>
+
+" Command Abbreviations {{{1
+" The following command abbreviation allows typing :tabv myfile.txt to view
+" the specified file in a new tab; the buffer is read-only and nomodifiable so
+" you cannot accidentally change it.
 
 " :EditConfig   OR   :ViewConfig   {{{
-command! EditConfig         call dotfiles#config_edit()
-command! BrowseConfigs      call dotfiles#config_browse()
-command! ReloadConfig       call dotfiles#config_reload()
 command! ViewConfig         call dotfiles#vars#view() " }}}
-
-" :EditLua [name]  {{{
-command! -nargs=1 -complete=custom,<SID>ListLua EditLua    execute printf("tabedit %s/lua/%s.lua", g:vim_config_dir, <q-args>)
-function s:ListLua(A,L,P)
-  return system(printf("ls -1 %s/lua | sed 's/\.lua//g'", g:vim_config_dir))
-endfun " }}}
 
 " :ReloadPlugin [name]  OR   :EditPlugin [name]  {{{
 command! -nargs=1 -complete=custom,<SID>ListPlugins ReloadPlugin  execute printf("source %s/plugin/%s.vim", g:vim_config_dir, <q-args>)
@@ -318,7 +268,7 @@ endfun " }}}
 " vnoremap <S-F12>   :TrimSpaces<CR>
 function! TrimSpaces() range
   let oldhlsearch=ShowSpaces(1)
-  execute a:firstline.",".a:lastline."substitute ///gec"
+  execute a:firstline.",".a:lastline."substitute ///ge"
   let &hlsearch=oldhlsearch
 endfunction
 command! -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces() "}}}
@@ -360,16 +310,6 @@ nnoremap ,        <Nop>
 xnoremap ,        <Nop>
 nnoremap \        <Nop>
 xnoremap \        <Nop>
-
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-inoremap <silent><expr> <C-Space>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ completion#trigger_completion()
-
 
 " Final Setup & Cleanup {{{1
 lua require('vimrc')

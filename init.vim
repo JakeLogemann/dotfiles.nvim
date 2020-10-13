@@ -328,6 +328,8 @@ xnoremap ,        <Nop>
 nnoremap \        <Nop>
 xnoremap \        <Nop>
 
+set omnifunc=v:lua.vim.lsp.omnifunc
+
 " Final Setup & Cleanup {{{1
 lua require('vimrc')
 " call dotfiles#setup()

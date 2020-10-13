@@ -1,6 +1,10 @@
-_G['vimp'] = require('vimp') -- install vimpeccable globally..
-
 vim.env.GIT_ASKPASS = "true"
+
+vim.api.nvim_set_var('libmodalTimeouts', true) -- enable modal timeouts!
+
+_G['vimp'] = require('vimp')
+_G['libmodal'] = require('libmodal')
+
 vim.cmd [[ cabbrev lua Lua ]]
 
 require'nvim-web-devicons'.setup()

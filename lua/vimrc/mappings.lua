@@ -20,6 +20,7 @@ vimp.rbind('nx', opts, {'<leader>fS'}, "<cmd>lua require'vimrc/plugins/telescope
 vimp.rbind('nx', opts, {'<leader>fg'}, "<cmd>lua require'vimrc/plugins/telescope'.live_grep()<cr>")
 vimp.rbind('nx', opts, {'<leader>fc'}, "<cmd>lua require'vimrc/plugins/telescope'.command_history()<cr>")
 vimp.rbind('nx', opts, {'<leader>fb'}, "<cmd>lua require'vimrc/plugins/telescope'.buffers()<cr>")
+vimp.rbind('nx', opts, {'<leader>fV'}, "<cmd>lua require'vimrc/plugins/telescope'.open_neovim_config()<cr>")
 vimp.rbind('nx', opts, {'<leader>Tn'}, "<cmd>tabNext<cr>")
 vimp.rbind('nx', opts, {'<leader>Tp'}, "<cmd>tabprevious<cr>")
 vimp.rbind('nx', opts, {'<leader>Tb'}, "<cmd>lua require'vimrc/plugins/libmodal'.tab_mode()<cr>")

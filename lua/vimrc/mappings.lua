@@ -20,6 +20,12 @@ vimp.rbind('nx', opts, {'<leader>fS'}, "<cmd>lua require'vimrc/plugins/telescope
 vimp.rbind('nx', opts, {'<leader>fg'}, "<cmd>lua require'vimrc/plugins/telescope'.live_grep()<cr>")
 vimp.rbind('nx', opts, {'<leader>fc'}, "<cmd>lua require'vimrc/plugins/telescope'.command_history()<cr>")
 vimp.rbind('nx', opts, {'<leader>fb'}, "<cmd>lua require'vimrc/plugins/telescope'.buffers()<cr>")
+vimp.rbind('nx', opts, {'<leader>Tn'}, "<cmd>tabNext<cr>")
+vimp.rbind('nx', opts, {'<leader>Tp'}, "<cmd>tabprevious<cr>")
+vimp.rbind('nx', opts, {'<leader>Tb'}, "<cmd>lua require'vimrc/plugins/libmodal'.tab_mode()<cr>")
+vimp.rbind('nx', opts, {'<leader>bn'}, "<cmd>bNext<cr>")
+vimp.rbind('nx', opts, {'<leader>bp'}, "<cmd>bprevious<cr>")
+vimp.rbind('nx', opts, {'<leader>bb'}, "<cmd>lua require'vimrc/plugins/libmodal'.buffer_mode()<cr>")
 vimp.rbind('nx', opts, {'<leader>t'}, ':Vista!!<cr>')
 vimp.rbind('nx', opts, {'<C-s>'}, ':write<cr>')
 vimp.rbind('nx', opts, {'<Esc><Esc>'}, ':noh<cr>')
@@ -39,26 +45,9 @@ vimp.rbind('nx', opts, {'gr'}, "<cmd>lua vim.lsp.buf.references()<cr>")
 vimp.rbind('nx', opts, {'g0'}, "<cmd>lua vim.lsp.buf.document_symbol()<cr>")
 vimp.rbind('nx', opts, {'gW'}, "<cmd>lua vim.lsp.buf.workspace_symbol()<cr>")
 
-vimp.nnoremap('<leader>b', function()
-      require('libmodal').mode.enter('BUFFER', {
-        ['n']   = 'bNext',
-        ['f']   = "<cmd>lua require'telescope.builtin'.buffers()<cr>",
-        ['x'] = 'bclose',
-        ['p'] = 'bprevious',
-        ['c']  = 'enew',
-        ['exit'] = libmodal.utils.api.mode_exit
-      }) end)
-
 vimp.nnoremap('<leader>v', function()
   local cur_buf = vim.api.nvim_get_current_buffer()
   dbg(cur_buf)
-
-  -- vim.api.nvim_open_win(0, false, {
-  --   relative='win',
-  --   width=12,
-  --   height=3,
-  --   bufpos={100,10}
-  -- })
 end)
 
 vim.cmd [[ inoremap <silent><expr> <C-Space> pumvisible() ? "\<C-n>" : completion#trigger_completion() ]]

@@ -4,3 +4,18 @@
 [submodule "pack/packer/opt/packer.nvim"]
 	path = pack/packer/opt/packer.nvim
 	url = https://github.com/wbthomason/packer.nvim
+[submodule "pack/packer/start/plenary.nvim"]
+	path = pack/packer/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim
+[submodule "pack/packer/start/popup.nvim"]
+	path = pack/packer/start/popup.nvim
+	url = https://github.com/nvim-lua/popup.nvim
+[submodule "pack/packer/start/telescope.nvim"]
+	path = pack/packer/start/telescope.nvim
+	url = https://github.com/nvim-lua/telescope.nvim
+[submodule "pack/packer/start/completion.nvim"]
+	path = pack/packer/start/completion.nvim
+	url = https://github.com/nvim-lua/completion-nvim
+[submodule "pack/packer/start/diagnostic.nvim"]
+	path = pack/packer/start/diagnostic.nvim
+	url = https://github.com/nvim-lua/diagnostic-nvim

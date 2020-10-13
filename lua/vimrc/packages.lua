@@ -48,4 +48,6 @@ packer.init({
 -- use {'dracula/vim', as = 'dracula'}
 ---------------------------------------------------------------------------
 packer.use {'wbthomason/packer.nvim', opt = true} -- Packer can manage itself.
-packer.use {'nvim-lua/telescope.nvim', opt = true} -- Minimal LUA "fuzzy finder":
+packer.use {'nvim-lua/telescope.nvim', opt = false} -- Minimal LUA "fuzzy finder":
+packer.use {'nvim-lua/plenary.nvim', opt = false} -- Lua utilities library.
+packer.use {'nvim-lua/popup.nvim', opt = false} -- Lua utilities library.

@@ -13,10 +13,10 @@ M.plugins.libmodal = require('vimrc/plugins/libmodal')
 
 -- require('vimrc.rocks')
 require('vimrc/ft/lua')
-require('vimrc/plugins/wordy')
-require('vimrc/plugins/dirvish')
-require('vimrc/plugins/gutentags')
-require('vimrc/plugins/rust')
+M.plugins.wordy = require('vimrc/plugins/wordy')
+M.plugins.dirvish = require('vimrc/plugins/dirvish')
+M.plugins.gutentags = require('vimrc/plugins/gutentags')
+M.plugins.rust = require('vimrc/plugins/rust')
 
 
 _G['vimrc'] = M  -- bind globally as "vimrc".

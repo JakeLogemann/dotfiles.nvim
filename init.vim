@@ -23,7 +23,7 @@ let g:vimrc_packpath = expand('<sfile>:p:h') . "/pack"
 let g:vimrc_default_packpath = expand('<sfile>:p:h') . "/pack/vimrc"
 
 for p in [g:vimrc_packpath, g:vimrc_default_packpath."/opt", g:vimrc_default_packpath."/start"]
-  !isdirectory(expand(p)) ?  call mkdir(expand(p), "p") : v:true
+  if !isdirectory(expand(p)) | call mkdir(expand(p), "p") | endif
 endfor
 
 execute "set packpath+=" . g:vimrc_packpath

@@ -5,7 +5,6 @@
   "RRethy/vim-illuminate": {},
   "akinsho/nvim-bufferline.lua": {},
   "Shougo/echodoc.vim": {},
-  "bfredl/nvim-luadev": {"on_cmd": "Luadev"},
   "bluz71/vim-nightfly-guicolors": {},
   "chrisbra/unicode.vim": {},
   "fatih/vim-go": { "on_ft": "go" },
@@ -27,11 +26,6 @@
   "mattn/vim-textobj-url": {},
   "metakirby5/codi.vim": {"on_cmd": ["Cody"]},
   "neovim/nvim-lsp": {},
-  "nvim-lua/completion-nvim": {},
-  "nvim-lua/diagnostic-nvim": {},
-  "nvim-lua/plenary.nvim": {},
-  "nvim-lua/popup.nvim": {},
-  "nvim-lua/telescope.nvim": {},
   "nvim-treesitter/nvim-treesitter": {},
   "reedes/vim-wordy": {},
   "kyazdani42/nvim-web-devicons": {},
@@ -50,6 +44,5 @@
   "tpope/vim-unimpaired": {},
   "tweekmonster/helpful.vim": { "on_cmd": ["HelpfulVersion"] },
   "tyru/caw.vim": {},
-  "wellle/targets.vim": {},
-  "wsdjeg/dein-ui.vim": {}
+  "wellle/targets.vim": {}
 }

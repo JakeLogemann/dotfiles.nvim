@@ -7,3 +7,5 @@
 !/vendor/repos/github.com/Shougo/dein.vim/
 
 
+plugin/packer_compiled.vim
+which_key.json

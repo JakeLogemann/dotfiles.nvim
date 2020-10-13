@@ -40,3 +40,9 @@
 [submodule "pack/packer/start/statusline.nvim"]
 	path = pack/packer/start/statusline.nvim
 	url = https://github.com/tjdevries/express_line.nvim
+[submodule "pack/packer/start/colorbuddy.nvim"]
+	path = pack/packer/start/colorbuddy.nvim
+	url = https://github.com/tjdevries/colorbuddy.nvim
+[submodule "pack/packer/start/luapad.nvim"]
+	path = pack/packer/start/luapad.nvim
+	url = https://github.com/rafcamlet/nvim-luapad

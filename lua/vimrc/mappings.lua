@@ -18,9 +18,9 @@ vimp.rbind('nx', opts, {'<leader>fr'}, "<cmd>lua require'vimrc/plugins/telescope
 vimp.rbind('nx', opts, {'<leader>fs'}, "<cmd>lua require'vimrc/plugins/telescope'.lsp_workspace_symbols()<cr>")
 vimp.rbind('nx', opts, {'<leader>fS'}, "<cmd>lua require'vimrc/plugins/telescope'.lsp_document_symbols()<cr>")
 vimp.rbind('nx', opts, {'<leader>fg'}, "<cmd>lua require'vimrc/plugins/telescope'.live_grep()<cr>")
-vimp.rbind('nx', opts, {'<leader>fc'}, "<cmd>lua require'vimrc/plugins/telescope'.command_history()<cr>")
+vimp.rbind('nx', opts, {'<leader>fx'}, "<cmd>lua require'vimrc/plugins/telescope'.command_history()<cr>")
 vimp.rbind('nx', opts, {'<leader>fb'}, "<cmd>lua require'vimrc/plugins/telescope'.buffers()<cr>")
-vimp.rbind('nx', opts, {'<leader>fV'}, "<cmd>lua require'vimrc/plugins/telescope'.open_neovim_config()<cr>")
+vimp.rbind('nx', opts, {'<leader>fv'}, "<cmd>lua require'vimrc/plugins/telescope'.open_neovim_config()<cr>")
 vimp.rbind('nx', opts, {'<leader>Tn'}, "<cmd>tabNext<cr>")
 vimp.rbind('nx', opts, {'<leader>Tp'}, "<cmd>tabprevious<cr>")
 vimp.rbind('nx', opts, {'<leader>Tb'}, "<cmd>lua require'vimrc/plugins/libmodal'.tab_mode()<cr>")
@@ -52,5 +52,14 @@ vimp.nnoremap('<leader>v', function()
 end)
 
 vim.cmd [[ inoremap <silent><expr> <C-Space> pumvisible() ? "\<C-n>" : completion#trigger_completion() ]]
+vim.cmd [[ cnoremap <C-A> <Home> ]] -- start of line.
+vim.cmd [[ cnoremap <C-B> <Left> ]] -- back 1 char.
+vim.cmd [[ cnoremap <C-D> <Del> ]] -- delete under cursor.
+vim.cmd [[ cnoremap <C-E> <End> ]] -- end of line.
+vim.cmd [[ cnoremap <C-F> <Right> ]] -- forward 1 char.
+vim.cmd [[ cnoremap <C-N> <Down> ]] -- next command in history.
+vim.cmd [[ cnoremap <C-P> <Up> ]] -- prev command in history.
+vim.cmd [[ cnoremap <Esc><C-B> <S-Left> ]] -- back one word.
+vim.cmd [[ cnoremap <Esc><C-F> <S-Right> ]] -- forward one word.
 
 -- vim: ft=lua

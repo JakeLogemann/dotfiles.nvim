@@ -14,8 +14,8 @@ while true; do clear; mask edit; sleep 1; done
 
 ```bash
 nvim -u ./init.vim -p \
+  lua/vimrc/{init,util,packages,globals,mappings}.lua \
   lua/vimrc/plugins/{telescope,libmodal}.lua \
-  lua/vimrc/{packages,globals,mappings}.lua \
   {README,maskfile}.md init.vim 
 ```
 

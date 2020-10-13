@@ -5,6 +5,7 @@ local builtin = require('el.builtin')
 local subscribe = require('el.subscribe')
 local lsp_statusline = require('el.plugins.lsp_status')
 
+
 require('el').setup({
     generator = function(win_id)
       return {
@@ -44,5 +45,23 @@ require('el').setup({
       }
     end
   })
+
+
+bufferline.setup({
+  options = {
+    view = "default", --"multiwindow" | "default"
+    numbers = "ordinal", -- | "none" | "ordinal" | "buffer_id"
+    number_style = "",
+    mappings = true,
+    close_icon = "x",
+    max_name_length = 18,
+    tab_size = 18,
+    show_buffer_close_icons = true,
+    separator_style = "thin", -- "thick" | "thin",
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+  }
+})
+
 
 return {}

@@ -14,6 +14,13 @@ function M.autodelete_bufnr_on_leave(bufnr)
   vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. bufnr .."'")
 end
 
+function M.random_string(length)
+  -- generate a random string of arbitrary length.
+  if not length or length <= 0 then return '' end
+  math.randomseed(os.clock()^5)
+  return RandomString(length - 1) .. charset[math.random(1, #charset)]
+end
+
 function M.check_back_space()
   local col = vim.fn.col('.') - 1
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')

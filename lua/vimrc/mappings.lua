@@ -1,5 +1,6 @@
 local util = require('vimrc.util')
 vimp.unmap_all() -- Remove all previously added maps.
+vimp.add_chord_cancellations('n', '<leader>') -- cancel chords when leader is pressed in normal mode.
 local opts = {"override", "nowait"}
 local opts_expr = {"expr", "override", "nowait"}
 

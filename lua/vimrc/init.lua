@@ -18,6 +18,6 @@ require('vimrc/plugins/dirvish')
 require('vimrc/plugins/gutentags')
 require('vimrc/plugins/rust')
 
-vimp.add_chord_cancellations('n', '<leader>')
-_G['vimrc'] = M
-return M
+
+_G['vimrc'] = M  -- bind globally as "vimrc".
+return M -- return the module (allows require()s)

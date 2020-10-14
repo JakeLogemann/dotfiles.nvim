@@ -27,3 +27,9 @@ nvim -u ./init.vim -p \
 git submodule update --init --recursive
 nvim --headless +'packload packer.nvim' +PackerCompile +PackerUpdate +qall
 ```
+
+## add-plugin (repo) (as)
+
+```bash
+git submodule add "${repo}" "./pack/packer/start/${as}"
+```

@@ -1,6 +1,6 @@
-local M = {}
+local util = {}
 
-M['unload_lua_namespace'] = function(prefix)
+util['unload_lua_namespace'] = function(prefix)
   local prefix_with_dot = prefix .. '.'
   for key, value in pairs(package.loaded) do
     if key == prefix or key:sub(1, #prefix_with_dot) == prefix_with_dot then
@@ -9,27 +9,27 @@ M['unload_lua_namespace'] = function(prefix)
   end
 end
 
-function M.autodelete_bufnr_on_leave(bufnr)
+function util.autodelete_bufnr_on_leave(bufnr)
   -- autocommand to automatically close/delete a buffer when its left.
   vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. bufnr .."'")
 end
 
-function M.random_string(length)
+function util.random_string(length)
   -- generate a random string of arbitrary length.
   if not length or length <= 0 then return '' end
   math.randomseed(os.clock()^5)
-  return RandomString(length - 1) .. charset[math.random(1, #charset)]
+  return util.random_string(length - 1) .. charset[math.random(1, #charset)]
 end
 
-function M.check_back_space()
+function util.check_back_space()
   local col = vim.fn.col('.') - 1
   return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
 -- Turn some special character value into a character code.
-function M.to_char(val) return eval('"\\'..val..'"') end
+function util.to_char(val) return eval('"\\'..val..'"') end
 
-function M.new_win()
+function util.new_win()
   vim.api.nvim_open_win(0, false, {
     relative='win',
     width=12,
@@ -38,7 +38,7 @@ function M.new_win()
   })
 end
 
-function M.create_win()
+function util.create_win()
   -- We save handle to window from which we open the navigation
   start_win = vim.api.nvim_get_current_win()
 
@@ -72,4 +72,21 @@ function M.create_win()
   set_mappings() -- At end we will set mappings for our navigation.
 end
 
-return M
+function util.load_env_file(dir_path)
+  local env_contents = {}
+  local env_file = dir_path .. '/.env'
+
+  if vim.fn.filereadable(env_file) ~= 1 then
+    print('.env file does not exist')
+    return
+  end
+
+  local contents = vim.fn.readfile(env_file)
+  for _,item in pairs(contents) do
+    local line_content = vim.fn.split(item,"=")
+    env_contents[line_content[1]] = line_content[2]
+  end
+  return env_contents
+end
+
+return util 

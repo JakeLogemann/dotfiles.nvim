@@ -52,3 +52,12 @@
 [submodule "pack/packer/start/daedalus"]
 	path = pack/packer/start/daedalus
 	url = https://github.com/hkupty/daedalus.nvim
+[submodule "pack/packer/start/terminal.nvim"]
+	path = pack/packer/start/terminal.nvim
+	url = https://github.com/norcalli/nvim-terminal.lua
+[submodule "pack/packer/start/surround.nvim"]
+	path = pack/packer/start/surround.nvim
+	url = https://github.com/blackCauldron7/surround.nvim
+[submodule "pack/packer/start/tree.nvim"]
+	path = pack/packer/start/tree.nvim
+	url = https://github.com/kyazdani42/nvim-tree.lua

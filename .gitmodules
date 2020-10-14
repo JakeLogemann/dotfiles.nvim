@@ -49,3 +49,6 @@
 [submodule "pack/packer/start/vlog.nvim"]
 	path = pack/packer/start/vlog.nvim
 	url = https://github.com/tjdevries/vlog.nvim
+[submodule "pack/packer/start/daedalus"]
+	path = pack/packer/start/daedalus
+	url = https://github.com/hkupty/daedalus.nvim

@@ -46,3 +46,6 @@
 [submodule "pack/packer/start/luapad.nvim"]
 	path = pack/packer/start/luapad.nvim
 	url = https://github.com/rafcamlet/nvim-luapad
+[submodule "pack/packer/start/vlog.nvim"]
+	path = pack/packer/start/vlog.nvim
+	url = https://github.com/tjdevries/vlog.nvim

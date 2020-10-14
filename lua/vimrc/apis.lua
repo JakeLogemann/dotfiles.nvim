@@ -3,9 +3,7 @@ local daedalus = require("daedalus")
 local specs = require("daedalus.specs")
 local helpers = require("daedalus.helpers")
 
-local function pass_token(secret_name)
-  return "Bearer " .. vim.fn.system("pass show " .. secret_name)
-end
+local function pass_token(secret_name) return vim.fn.system("pass show " .. secret_name) end
 
 local function default_handler(data)
   -- the handler function receives already parsed objects
@@ -13,11 +11,11 @@ local function default_handler(data)
 end
 
 return {
-  github_client = daedalus.make_client(specs.define{
+  github = daedalus.make_client(specs.define{
       ['*'] = { -- default attributes of following spec entries.
         url = "https://api.github.com",
         handler = default_handler, -- you can specify default values that will be shared for all api specs
-        auth = pass_token("JakeLogemann@github.com")
+        auth = "Bearer " .. pass_token("JakeLogemann@github.com"),
       },
       issues = {
         path = "/issues",
@@ -32,11 +30,11 @@ return {
 }
 
 -- if you don't supply any arguments, the default values will be used
--- github_client.issues{}
+-- github.issues{}
 --
 -- -- if you need to override any default behavior, you can 
 -- -- do so through arguments:
--- github_client.issues{
+-- github.issues{
 --   before = function(cmd)
 --     -- if you need to extend the curl command or debug it before calling,
 --     -- override this function
@@ -52,7 +50,7 @@ return {
 --   end
 -- }
 -- 
--- github_client.create_issue{
+-- github.create_issue{
 --   urlargs = {
 --     owner = "hkupty",
 --     repo = "daedalus.nvim"

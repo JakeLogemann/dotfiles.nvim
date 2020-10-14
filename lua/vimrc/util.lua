@@ -1,5 +1,10 @@
 local util = {}
 
+function util.secret_from_pass(secret_name) 
+  -- return the output of a given secret from `pass`.
+  return vim.fn.system("pass show " .. secret_name) 
+end
+
 util['unload_lua_namespace'] = function(prefix)
   local prefix_with_dot = prefix .. '.'
   for key, value in pairs(package.loaded) do

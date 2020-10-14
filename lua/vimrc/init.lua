@@ -27,16 +27,16 @@ require('vimrc/statusline')
 require('vimrc/lsp')
 
 M.diags = require('vimrc/diags')
-M.plugins.telescope = require('vimrc/plugins/telescope')
-M.plugins.libmodal = require('vimrc/plugins/libmodal')
+M.util = require('vimrc/util')
+M.finders = require('vimrc/finders')
+M.modals = require('vimrc/modals')
+M.tags = require('vimrc/tags')
+M.apis = require('vimrc/apis')
 
 -- require('vimrc.rocks')
 require('vimrc/ft/lua')
 M.plugins.wordy = require('vimrc/plugins/wordy')
 M.plugins.colorbuddy = require('vimrc/plugins/colorbuddy')
-M.plugins.dirvish = require('vimrc/plugins/dirvish')
-M.plugins.daedalus = require('vimrc/plugins/daedalus')
-M.plugins.gutentags = require('vimrc/plugins/gutentags')
 M.plugins.rust = require('vimrc/plugins/rust')
 
 

@@ -1,7 +1,19 @@
-local diag = { data = {}, action = {} }
+local pl = require'pl.import_into'()
+local log = require'vimrc.vendored.log'
 local buf, win, start_win
-local mappings = {
+
+local lstriplines = function(s) 
+  local ls = pl.stringx.splitlines(s)
+  ls = pl.tablex.map(function(li) return pl.stringx.lstrip(li) end, ls)
+  return table.concat(ls, "\n") 
+end
+
+local diag = {}
+
+diag.mappings = {
   q = 'close()',
+  Q = 'close()',
+  ['<c-c>'] = 'close()',
   ['<cr>'] = 'open_and_close()',
   v = 'split("v")',
   s = 'split("")',
@@ -9,53 +21,82 @@ local mappings = {
   t = 'open_in_tab()'
 }
 
-function diag.action.open()
-  local path = vim.api.nvim_get_current_line()
+-- raw template, after pruning off any leading whitespace.
+diag.raw_template = lstriplines([[
+    Vimrc Diagnostics
+    =================
 
-  if vim.api.nvim_win_is_valid(start_win) then
-    vim.api.nvim_set_current_win(start_win)
-    vim.api.nvim_command('edit ' .. path)
-  else
-    vim.api.nvim_command('leftabove vsplit ' .. path)
-    start_win = vim.api.nvim_get_current_win()
-  end
+    - **Node.js Binary**: `$(vim.g.node_host_prog)`
+    - **Ruby Binary**: `$(vim.g.ruby_host_prog)`
+    - **Python3 Binary**: `$(vim.g.python3_host_prog)`
+
+  ]])
+    -- Color Map
+    -- ---------
+    -- ```lua
+    -- $(pl.pretty.write(color_map))
+    -- ```
+
+diag.render_template = function()
+  local res = pl.template.substitute(diag.raw_template, {
+    vim = vim, pl = pl,
+    -- color_map = vim.api.nvim_get_color_map(),
+  })
+
+  diag.template = res
+  return res
 end
 
-function diag.action.close()
-  if win and vim.api.nvim_win_is_valid(win) then
-    vim.api.nvim_win_close(win, true)
-  end
-end
+diag.action = {
 
-function diag.action.open_and_close()
-  diag.action.open()
-  diag.action.close()
-end
+  open = function()
+    local path = vim.api.nvim_get_current_line()
 
-function diag.action.preview()
-  diag.action.open()
-  vim.api.nvim_set_current_win(win)
-end
+    if vim.api.nvim_win_is_valid(start_win) then
+      vim.api.nvim_set_current_win(start_win)
+      vim.api.nvim_command('edit ' .. path)
+    else
+      vim.api.nvim_command('leftabove vsplit ' .. path)
+      start_win = vim.api.nvim_get_current_win()
+    end
+  end,
 
-function diag.action.split(axis)
-  local path = vim.api.nvim_get_current_line()
+  close = function()
+    if win and vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end,
 
-  if vim.api.nvim_win_is_valid(start_win) then
-    vim.api.nvim_set_current_win(start_win)
-    vim.api.nvim_command(axis ..'split ' .. path)
-  else
-    vim.api.nvim_command('leftabove ' .. axis..'split ' .. path)
-  end
+  open_and_close = function()
+    diag.action.open()
+    diag.action.close()
+  end,
 
-  diag.action.close()
-end
+  preview = function ()
+    diag.action.open()
+    vim.api.nvim_set_current_win(win)
+  end,
 
-function diag.action.open_in_tab()
-  local path = vim.api.nvim_get_current_line()
+  split = function(axis)
+    local path = vim.api.nvim_get_current_line()
 
-  vim.api.nvim_command('tabnew ' .. path)
-  diag.action.close()
-end
+    if vim.api.nvim_win_is_valid(start_win) then
+      vim.api.nvim_set_current_win(start_win)
+      vim.api.nvim_command(axis ..'split ' .. path)
+    else
+      vim.api.nvim_command('leftabove ' .. axis..'split ' .. path)
+    end
+
+    diag.action.close()
+  end,
+
+  open_in_tab =function ()
+    local path = vim.api.nvim_get_current_line()
+
+    vim.api.nvim_command('tabnew ' .. path)
+    diag.action.close()
+  end,
+}
 
 function diag.is_open()
   return win and vim.api.nvim_win_is_valid(win)
@@ -91,7 +132,7 @@ function diag.create_win()
     vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. buf .."'")
 
     --define mappings from local var at top of this file.
-    for keymap,action_fn in pairs(mappings) do
+    for keymap,action_fn in pairs(diag.mappings) do
       vim.api.nvim_buf_set_keymap(buf, 'n', keymap, '<cmd>lua vimrc.diags.action.'..action_fn..'<cr>', {
           nowait = true, 
           noremap = true, 
@@ -101,21 +142,12 @@ function diag.create_win()
   end
 end
 
-function diag.refresh_data()
-  diag.data = {
-    "Vimrc Diagnostics", 
-    "=================", 
-    "",
-    string.format("- **Node.js Binary**: `%s`", vim.g.node_host_prog),
-    string.format("- **Ruby Binary**: `%s`", vim.g.ruby_host_prog),
-    string.format("- **Python3 Binary**: `%s`", vim.g.python3_host_prog),
-  }
-end
-
 function diag.redraw()
-  diag.refresh_data()
+  local contents, err = diag.render_template()
+  if not err then return pl.utils.raise(err) end
+  contents = pl.stringx.splitlines(contents)
   vim.api.nvim_buf_set_option(buf, 'modifiable', true)
-  vim.api.nvim_buf_set_lines(buf, 0, 0, true, diag.data)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, true, contents)
   vim.api.nvim_buf_set_option(buf, 'modifiable', false)
 end
 
@@ -129,4 +161,4 @@ function diag.run()
   diag.redraw()
 end
 
-return setmetatable(diag, { __call = function(cls) cls.run() end })
+_G.vimrc.diags = setmetatable(diag, { __call = function(cls) cls.run() end })

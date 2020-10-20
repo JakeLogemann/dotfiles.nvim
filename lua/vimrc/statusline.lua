@@ -1,3 +1,5 @@
+local el = require('el')
+local bufferline = require('bufferline')
 local helper = require("el.helper")
 local sections = require("el.sections")
 local extensions = require('el.extensions')
@@ -5,8 +7,7 @@ local builtin = require('el.builtin')
 local subscribe = require('el.subscribe')
 local lsp_statusline = require('el.plugins.lsp_status')
 
-
-require('el').setup({
+el.setup({
     generator = function(win_id)
       return {
         extensions.gen_mode { format_string = ' [%s]' },
@@ -54,14 +55,11 @@ bufferline.setup({
     number_style = "",
     mappings = true,
     close_icon = "x",
-    max_name_length = 18,
-    tab_size = 18,
-    show_buffer_close_icons = true,
-    separator_style = "thin", -- "thick" | "thin",
-    enforce_regular_tabs = false,
+    max_name_length = 20,
+    tab_size = 20,
+    show_buffer_close_icons = false,
+    separator_style = "thick", -- "thick" | "thin",
+    enforce_regular_tabs = true,
     always_show_bufferline = true,
   }
 })
-
-
-return {}

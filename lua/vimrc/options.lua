@@ -19,7 +19,6 @@ vim.o.swapfile                  = true
 vim.o.backup                    = true
 vim.o.undodir                   = local_dir .. "/undo/"
 vim.g.vim_config_file           = config_dir .. '/init.vim'
-vim.g.colors_name               = 'deus'
 vim.g.deus_termcolors           = vim.o.t_Co
 vim.g.mapleader                 = " "
 vim.g.maplocalleader            = "\\"
@@ -32,7 +31,6 @@ vim.o.titlestring               = "%{expand('%:p:~:.')}%(%m%r%w%) %<\\[%{fnamemo
 vim.o.autoindent                = true    -- Indent according to previous line.
 vim.o.autoread                  = true           -- Load changes automatically,
 vim.o.autowrite                 = true          -- write on lose focus.
-vim.o.background                = 'dark'
 vim.o.backspace                 = 'indent,eol,start'  -- Make backspace work as you would expect.
 vim.o.backup                    = true
 vim.o.backupext                 = '.vim-backup'
@@ -132,7 +130,6 @@ vim.o.wrapscan                  = true            -- Searches wrap around end-of
 
 -- Long list items:
 -----------------------------------------------------------------------------
-vim.cmd('colorscheme '.. vim.g.colors_name)
 vim.o.listchars = table.concat(vim.tbl_map((function(k,v) return string.format('%s:%s', k, v) end), {
       tab = "→",
       trail="·",

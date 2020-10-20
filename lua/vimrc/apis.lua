@@ -1,4 +1,3 @@
-local M = {}
 local daedalus = require("daedalus")
 local specs = require("daedalus.specs")
 local helpers = require("daedalus.helpers")
@@ -10,7 +9,7 @@ local function default_handler(data)
   print(vim.inspect(data))
 end
 
-return {
+_G.vimrc.apis = {
   github = daedalus.make_client(specs.define{
       ['*'] = { -- default attributes of following spec entries.
         url = "https://api.github.com",

@@ -1,6 +1,5 @@
-package.loaded['vimrc.packages'] = nil -- always reload this file on require()
 vim.cmd [[packadd packer.nvim]] -- lazily load packer.
-_G['packer'] = require('packer')
+local packer = require'packer'
 local use = packer.use
 
 -- Initialize Packer.

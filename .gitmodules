@@ -61,3 +61,9 @@
 [submodule "pack/packer/start/tree.nvim"]
 	path = pack/packer/start/tree.nvim
 	url = https://github.com/kyazdani42/nvim-tree.lua
+[submodule "pack/packer/start/penlight.lua"]
+	path = pack/packer/start/penlight.lua
+	url = https://github.com/lunarmodules/Penlight
+[submodule "pack/packer/start/colorizer.nvim"]
+	path = pack/packer/start/colorizer.nvim
+	url = https://github.com/norcalli/nvim-colorizer.lua

@@ -1,5 +1,6 @@
-package.loaded['vimrc.commands'] = nil -- always reload this file on require()
-require('vimp') -- vimpeccable, not vim.api
+require'vimp' -- vimpeccable, not vim.api
+_G.vimrc.commands = vimrc.util.DeepTable()
+
 local util = require('vimrc.util')
 
 vimp.map_command('SvOpenFileOnGithub', function()
@@ -30,5 +31,3 @@ end)
 
 vim.cmd [[ command! -nargs=1 -complete=file TabView tab sview +setlocal\ nomodifiable <args> ]]
 vim.cmd [[ command! -nargs=1 -complete=file DE tabedit <args> ]]
-vim.cmd [[ command! -nargs=1 -complete=help Vhelp vertical help <args> ]]
-vim.cmd [[ command! -nargs=1 -complete=help Thelp tab help <args> ]]

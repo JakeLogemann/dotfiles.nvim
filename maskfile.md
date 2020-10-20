@@ -13,7 +13,7 @@ while true; do clear; mask edit; sleep 1; done
 > Opens the editor.
 
 ```bash
-nvim -u ./init.vim -p lua/vimrc/ init.vim  {README,maskfile}.md
+nvim -u ./init.vim -p lua/vimrc/{,init.lua} init.vim  {README,maskfile}.md
 ```
 
 ## setup

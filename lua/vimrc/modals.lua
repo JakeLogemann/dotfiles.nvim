@@ -1,4 +1,4 @@
-local libmodal = (libmodal or require('libmodal')) -- exported in globals.lua
+local libmodal = (libmodal or require('libmodal')) -- exported in init.lua
 local M = {} -- define module to be returned.
 
 M.buffer_mode = function()
@@ -25,4 +25,5 @@ M.tab_mode = function()
         }) 
 end
 
+_G.vimrc.modals = M
 return M

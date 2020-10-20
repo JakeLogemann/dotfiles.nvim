@@ -93,7 +93,6 @@ augroup dotfiles_global
   au InsertEnter,WinLeave          * setlocal nocursorline
   " Use completion-nvim in every buffer
   au BufEnter *   lua require('completion').on_attach()
-  au FileType lua lua require("vimrc/ft/lua").setup()
 augroup END
 
 " General (Neo)Vim Settings {{{1
@@ -331,7 +330,7 @@ xnoremap \        <Nop>
 set omnifunc=v:lua.vim.lsp.omnifunc
 
 " Final Setup & Cleanup {{{1
-lua require('vimrc')
+lua require 'vimrc'
 " call dotfiles#setup()
 " ExecLuaConfig
 scriptencoding utf-8

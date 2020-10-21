@@ -1,15 +1,40 @@
 _G.vimrc.util = (_G.vimrc.util or {})
-require('vimrc.util.win')
-require('vimrc.util.buf')
 _G.vimrc['load'] = require('vimrc.util.load')
 
-
-_G.vimrc.util.lstriplines = function(s) 
+_G.vimrc.util.lstriplines = function(s)
   local ls = pl.stringx.splitlines(s)
   ls = pl.tablex.map(function(li) return pl.stringx.lstrip(li) end, ls)
-  return table.concat(ls, "\n") 
+  return table.concat(ls, "\n")
 end
 
+-- toggles a named option, outputing its new value for a better UX.
+--
+-- @option_name name of the vim option to be toggled on or off.
+_G.vimrc.util.toggle_option = function(option_name)
+  local current = vim.api.nvim_get_option(option_name) or false
+  local new_val = not current
+  vim.api.nvim_set_option(option_name, new_val)
+  print("SET " .. option_name .. " = " .. (new_val and "ON" or "OFF"))
+end
+
+-- render a penlight template using a standardized context.
+--
+-- @template text to render with template context
+_G.vimrc.util.render_template = function(template)
+  return pl.stringx.splitlines(pl.template.substitute(template, {
+    vimrc = vimrc,
+    vim = vim,
+    plenary = require'plenary',
+    pl = require'pl',
+    icon = require'nvim-web-devicons',
+  }))
+end
+
+-- bounds given number value between min and max.
+--
+-- @value target value to modify.
+-- @min minimum acceptable value.
+-- @max maximum acceptable value.
 _G.vimrc.util.bounded = function(value, min, max)
   min = min or 0
   max = max or math.huge
@@ -20,38 +45,19 @@ _G.vimrc.util.bounded = function(value, min, max)
   return value
 end
 
+-- applys defaults to a given table.
+--
+-- @original table to inject defaults into.
+-- @defaults default values to inject into target table
 _G.vimrc.util.apply_defaults = function(original, defaults)
-  if original == nil then
-    original = {}
-  end
-
+  if original == nil then original = {} end
   original = vim.deepcopy(original)
 
   for k, v in pairs(defaults) do
-    if original[k] == nil then
-      original[k] = v
-    end
+    if original[k] == nil then original[k] = v end
   end
 
   return original
-end
-
-function _G.vimrc.util.get_node_at_cursor(cursor)
-    if not (vim.g.loaded_nvim_treesitter and vim.g.loaded_nvim_treesitter > 0) then return end
-    local parsers = require("nvim-treesitter/parsers")
-    if not parsers.has_parser() then return end
-    local root = parsers.get_parser():parse():root()
-    return root:named_descendant_for_range(cursor[1]-1, cursor[2]-1, cursor[1]-1, cursor[2]-1)
-end
-
-function _G.vimrc.util.syntax_at_point(winnr)
-    local cursor = vim.api.nvim_win_get_cursor(winnr or 0)
-
-    -- try to get treesitter node type firstly
-    local current_node = util.get_node_at_cursor(cursor)
-    if current_node then return current_node:type() end
-    -- fallback
-    return vim.fn.synIDattr(vim.fn.synID(cursor[1], cursor[2], 1), "name")
 end
 
 function _G.vimrc.util.Augroup(group, fn)
@@ -59,11 +65,6 @@ function _G.vimrc.util.Augroup(group, fn)
   vim.api.nvim_command("autocmd!")
   fn()
   vim.api.nvim_command("augroup end")
-end
-
-function _G.vimrc.util.autodelete_bufnr_on_leave(bufnr)
-  -- autocommand to automatically close/delete a buffer when its left.
-  vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. bufnr .."'")
 end
 
 function _G.vimrc.util.random_string(length)
@@ -102,13 +103,11 @@ function _G.vimrc.util.create_win(name)
   -- because it is already unique and it's just a number.
   vim.api.nvim_buf_set_name(bufnr, name .. '.' .. bufnr)
 
-  buf.make_ephemeral(bufnr)
+  require'vimrc.util.buf'.make_ephemeral(bufnr)
 
   -- For better UX we will turn off line wrap and turn on current line highlight.
   vim.api.nvim_win_set_option(winnr, 'wrap', false)
   vim.api.nvim_win_set_option(winnr, 'cursorline', true)
-
-  set_mappings() -- At end we will set mappings for our navigation.
 end
 
 
@@ -146,4 +145,6 @@ function _G.vimrc.util.DeepTable()
   return setmetatable({}, meta)
 end
 
+require('vimrc.util.win')
+require('vimrc.util.buf')
 return _G.vimrc.util 

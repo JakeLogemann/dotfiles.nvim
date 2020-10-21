@@ -1,6 +1,6 @@
-local LOAD = {}
+_G.vimrc.util.load = _G.vimrc.util.load or {}
 
-function LOAD.env_file(env_file)
+function _G.vimrc.util.load.env_file(env_file)
   local env_contents = {}
 
   if vim.fn.filereadable(env_file) ~= 1 then
@@ -17,7 +17,7 @@ function LOAD.env_file(env_file)
   return env_contents
 end
 
-function LOAD.unload_lua_namespace(prefix)
+function _G.vimrc.util.load.unload_lua_namespace(prefix)
   local prefix_with_dot = prefix .. '.'
   for key, value in pairs(package.loaded) do
     if key == prefix or key:sub(1, #prefix_with_dot) == prefix_with_dot then
@@ -26,17 +26,17 @@ function LOAD.unload_lua_namespace(prefix)
   end
 end
 
-function LOAD.secret_from_pass(secret_name) 
+function _G.vimrc.util.load.secret_from_pass(secret_name) 
   -- return the output of a given secret from `pass`.
   return vim.fn.system("pass show " .. secret_name) 
 end
 
-function LOAD.random_string(length)
+function _G.vimrc.util.load.random_string(length)
   -- generate a random string of arbitrary length.
   if not length or length <= 0 then return '' end
   math.randomseed(os.clock()^5)
   return util.random_string(length - 1) .. charset[math.random(1, #charset)]
 end
 
-return LOAD
+return _G.vimrc.util.load
 

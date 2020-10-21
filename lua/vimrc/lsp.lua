@@ -6,6 +6,9 @@ local default_lsp_settings = {
   end
 }
 
+vim.g.diagnostic_enable_virtual_text = 1
+vim.g.space_before_virtual_text = 1
+
 lsp.rust_analyzer.setup(default_lsp_settings)
 -- lsp.rls.setup({})
 lsp.bashls.setup(default_lsp_settings)
@@ -16,8 +19,6 @@ lsp.cssls.setup(default_lsp_settings)
 lsp.jsonls.setup(default_lsp_settings)
 lsp.clangd.setup(default_lsp_settings)
 lsp.solargraph.setup(default_lsp_settings)
-lsp.sumneko_lua.setup(vim.tbl_extend("error", default_lsp_settings, { 
-    cmd = {"/usr/local/src/lua_lsp/bin/Linux/lua-language-server", "-E", "/usr/local/src/lua_lsp/main.lua"}
-  }))
+lsp.sumneko_lua.setup(default_lsp_settings)
 lsp.bashls.setup(default_lsp_settings)
 

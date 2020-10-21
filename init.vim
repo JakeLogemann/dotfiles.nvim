@@ -79,6 +79,10 @@ function s:AutoMkdirIfNotExists() "{{{
 endfunction
 autocmd BufWritePre * call s:AutoMkdirIfNotExists() "}}}
 
+map <F10> :echo "Highlight Groups at Cursor:  " . synIDattr(synID(line("."),col("."),1),"name") . '; '
+\ . synIDattr(synID(line("."),col("."),0),"name") . "; "
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . "; "<CR>
+
 lua require 'vimrc'
 
 " Final Setup & Cleanup {{{1

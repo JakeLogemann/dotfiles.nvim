@@ -12,7 +12,9 @@ _G.pl.stringx.import() -- make all strings awesome.
 _G.plenary = require'plenary'
 _G.pp = require'vimrc/vendored/serpent'
 _G.tree = require'tree'
-_G.vimrc = (_G.vimrc or {})
+_G.vimrc = (_G.vimrc or {  })
+
+_G.vimrc.log = require('vlog').new { plugin = 'vimrc' }
 
 -- Global Library Setup Functions
 require'terminal'.setup{}

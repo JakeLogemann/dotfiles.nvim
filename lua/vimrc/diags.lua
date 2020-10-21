@@ -1,49 +1,56 @@
-local util = require'vimrc.util'
-
-  -- We save handle to window from which we open the navigation
-local start_win = vim.api.nvim_get_current_win()
-vim.api.nvim_command('botright vnew') -- We open a new vertical window at the far right
-local winnr = vim.api.nvim_get_current_win() -- We save our navigation window handle...
-local bufnr = vim.api.nvim_get_current_buf() -- ...and it's buffer handle.
-
-local res = pl.stringx.splitlines(pl.template.substitute([[
-
+vimrc.util.win.ephemeral_markdown("Diagnostics", [[
 Vimrc Diagnostics
 =================
-- **Current User**: `$(vim.env.USER)`
+- **USER**: _$(vim.env.USER)_
+- **TERM**: _$(vim.env.TERM)_
+- **EDITOR**: _$(vim.env.EDITOR)_
+- **VISUAL**: _$(vim.env.VISUAL)_
 
-- **Host Provider Paths**:
-  - **Node.js**: `$(vim.g.node_host_prog)`
-  - **Ruby**: `$(vim.g.ruby_host_prog)`
-  - **Python 3**: `$(vim.g.python3_host_prog)`
+Host Provider Paths
+-------------------
+- **Node.js**: _$(vim.g.node_host_prog)_
+- **Ruby**: _$(vim.g.ruby_host_prog)_
+- **Python 3**: _$(vim.g.python3_host_prog)_
 
-- **Directories**:
-  - **Config Dir**: `$(vim.g.vimrc_config_dir)`
-  - **Working Dir**: `$(vim.env.PWD)`
+Directories
+-----------
+- **Config Dir**: _$(vim.g.vimrc_config_dir)_
+- **Working Dir**: _$(vim.env.PWD)_
 
-]], {
-  vimrc = vimrc,
-  vim = vim, 
-  pl = pl,
-}))
+Terminal Colors
+---------------
+0. $(vim.g.terminal_color_0)
+1. $(vim.g.terminal_color_1)
+2. $(vim.g.terminal_color_2)
+3. $(vim.g.terminal_color_3)
+4. $(vim.g.terminal_color_4) 
+5. $(vim.g.terminal_color_5) 
+6. $(vim.g.terminal_color_6) 
+7. $(vim.g.terminal_color_7) 
+8. $(vim.g.terminal_color_8) 
+9. $(vim.g.terminal_color_9) 
+10. $(vim.g.terminal_color_10)
+11. $(vim.g.terminal_color_11)
+12. $(vim.g.terminal_color_12)
+13. $(vim.g.terminal_color_13)
+14. $(vim.g.terminal_color_14)
+15. $(vim.g.terminal_color_15)
 
-vim.api.nvim_buf_set_name(bufnr, "Diagnostics"..'.'..bufnr)
-vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, res)
-vim.api.nvim_buf_set_option(bufnr, 'filetype', 'markdown')
-vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
--- Now we set some options for our buffer.
--- nofile prevent mark buffer as modified so we never get warnings about not saved changes.
--- Also some plugins treat nofile buffers different.  For example coc.nvim don't triggers
--- aoutcompletation for these.
-vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
-vim.api.nvim_buf_set_option(bufnr, 'buflisted', false)
-vim.api.nvim_buf_set_option(bufnr, 'modified', false)
--- We do not need swapfile, backup, etc.
-vim.api.nvim_buf_set_option(bufnr, 'swapfile', false)
--- And we would rather prefer that buffer will be destroyed when hide.
-vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
--- For better UX we will turn off line wrap and turn on current line highlight.
-vim.api.nvim_win_set_option(winnr, 'wrap', false)
-vim.api.nvim_win_set_option(winnr, 'cursorline', true)
-vim.api.nvim_win_set_option(winnr, 'number', true)
-vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. bufnr .."'")
+Buffer Info
+-----------
+```lua
+$(vim.inspect(vim.fn.getbufinfo(0)))
+```
+
+Lua Vimrc
+-----------
+```lua
+$(vim.inspect(vimrc))
+```
+
+Environment
+-----------
+```sh
+$(vim.fn.system("env | sort"))
+```
+]])

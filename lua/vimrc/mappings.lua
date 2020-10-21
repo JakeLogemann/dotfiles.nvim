@@ -26,7 +26,7 @@ local mapping_groups = {
     prefix = '<leader>f',
     command = '<cmd>lua vimrc.find.%s()<cr>',
     mappings = {
-        f = 'find_file',
+        f = 'file',
         h = 'help_tag',
         r = 'lsp_reference',
         s = 'lsp_workspace_symbol',
@@ -72,14 +72,13 @@ local mapping_groups = {
   },
   toggle = {
     prefix = '<leader>z',
-    command = "<cmd>lua vimrc.util.buf.toggle_option('%s')<cr>",
+    command = "<cmd>lua vimrc.util.%s<cr>",
     mappings = {
-        n = 'number',
-        w = 'wrap',
-        s = 'spell',
-        l = 'list',
-        m = 'mouse',
-        r = 'readonly',
+        n = 'win.toggle_option("number")',
+        w = 'win.toggle_option("wrap")',
+        s = 'win.toggle_option("spell")',
+        l = 'win.toggle_option("list")',
+        r = 'buf.toggle_option("readonly")',
       },
   },
   reload = {

@@ -21,13 +21,13 @@ require'nvim-web-devicons'.setup{}
 
 -- Dumps debug information about a given variable list of var(s).
 -- @param params arbitrary params to output
-function _G.dbg(...) 
-  print(unpack(vim.tbl_map(pp.dump, {...}))) 
-end
+_G.dbg = function(...) print(unpack(vim.tbl_map(pp.dump, {...}))) end
 
 -- Require Core Components First
-require'vimrc/util' -- keep first
-require'vimrc/options'
+require'vimrc/util'     -- keep first.
+require'vimrc/options'  -- keep second.
+require'vimrc/ft'       -- keep third.
+require'vimrc/colors'
 
 -- Require Other Internal Components
 require'vimrc/mappings'
@@ -35,18 +35,11 @@ require'vimrc/packages'
 require'vimrc/commands'
 require'vimrc/statusline'
 require'vimrc/lsp'
-require'vimrc/plugins/tree'
-require'vimrc/colors'
-require'vimrc/diags'
-require'vimrc/finders'
+require'vimrc/find' -- "fuzzy finder" components
 require'vimrc/modals'
-require'vimrc/tags'
 require'vimrc/apis'
 require'vimrc/autocommands'
+require'vimrc/plugins'
 -- require('vimrc.rocks')
-require'vimrc/ft/lua'
-require'vimrc/plugins/wordy'
-require'vimrc/plugins/rust'
 
-
-return vimrc -- return the module (allows require()s)
+return vimrc -- still return the module (allows require()s)

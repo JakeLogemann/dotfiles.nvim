@@ -4,7 +4,7 @@ local M = {} -- define module to be returned.
 M.buffer_mode = function()
     libmodal.mode.enter('BUFFER', {
             ['n']    = 'bNext',
-            ['f']    = "<cmd>lua vimrc.plugins.telescope.buffers()<cr>",
+            ['f']    = "<cmd>lua vimrc.finders.buffer()<cr>",
             ['x']    = 'bclose',
             ['X']    = 'bdelete',
             ['p']    = 'bprevious',

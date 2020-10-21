@@ -6,16 +6,6 @@ local default_lsp_settings = {
   end
 }
 
-vim.g.completion_trigger_keyword_length = 2
-vim.g.completion_enable_snippet = 'neosnippet'
-vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
-vim.g.vista_sidebar_position = 'left'
-vim.g.vista_sidebar_width = 30
-vim.g.vista_sidebar_keepalt = 1
-vim.g.vista_stay_on_open = 1 -- 1=switch-to, 0=stay. very confusing.
-vim.g.vista_close_on_jump = 1 -- 1=enabled
-
-
 lsp.rust_analyzer.setup(default_lsp_settings)
 -- lsp.rls.setup({})
 lsp.bashls.setup(default_lsp_settings)

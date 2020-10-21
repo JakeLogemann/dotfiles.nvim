@@ -67,3 +67,111 @@
 [submodule "pack/packer/start/colorizer.nvim"]
 	path = pack/packer/start/colorizer.nvim
 	url = https://github.com/norcalli/nvim-colorizer.lua
+[submodule "pack/packer/start/nvim-web-devicons"]
+	path = pack/packer/start/nvim-web-devicons
+	url = https://github.com/kyazdani42/nvim-web-devicons
+[submodule "pack/packer/start/colors.nightfly"]
+	path = pack/packer/start/colors.nightfly
+	url = https://github.com/bluz71/vim-nightfly-guicolors
+[submodule "pack/packer/opt/sideways.vim"]
+	path = pack/packer/opt/sideways.vim
+	url = https://github.com/AndrewRadev/sideways.vim
+[submodule "pack/packer/opt/splitjoin.vim"]
+	path = pack/packer/opt/splitjoin.vim
+	url = https://github.com/AndrewRadev/splitjoin.vim
+[submodule "pack/packer/opt/illuminate.vim"]
+	path = pack/packer/opt/illuminate.vim
+	url = https://github.com/RRethy/vim-illuminate
+[submodule "pack/packer/opt/echodoc.vim"]
+	path = pack/packer/opt/echodoc.vim
+	url = https://github.com/Shougo/echodoc.vim
+[submodule "pack/packer/opt/unicode.vim"]
+	path = pack/packer/opt/unicode.vim
+	url = https://github.com/chrisbra/unicode.vim
+[submodule "pack/packer/opt/go.vim"]
+	path = pack/packer/opt/go.vim
+	url = https://github.com/fatih/vim-go
+[submodule "pack/packer/opt/colors.tender"]
+	path = pack/packer/opt/colors.tender
+	url = https://github.com/jacoborus/tender.vim
+[submodule "pack/packer/opt/gnupg.vim"]
+	path = pack/packer/opt/gnupg.vim
+	url = https://github.com/jamessan/vim-gnupg
+[submodule "pack/packer/opt/goyo.vim"]
+	path = pack/packer/opt/goyo.vim
+	url = https://github.com/junegunn/goyo.vim
+[submodule "pack/packer/opt/limelight.vim"]
+	path = pack/packer/opt/limelight.vim
+	url = https://github.com/junegunn/limelight.vim
+[submodule "pack/packer/opt/easyalign.vim"]
+	path = pack/packer/opt/easyalign.vim
+	url = https://github.com/junegunn/vim-easy-align
+[submodule "pack/packer/opt/sneak.vim"]
+	path = pack/packer/opt/sneak.vim
+	url = https://github.com/justinmk/vim-sneak
+[submodule "pack/packer/opt/vim-textobj-function.vim"]
+	path = pack/packer/opt/vim-textobj-function.vim
+	url = https://github.com/kana/vim-textobj-function
+[submodule "pack/packer/opt/vim-textobj-user.vim"]
+	path = pack/packer/opt/vim-textobj-user.vim
+	url = https://github.com/kana/vim-textobj-user
+[submodule "pack/packer/start/gina.vim"]
+	path = pack/packer/start/gina.vim
+	url = https://github.com/lambdalisue/gina.vim
+[submodule "pack/packer/start/suda.vim"]
+	path = pack/packer/start/suda.vim
+	url = https://github.com/lambdalisue/suda.vim
+[submodule "pack/packer/start/whichkey.vim"]
+	path = pack/packer/start/whichkey.vim
+	url = https://github.com/liuchengxu/vim-which-key
+[submodule "pack/packer/start/vista.vim"]
+	path = pack/packer/start/vista.vim
+	url = https://github.com/liuchengxu/vista.vim
+[submodule "pack/packer/start/vim-textobj-url.vim"]
+	path = pack/packer/start/vim-textobj-url.vim
+	url = https://github.com/mattn/vim-textobj-url
+[submodule "pack/packer/start/treesitter.nvim"]
+	path = pack/packer/start/treesitter.nvim
+	url = https://github.com/nvim-treesitter/nvim-treesitter
+[submodule "pack/packer/start/wordy.vim"]
+	path = pack/packer/start/wordy.vim
+	url = https://github.com/reedes/vim-wordy
+[submodule "pack/packer/opt/qf.vim"]
+	path = pack/packer/opt/qf.vim
+	url = https://github.com/romainl/vim-qf
+[submodule "pack/packer/opt/rust.vim"]
+	path = pack/packer/opt/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "pack/packer/opt/polyglot.vim"]
+	path = pack/packer/opt/polyglot.vim
+	url = https://github.com/sheerun/vim-polyglot
+[submodule "pack/packer/opt/abolish.vim"]
+	path = pack/packer/opt/abolish.vim
+	url = https://github.com/tpope/vim-abolish
+[submodule "pack/packer/opt/endwise.vim"]
+	path = pack/packer/opt/endwise.vim
+	url = https://github.com/tpope/vim-endwise
+[submodule "pack/packer/opt/jdaddy.vim"]
+	path = pack/packer/opt/jdaddy.vim
+	url = https://github.com/tpope/vim-jdaddy
+[submodule "pack/packer/opt/repeat.vim"]
+	path = pack/packer/opt/repeat.vim
+	url = https://github.com/tpope/vim-repeat
+[submodule "pack/packer/opt/scriptease.vim"]
+	path = pack/packer/opt/scriptease.vim
+	url = https://github.com/tpope/vim-scriptease
+[submodule "pack/packer/opt/surround.vim"]
+	path = pack/packer/opt/surround.vim
+	url = https://github.com/tpope/vim-surround
+[submodule "pack/packer/opt/unimpaired.vim"]
+	path = pack/packer/opt/unimpaired.vim
+	url = https://github.com/tpope/vim-unimpaired
+[submodule "pack/packer/opt/helpful.vim"]
+	path = pack/packer/opt/helpful.vim
+	url = https://github.com/tweekmonster/helpful.vim
+[submodule "pack/packer/opt/caw.vim"]
+	path = pack/packer/opt/caw.vim
+	url = https://github.com/tyru/caw.vim
+[submodule "pack/packer/opt/targets.vim"]
+	path = pack/packer/opt/targets.vim
+	url = https://github.com/wellle/targets.vim

@@ -59,3 +59,50 @@ use {'nvim-lua/diagnostic-nvim', as = 'diagnostic.nvim'}
 use {'nvim-lua/completion-nvim', as = 'completion.nvim'}
 use {'Iron-E/nvim-libmodal', as = 'libmodal.nvim' } 
 use {'neovim/nvim-lsp', as = 'nvim_lsp.nvim' } 
+
+
+-- DEIN (Legacy)
+-- vim.cmd [[
+-- " Dein Plugins Setup {{{1
+--
+-- " include dein in the runtime path.
+-- let g:dein_rtp = g:vim_plugin_repos_dir . '/github.com/Shougo/dein.vim'
+-- execute printf("set rtp+=%s", g:dein_rtp)
+--
+-- if !isdirectory(expand(g:dein_rtp).'/.git')
+--   " clone dein if it is not a git repo already.
+--   call mkdir(expand(g:dein_rtp), "p")
+--   call system(printf("rm -rf %s", g:dein_rtp))
+--   call system(printf("git clone https://github.com/Shougo/dein.vim %s", g:dein_rtp))
+-- endif
+--
+-- " after loading dein, configure it.
+-- let g:dein#install_progress_type = "tabline"
+-- let g:dein#enable_name_conversion = 1
+-- let g:dein#enable_notification = 1
+-- let g:dein#install_process_timeout = 30
+-- let g:dein#auto_recache = 1
+-- let g:dein#install_log_filename = g:vim_config_dir . '/local/dein.log'
+-- let g:dein#cache_directory = g:vim_plugins_dir
+-- " ensure the cache directory exists.
+-- if !isdirectory(expand(g:dein#cache_directory)) "{{{
+--   call mkdir(expand(g:dein#cache_directory), "p")
+-- endif "}}}
+-- if dein#load_state(g:vim_plugins_dir) "{{{
+--   call dein#begin(g:vim_plugins_dir)
+--   call dein#add(g:dein_rtp)
+--
+--   " enables neovim support in vim8
+--   if !has('nvim')
+--     call dein#add('roxma/nvim-yarp')
+--     call dein#add('roxma/vim-hug-neovim-rpc')
+--   endif
+--
+--   call dein#add('Shougo/neosnippet.vim')
+--   call dein#add('Shougo/neosnippet-snippets')
+--
+--   call dein#load_dict(json_decode(readfile(g:vim_config_dir . "/repos.json")))
+--   call dein#end()
+--   call dein#save_state()
+-- endif "1}}}
+-- ]]

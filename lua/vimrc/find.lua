@@ -123,5 +123,5 @@ end
 -- Final Module Initialization & Return
 ---
 M.finder_names = vim.tbl_keys(M)
-_G.vimrc.finders = M
+_G.vimrc.find = M
 return M

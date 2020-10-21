@@ -5,54 +5,131 @@ vimp.add_chord_cancellations('n', '<leader>') -- cancel chords when leader is pr
 local opts = {"override", "nowait"}
 local opts_expr = {"expr", "override", "nowait"}
 
-vimp.rbind('nx', opts, {'<C-j>'}, '<C-w>j')
-vimp.rbind('nx', opts, {'<F8>'}, ':sbnext<cr>')
-vimp.rbind('nx', opts, {'<S-F8>'}, ':sbprev<cr>')
-vimp.rbind('nx', opts, {'<C-k>'}, '<C-w>k')
-vimp.rbind('nx', opts, {'<C-s>'}, ':write<cr>')
-vimp.rbind('nx', opts, {'<C-h>'}, '<C-w>h')
-vimp.rbind('nx', opts, {'<F5>'}, '<cmd>lwindow<cr>')
-vimp.rbind('nx', opts, {'<C-l>'}, '<C-w>l')
-vimp.rbind('nx', opts, {'<leader>e'}, "<cmd>LuaTreeToggle<cr>")
-vimp.rbind('nx', opts, {'<leader>ff'}, "<cmd>lua vimrc.find.file()<cr>")
-vimp.rbind('nx', opts, {'<leader>fh'}, "<cmd>lua vimrc.find.help_tag()<cr>")
-vimp.rbind('nx', opts, {'<leader>fr'}, "<cmd>lua vimrc.find.lsp_reference()<cr>")
-vimp.rbind('nx', opts, {'<leader>fs'}, "<cmd>lua vimrc.find.lsp_workspace_symbol()<cr>")
-vimp.rbind('nx', opts, {'<leader>fS'}, "<cmd>lua vimrc.find.lsp_document_symbol()<cr>")
-vimp.rbind('nx', opts, {'<leader>fg'}, "<cmd>lua vimrc.find.grep()<cr>")
-vimp.rbind('nx', opts, {'<leader>fx'}, "<cmd>lua vimrc.find.command()<cr>")
-vimp.rbind('nx', opts, {'<leader>fX'}, "<cmd>lua vimrc.find.command_in_history()<cr>")
-vimp.rbind('nx', opts, {'<leader>fb'}, "<cmd>lua vimrc.find.buffer()<cr>")
-vimp.rbind('nx', opts, {'<leader>fv'}, "<cmd>lua vimrc.find.neovim_config()<cr>")
-vimp.rbind('nx', opts, {'<leader>Tn'}, "<cmd>tabNext<cr>")
-vimp.rbind('nx', opts, {'<leader>gs'}, "<cmd>Gina status<cr>")
-vimp.rbind('nx', opts, {'<leader>gl'}, "<cmd>Gina status<cr>")
-vimp.rbind('nx', opts, {'<leader>gC'}, "<cmd>Gina commit<cr>")
-vimp.rbind('nx', opts, {'<leader>gB'}, "<cmd>Gina blame<cr>")
-vimp.rbind('nx', opts, {'<leader>gb'}, "<cmd>Gina branch<cr>")
-vimp.rbind('nx', opts, {'<leader>Tp'}, "<cmd>tabprevious<cr>")
-vimp.rbind('nx', opts, {'<leader>Tb'}, "<cmd>lua vimrc.modals.tab_mode()<cr>")
-vimp.rbind('nx', opts, {'<leader>bn'}, "<cmd>bNext<cr>")
-vimp.rbind('nx', opts, {'<leader>bd'}, "<cmd>bdelete<cr>")
-vimp.rbind('nx', opts, {'<leader>bD'}, "<cmd>bdelete!<cr>")
-vimp.rbind('nx', opts, {'<leader>bl'}, "<cmd>buffers<cr>")
-vimp.rbind('nx', opts, {'<leader>bp'}, "<cmd>bprevious<cr>")
-vimp.rbind('nx', opts, {'<leader>bb'}, "<cmd>lua vimrc.modals.buffer_mode()<cr>")
-vimp.rbind('nx', opts, {'<leader>zn'}, "<cmd>setl number!<cr>")
-vimp.rbind('nx', opts, {'<leader>zw'}, "<cmd>setl wrap!<cr>")
-vimp.rbind('nx', opts, {'<leader>zs'}, "<cmd>setl spell!<cr>")
-vimp.rbind('nx', opts, {'<leader>zl'}, "<cmd>setl list!<cr>")
-vimp.rbind('nx', opts, {'<leader>zm'}, "<cmd>setl mouse!<cr>")
-vimp.rbind('nx', opts, {'<leader>zr'}, "<cmd>setl readonly!<cr>")
-vimp.rbind('nx', opts, {'<leader>t'}, ':Vista!!<cr>')
-vimp.rbind('nx', opts, {'<C-s>'}, ':write<cr>')
-vimp.rbind('nx', opts, {'<Esc><Esc>'}, ':noh<cr>')
-vimp.rbind('t',  opts, {'<Esc><Esc>'}, '<C-\\><C-n>')
-vimp.rbind('nx', opts, {'<leader>r'}, ':ReloadLuaVimrc<cr>')
-vimp.rbind('nx', opts, {'<leader>d'}, "<cmd>lua vimrc.diags()<cr>")
+local mapping_tbl = {
+  { comment = "goto window below", keys    = {"<C-j>"}, command = '<C-w>j', modes   = "nx" },
+  { comment = "goto window above", keys    = {"<C-k>"}, command = '<C-w>k', modes   = "nx" },
+  { comment = "goto window left", keys    = {"<C-h>"}, command = '<C-w>h', modes   = "nx" },
+  { comment = "goto window right", keys    = {"<C-k>"}, command = '<C-w>l', modes   = "nx" },
+  { comment = "save current buffer", keys    = {"<C-s>"}, command = '<cmd>write<cr>', modes   = "nx" },
+  { comment = "sbnext", command = '<cmd>sbnext<cr>', keys = {"<F8>"},   modes = "nx" },
+  { comment = "sbprev", command = '<cmd>sbprev<cr>', keys = {"<S-F8>"}, modes = "nx" },
+  { comment = "lwindow", command = '<cmd>lwindow<cr>', keys = {"<F5>"}, modes = "nx" },
+
+  { comment = "toggle file tree",
+    command = '<cmd>LuaTreeToggle<cr>',
+    keys    = {"<C-e>", "<leader>e"},
+    modes   = "nx" },
+}
+
+local mapping_groups = {
+  find = {
+    prefix = '<leader>f',
+    command = '<cmd>lua vimrc.find.%s()<cr>',
+    mappings = {
+        f = 'find_file',
+        h = 'help_tag',
+        r = 'lsp_reference',
+        s = 'lsp_workspace_symbol',
+        S = 'lsp_document_symbol',
+        g = 'grep',
+        x = 'command',
+        X = 'command_in_history',
+        b = 'buffer',
+        v = 'neovim_config',
+      },
+  },
+  git = {
+    prefix = '<leader>g',
+    command = '<cmd>Gina %s<cr>',
+    modes = "nx",
+    mappings = {
+        s = 'status',
+        C = 'commit',
+        B = 'blame',
+        b = 'branch',
+      },
+  },
+  buffer = {
+    prefix = '<leader>b',
+    modes = "nx",
+    mappings = {
+        b = 'lua vimrc.modals.buffer_mode()',
+        n = 'bNext',
+        p = 'bprevious',
+        l = 'buffers',
+        d = 'bdelete',
+      },
+  },
+  tab = {
+    prefix = '<leader>T',
+    modes = "nx",
+    mappings = {
+        n = 'tabNext',
+        p = 'tabprevious',
+        l = 'tabs',
+        d = 'tabclose',
+      },
+  },
+  toggle = {
+    prefix = '<leader>z',
+    command = "<cmd>lua vimrc.util.buf.toggle_option('%s')<cr>",
+    mappings = {
+        n = 'number',
+        w = 'wrap',
+        s = 'spell',
+        l = 'list',
+        m = 'mouse',
+        r = 'readonly',
+      },
+  },
+  reload = {
+    prefix = '<leader>r',
+    command = "<cmd>luafile "..vim.g.vimrc_config_dir.."/lua/vimrc/%s.lua<cr>",
+    mappings = {
+        c = 'colors',
+        m = 'mappings',
+        s = 'statusline',
+        A = 'apis',
+        f = 'find',
+        d = 'diags',
+        i = 'init',
+        o = 'options',
+        a = 'autocommands',
+        u = 'util/init',
+      },
+  },
+}
+
+-- generate a mapping for each mapping group above.
+for group_name, group in pairs(mapping_groups) do
+  for key, cmd in pairs(group.mappings) do
+    local mapping = { 
+      comment = string.format((group.comment or group_name..' %s'), cmd),
+      command = string.format((group.command or '<cmd>%s<cr>'), cmd) ,
+      keys    = {(group.prefix or '')..key},
+      modes   = (group.modes or "nx"),
+    }
+    -- insert the mapping into the global table.
+    table.insert(mapping_tbl, mapping)
+  end
+end
+
+-- generate vimpeccable bindings for each mapping defined above.
+for _, mapping in pairs(mapping_tbl) do
+  vimp.rbind(
+    (mapping.modes or 'nx'), 
+    (mapping.opts or opts), 
+    mapping.keys, 
+    mapping.command)
+end
+
 vimp.rbind('i',  opts_expr, {'<Tab>'}, 'pumvisible() ? "\\<C-n>" : "\\<Tab>"')
 vimp.rbind('i',  opts_expr, {'<S-Tab>'}, 'pumvisible() ? "\\<C-p>" : "\\<S-Tab>"')
 vimp.rbind('i',  opts_expr, {'<C-Space>'}, '<Plug>(completion_trigger)')
+vimp.rbind('nx', opts, {'<leader>t'}, ':Vista!!<cr>')
+vimp.rbind('nx', opts, {'<Esc><Esc>'}, ':noh<cr>')
+vimp.rbind('t',  opts, {'<Esc><Esc>'}, '<C-\\><C-n>')
+vimp.rbind('nx', opts, {'<leader>d'}, "<cmd>luafile "..vim.g.vimrc_config_dir.."/lua/vimrc/diags.lua<cr>")
 vimp.rbind('nx', opts, {'gd'}, "<cmd>lua vim.lsp.buf.declaration()<cr>")
 vimp.rbind('nx', opts, {'gD'}, "<cmd>lua vim.lsp.buf.implementation()<cr>")
 vimp.rbind('nx', opts, {'K'}, "<cmd>lua vim.lsp.buf.hover()<cr>")
@@ -78,5 +155,19 @@ vim.cmd [[ cnoremap <C-N> <Down> ]] -- next command in history.
 vim.cmd [[ cnoremap <C-P> <Up> ]] -- prev command in history.
 vim.cmd [[ cnoremap <Esc><C-B> <S-Left> ]] -- back one word.
 vim.cmd [[ cnoremap <Esc><C-F> <S-Right> ]] -- forward one word.
+-- 
+-- " Release keymappings prefixes, evict entirely for use of plug-ins.
+-- nnoremap <Space>  <Nop>
+-- xnoremap <Space>  <Nop>
+-- nnoremap ,        <Nop>
+-- xnoremap ,        <Nop>
+-- nnoremap \        <Nop>
+-- xnoremap \        <Nop>
+-- 
 
+
+_G.vimrc.mappings = {
+  tbl = mapping_tbl,
+  groups = mapping_groups,
+}
 -- vim: ft=lua

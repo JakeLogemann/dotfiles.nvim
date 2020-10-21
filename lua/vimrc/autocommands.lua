@@ -1,63 +1,51 @@
-local AC = {
 
-  InsertEnter = function() 
-    vim.api.nvim_win_set_option(0, 'cursorline', false)
-    vim.api.nvim_win_set_option(0, 'cursorcolumn', false)
-    vim.api.nvim_win_set_option(0, 'list', false)
-    return true 
-  end,
-
-  CursorHold = function() 
-    vim.api.nvim_win_set_option(0, 'cursorline', false)
-    vim.api.nvim_win_set_option(0, 'cursorcolumn', false)
-    vim.api.nvim_win_set_option(0, 'list', false)
-    return true 
-  end,
-
-  CursorMoved = function() 
-    vim.api.nvim_win_set_option(0, 'cursorline', true)
-    vim.api.nvim_win_set_option(0, 'cursorcolumn', true)
-    return true 
-  end,
-
-  InsertLeave = function() 
-    vim.api.nvim_win_set_option(0, 'list', true) 
-    vim.api.nvim_win_set_option(0, 'cursorline', true)
-    vim.api.nvim_win_set_option(0, 'cursorcolumn', true)
-    return true 
-  end,
-
-  WinEnter = function() 
-    return true 
-  end,
-
-  WinLeave = function() 
-    return true 
-  end,
-
-  BufEnter = function() 
-    return true 
-  end,
-
-  BufLeave = function() 
-    return true 
-  end,
-
-  BufReadPre = function() 
-    return true 
-  end,
-  
-  BufReadPost = function() 
-    return true 
-  end,
-}
-
--- define an autogroup from the above function(s).
 vim.cmd("augroup LuaVimrc")
 vim.cmd("autocmd!") -- clear previous settings
-for name,_ in pairs(AC) do
-  vim.cmd("autocmd ".. name .." " .. "lua require'vimrc.autocommands'." .. name .. "()")
+
+-- https://vim.fandom.com/wiki/Detect_window_creation_with_WinEnter
+vim.cmd("autocmd VimEnter * autocmd WinEnter * let w:created=1")
+
+local function define_autocommand(opts)
+  local name = opts.name
+  local callback = opts.callback
+  local events = opts.events or { opts.name, }
+  local match = opts.match or { '*', }
+
+  _G.vimrc.autocmd = (_G.vimrc.autocmd or {})
+  _G.vimrc.autocmd[name] = callback
+  vim.cmd(string.format("autocmd %s %s lua vimrc.autocmd.%s()", 
+    table.concat(events,','), 
+    table.concat(match, ','), 
+    name))
 end
-vim.cmd("augroup END")
--- return the autocommand functions for calling from the maps.
-_G.vimrc.autocommands = AC
+
+define_autocommand({ name = "BufEnter", callback = function() 
+  require'completion'.on_attach() 
+end })
+
+define_autocommand({ name = "InsertEnter", callback = function() 
+  vim.cmd('noh') -- disable highlight
+end })
+
+define_autocommand({ name = "InsertLeave", callback = function() 
+  vim.o.paste = false 
+  vim.cmd('noh') -- disable highlight
+end })
+
+define_autocommand({ name = "VimLeave", callback = function() 
+      vim.cmd('wshada!') -- ensure ShaDa file is written before exit.
+    end })
+
+define_autocommand({
+    name = "SwapExists", 
+    match = {"* nested"},
+    callback = function() 
+      vim.v.swapchoice = 'o' -- automatically select readonly when swap exists.
+    end,
+  })
+
+define_autocommand({ name = "TextYankPost", callback = function() 
+  require'vim.highlight'.on_yank()  -- requires nvim 0.5.0+
+end })
+
+vim.cmd("augroup END") -- close the autogroup (at end of file).

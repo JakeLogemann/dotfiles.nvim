@@ -33,7 +33,7 @@ end
 
 function BUF.autodelete_on_leave(bufnr)
   -- autocommand to automatically close/delete a buffer when its left.
-  vim.cmd("autocmd WinLeave <buffer> silent! execute 'bdelete! ".. bufnr .."'")
+  vim.cmd("autocmd WinLeave <buffer> silent! execute 'bwipe! ".. bufnr .."'")
 end
 
 _G.vimrc.util.buf = BUF

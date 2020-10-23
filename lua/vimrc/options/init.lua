@@ -1,9 +1,8 @@
-package.loaded['vimrc.options'] = nil -- force reload on require() call.
-
 local config_dir = vim.fn.expand(vim.fn.stdpath('config'))
 local local_dir = config_dir .. "/local"
 local globals_options = require'vimrc.options.globals'
 local builtin_options = require'vimrc.options.builtins'
+local env_options = require'vimrc.options.env'
 
 -- Long list items:
 -----------------------------------------------------------------------------
@@ -54,7 +53,6 @@ vim.o.wildignore = table.concat({
     '.pytest_cache',
   '.mypy_cache/**' }, ',')
 
-vim.g['neosnippet#snippets_directory'] = config_dir .. '/local/snips'
 
 vim.cmd[[
   if exists('+inccommand')    |  set inccommand=nosplit | endif
@@ -89,6 +87,10 @@ vim.cmd[[
 ]]
 
 
+-- apply ENV options.
+for opt, val in pairs(env_options) do
+  vim.env[opt] = val
+end
 -- apply builtin options.
 for opt, val in pairs(builtin_options) do
   vim.o[opt] = val
@@ -103,4 +105,5 @@ _G.vimrc.options = {
   local_dir = local_dir,
   globals = globals_options,
   builtin = builtin_options,
+  env = env_options,
 }

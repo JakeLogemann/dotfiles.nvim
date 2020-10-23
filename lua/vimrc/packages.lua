@@ -47,7 +47,7 @@ packer.init({
 -- You can alias plugin names
 -- use {'dracula/vim', as = 'dracula'}
 ---------------------------------------------------------------------------
-use {'wbthomason/packer.nvim', opt = true} 
+use {'wbthomason/packer.nvim', opt = false} 
 use 'nvim-lua/telescope.nvim'
 use 'nvim-lua/plenary.nvim'
 use {'rafcamlet/nvim-luapad', cmd = 'LuaPad'}

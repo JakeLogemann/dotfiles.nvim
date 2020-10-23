@@ -7,6 +7,7 @@ _G.libmodal = require'libmodal'
 _G.impromptu = require'impromptu'
 _G.log = require'vimrc/vendored/log'
 _G.lush = require'vimrc/vendored/lush'
+_G.packer = require'packer'
 _G.pl = require'pl.import_into'()
 _G.pl.stringx.import() -- make all strings awesome.
 _G.plenary = require'plenary'

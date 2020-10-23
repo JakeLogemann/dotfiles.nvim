@@ -40,6 +40,14 @@ define_autocommand("VimLeave", { callback = function()
       vim.cmd('wshada!') -- ensure ShaDa file is written before exit.
     end })
 
+define_autocommand("VimEnter", { 
+  callback = function()
+    vim.defer_fn(function() print("Welcome to my NeoVim!") end, 1000)
+    vim.defer_fn(function() print("Lets see if this works ...") end, 2500)
+    vim.defer_fn(function() print(" ") end, 4000)
+  end,
+})
+
 
 define_autocommand("RefFileTypes", {
     events = {"FileType"},

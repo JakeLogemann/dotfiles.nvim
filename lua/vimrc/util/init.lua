@@ -1,5 +1,5 @@
 _G.vimrc.util = (_G.vimrc.util or {})
-_G.vimrc['load'] = require('vimrc.util.load')
+_G.vimrc.util['load'] = require('vimrc.util.load')
 
 _G.vimrc.util.lstriplines = function(s)
   local ls = pl.stringx.splitlines(s)

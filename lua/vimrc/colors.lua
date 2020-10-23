@@ -22,7 +22,6 @@ _G.vimrc.colors.reset = function()
   vim.o.termguicolors = true
   vim.o.background  = 'dark'
   vim.g.colors_name = 'deus'
-  vim.cmd('colorscheme '.. vim.g.colors_name)
 
   local color_groups = {}
   local define_color_group = function(name, opts)
@@ -194,7 +193,7 @@ _G.vimrc.colors.reset = function()
   define_color_group('Comment', {
     foreground = colors.gray_4,
     background = colors.none,
-    aliases    = {"Conceal", "Delimiter"},
+    aliases    = {"Conceal", "Delimiter", "LspDiagnosticHint"},
   })
 
   define_color_group('Directory', {

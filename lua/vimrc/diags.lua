@@ -36,16 +36,16 @@ Terminal Colors
 14. $(vim.g.terminal_color_14)
 15. $(vim.g.terminal_color_15)
 
+vimrc.options
+-------------
+```lua
+$(vim.inspect(vimrc.options))
+```
+
 Buffer Info
 -----------
 ```lua
 $(vim.inspect(vim.fn.getbufinfo(0)))
-```
-
-Lua Vimrc
------------
-```lua
-$(vim.inspect(vimrc))
 ```
 
 Environment

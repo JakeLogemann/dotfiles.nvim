@@ -5,22 +5,6 @@ vimp.add_chord_cancellations('n', '<leader>') -- cancel chords when leader is pr
 local opts = {"override", "nowait"}
 local opts_expr = {"expr", "override", "nowait"}
 
-local mapping_tbl = {
-  { comment = "goto window below", keys    = {"<C-j>"}, command = '<C-w>j', modes   = "nx" },
-  { comment = "goto window above", keys    = {"<C-k>"}, command = '<C-w>k', modes   = "nx" },
-  { comment = "goto window left", keys    = {"<C-h>"}, command = '<C-w>h', modes   = "nx" },
-  { comment = "goto window right", keys    = {"<C-k>"}, command = '<C-w>l', modes   = "nx" },
-  { comment = "save current buffer", keys    = {"<C-s>"}, command = '<cmd>write<cr>', modes   = "nx" },
-  { comment = "sbnext", command = '<cmd>sbnext<cr>', keys = {"<F8>"},   modes = "nx" },
-  { comment = "sbprev", command = '<cmd>sbprev<cr>', keys = {"<S-F8>"}, modes = "nx" },
-  { comment = "lwindow", command = '<cmd>lwindow<cr>', keys = {"<F5>"}, modes = "nx" },
-
-  { comment = "toggle file tree",
-    command = '<cmd>LuaTreeToggle<cr>',
-    keys    = {"<C-e>", "<leader>e"},
-    modes   = "nx" },
-}
-
 local mapping_groups = {
   find = {
     prefix = '<leader>f',
@@ -92,12 +76,64 @@ local mapping_groups = {
         f = 'find',
         d = 'diags',
         i = 'init',
-        o = 'options',
+        o = 'options/init',
         a = 'autocommands',
         u = 'util/init',
       },
   },
 }
+
+local which_key_leader_map = {
+  b = {
+    name = '+buffer' ,
+    ['?'] = {'Buffers'   , 'fzf-buffer'}      ,
+    [1] = {'b1'        , 'buffer 1'}        ,
+    [2] = {'b2'        , 'buffer 2'}        ,
+    d = {'bd'        , 'delete-buffer'}   ,
+    f = {'bfirst'    , 'first-buffer'}    ,
+    h = {'Startify'  , 'home-buffer'}     ,
+    l = {'blast'     , 'last-buffer'}     ,
+    n = {'bnext'     , 'next-buffer'}     ,
+    p = {'bprevious' , 'previous-buffer'} ,
+  },
+
+  f = {
+    name = '+find',
+    f = {'<cmd>lua vimrc.find.file<cr>', 'file'},
+    h = {'<cmd>lua vimrc.find.help_tag<cr>', 'help tag'},
+    r = {'<cmd>lua vimrc.find.lsp_reference<cr>', 'lsp ref'},
+    s = {'<cmd>lua vimrc.find.lsp_workspace_symbol<cr>', 'workspace sym'},
+    S = {'<cmd>lua vimrc.find.lsp_document_symbol<cr>', 'document sym'},
+    g = {'<cmd>lua vimrc.find.grep<cr>', 'grep'},
+    x = {'<cmd>lua vimrc.find.command<cr>', 'command'},
+    X = {'<cmd>lua vimrc.find.command_in_history<cr>', 'command hist'},
+    b = {'<cmd>lua vimrc.find.buffer<cr>', 'buffer'},
+    v = {'<cmd>lua vimrc.find.neovim_config<cr>', 'nvim cfg'},
+  },
+
+}
+
+-- vim.fn.call('which_key#register', ' ', "g:which_key_leader_map")
+
+local mapping_tbl = {
+  { comment = "goto window below",        command = '<C-w>j',                 keys = {"<C-j>"},     modes = "nx" },
+  { comment = "goto window above",        command = '<C-w>k',                 keys = {"<C-k>"},     modes = "nx" },
+  { comment = "goto window left",         command = '<C-w>h',                 keys = {"<C-h>"},     modes = "nx" },
+  { comment = "goto window right",        command = '<C-w>l',                 keys = {"<C-k>"},     modes = "nx" },
+  { comment = "save current buffer",      command = '<cmd>write<cr>',         keys = {"<C-s>"},     modes = "nx" },
+  { comment = "sbnext",                   command = '<cmd>sbnext<cr>',        keys = {"<F8>"},      modes = "nx" },
+  { comment = "sbprev",                   command = '<cmd>sbprev<cr>',        keys = {"<S-F8>"},    modes = "nx" },
+  { comment = "lwindow",                  command = '<cmd>lwindow<cr>',       keys = {"<F5>"},      modes = "nx" },
+  { comment = "start of line",            command = '<Home>',                 keys = {"<C-A>"},     modes = "c"  },
+  { comment = "end of line",              command = '<End>',                  keys = {"<C-E>"},     modes = "c"  },
+  { comment = "delete char under cursor", command = '<C-D>',                  keys = {"<Del>"},     modes = "c"  },
+  { comment = "back 1 char",              command = '<C-B>',                  keys = {"<Left>"},    modes = "c"  },
+  { comment = "forward 1 char",           command = '<C-F>',                  keys = {"<Right>"},   modes = "c"  },
+  { comment = "previous command",         command = '<C-P>',                  keys = {"<Up>"},      modes = "c"  },
+  { comment = "next command",             command = '<C-N>',                  keys = {"<Down>"},    modes = "c"  },
+  { comment = "toggle file tree",         command = '<cmd>LuaTreeToggle<cr>', keys = {"<leader>e"}, modes = "nx" },
+}
+
 
 -- generate a mapping for each mapping group above.
 for group_name, group in pairs(mapping_groups) do
@@ -145,15 +181,6 @@ vimp.nnoremap('<leader>v', function()
 end)
 
 vim.cmd [[ inoremap <silent><expr> <C-Space> pumvisible() ? "\<C-n>" : completion#trigger_completion() ]]
-vim.cmd [[ cnoremap <C-A> <Home> ]] -- start of line.
-vim.cmd [[ cnoremap <C-B> <Left> ]] -- back 1 char.
-vim.cmd [[ cnoremap <C-D> <Del> ]] -- delete under cursor.
-vim.cmd [[ cnoremap <C-E> <End> ]] -- end of line.
-vim.cmd [[ cnoremap <C-F> <Right> ]] -- forward 1 char.
-vim.cmd [[ cnoremap <C-N> <Down> ]] -- next command in history.
-vim.cmd [[ cnoremap <C-P> <Up> ]] -- prev command in history.
-vim.cmd [[ cnoremap <Esc><C-B> <S-Left> ]] -- back one word.
-vim.cmd [[ cnoremap <Esc><C-F> <S-Right> ]] -- forward one word.
 -- 
 -- " Release keymappings prefixes, evict entirely for use of plug-ins.
 -- nnoremap <Space>  <Nop>

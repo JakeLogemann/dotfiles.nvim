@@ -181,3 +181,6 @@
 [submodule "pack/packer/start/echodoc.vim"]
 	path = pack/packer/start/echodoc.vim
 	url = https://github.com/Shougo/echodoc.vim
+[submodule "pack/packer/start/markdown.vim"]
+	path = pack/packer/start/markdown.vim
+	url = https://github.com/tpope/vim-markdown

@@ -19,7 +19,7 @@ function BUF.make_ephemeral(winnr, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
   -- buftype=nofile prevents marking buffers as not being backed by a real file, so
   -- theres no need to save.
-  vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
+  -- vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
   -- destroy this buffer automaticaly when its left.
   vim.cmd("autocmd WinLeave,BufLeave <buffer> silent! execute 'bwipeout!'")
 end

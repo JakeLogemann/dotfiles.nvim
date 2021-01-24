@@ -1,14 +1,14 @@
-vim.g.lua_tree_git_hl = 1
-vim.g.lua_tree_auto_open = 1
-vim.g.lua_tree_auto_close = 1
-vim.g.lua_tree_indent_markers = 1
-vim.g.lua_tree_tab_open = 1
-vim.g.lua_tree_follow = 1
-vim.g.lua_tree_width = 35
-vim.g.lua_tree_side = "right"
-vim.g.lua_tree_ignore = { '.git', 'node_modules' }
-vim.g.lua_tree_show_icons = { git=1, folders=1, icons=1 }
-vim.g.lua_tree_icons = {
+vim.g.nvim_tree_git_hl = 1
+vim.g.nvim_tree_auto_open = 1
+vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_indent_markers = 1
+vim.g.nvim_tree_tab_open = 1
+vim.g.nvim_tree_follow = 1
+vim.g.nvim_tree_width = 35
+vim.g.nvim_tree_side = "right"
+vim.g.nvim_tree_ignore = { '.git', 'node_modules' }
+vim.g.nvim_tree_show_icons = { git=1, folders=1, icons=1 }
+vim.g.nvim_tree_icons = {
   default= '',
   symlink= '',
   git= {
@@ -23,7 +23,7 @@ vim.g.lua_tree_icons = {
     open= "",
   }
 }
-vim.g.lua_tree_bindings = {
+vim.g.nvim_tree_bindings = {
   edit          = {'<cr>', 'o'}, -- Multiple keys provided via list
   edit_vsplit   = '<c-v>',
   edit_split    = '<c-x>',

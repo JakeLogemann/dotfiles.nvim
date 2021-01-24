@@ -116,22 +116,22 @@ local which_key_leader_map = {
 -- vim.fn.call('which_key#register', ' ', "g:which_key_leader_map")
 
 local mapping_tbl = {
-  { comment = "goto window below",        command = '<C-w>j',                 keys = {"<C-j>"},     modes = "nx" },
-  { comment = "goto window above",        command = '<C-w>k',                 keys = {"<C-k>"},     modes = "nx" },
-  { comment = "goto window left",         command = '<C-w>h',                 keys = {"<C-h>"},     modes = "nx" },
-  { comment = "goto window right",        command = '<C-w>l',                 keys = {"<C-k>"},     modes = "nx" },
-  { comment = "save current buffer",      command = '<cmd>write<cr>',         keys = {"<C-s>"},     modes = "nx" },
-  { comment = "sbnext",                   command = '<cmd>sbnext<cr>',        keys = {"<F8>"},      modes = "nx" },
-  { comment = "sbprev",                   command = '<cmd>sbprev<cr>',        keys = {"<S-F8>"},    modes = "nx" },
-  { comment = "lwindow",                  command = '<cmd>lwindow<cr>',       keys = {"<F5>"},      modes = "nx" },
-  { comment = "start of line",            command = '<Home>',                 keys = {"<C-A>"},     modes = "c"  },
-  { comment = "end of line",              command = '<End>',                  keys = {"<C-E>"},     modes = "c"  },
-  { comment = "delete char under cursor", command = '<C-D>',                  keys = {"<Del>"},     modes = "c"  },
-  { comment = "back 1 char",              command = '<C-B>',                  keys = {"<Left>"},    modes = "c"  },
-  { comment = "forward 1 char",           command = '<C-F>',                  keys = {"<Right>"},   modes = "c"  },
-  { comment = "previous command",         command = '<C-P>',                  keys = {"<Up>"},      modes = "c"  },
-  { comment = "next command",             command = '<C-N>',                  keys = {"<Down>"},    modes = "c"  },
-  { comment = "toggle file tree",         command = '<cmd>LuaTreeToggle<cr>', keys = {"<leader>e"}, modes = "nx" },
+  { comment = "goto window below",        command = '<C-w>j',                  keys = {"<C-j>"},     modes = "nx" },
+  { comment = "goto window above",        command = '<C-w>k',                  keys = {"<C-k>"},     modes = "nx" },
+  { comment = "goto window left",         command = '<C-w>h',                  keys = {"<C-h>"},     modes = "nx" },
+  { comment = "goto window right",        command = '<C-w>l',                  keys = {"<C-k>"},     modes = "nx" },
+  { comment = "save current buffer",      command = '<cmd>write<cr>',          keys = {"<C-s>"},     modes = "nx" },
+  { comment = "sbnext",                   command = '<cmd>sbnext<cr>',         keys = {"<F8>"},      modes = "nx" },
+  { comment = "sbprev",                   command = '<cmd>sbprev<cr>',         keys = {"<S-F8>"},    modes = "nx" },
+  { comment = "lwindow",                  command = '<cmd>lwindow<cr>',        keys = {"<F5>"},      modes = "nx" },
+  { comment = "start of line",            command = '<Home>',                  keys = {"<C-A>"},     modes = "c"  },
+  { comment = "end of line",              command = '<End>',                   keys = {"<C-E>"},     modes = "c"  },
+  { comment = "delete char under cursor", command = '<C-D>',                   keys = {"<Del>"},     modes = "c"  },
+  { comment = "back 1 char",              command = '<C-B>',                   keys = {"<Left>"},    modes = "c"  },
+  { comment = "forward 1 char",           command = '<C-F>',                   keys = {"<Right>"},   modes = "c"  },
+  { comment = "previous command",         command = '<C-P>',                   keys = {"<Up>"},      modes = "c"  },
+  { comment = "next command",             command = '<C-N>',                   keys = {"<Down>"},    modes = "c"  },
+  { comment = "find file",                command = '<cmd>NvimTreeToggle<cr>', keys = {"<leader>e"}, modes = "nx" },
 }
 
 

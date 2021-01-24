@@ -21,7 +21,7 @@ local styles = require('colorbuddy.init').styles
 _G.vimrc.colors.reset = function()
   vim.o.termguicolors = true
   vim.o.background  = 'dark'
-  vim.g.colors_name = 'deus'
+  vim.g.colors_name = 'nightfly'
 
   local color_groups = {}
   local define_color_group = function(name, opts)

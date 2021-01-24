@@ -2,6 +2,7 @@ local opts = {}
 local config_dir = vim.fn.expand(vim.fn.stdpath('config'))
 local local_dir = config_dir .. "/local"
 
+opts['loaded_netrwPlugin']                 = 0 -- disable netrw (if not already loaded/disabled).
 opts['Illuminate_delay']                   = 250 -- milliseconds (default 250)
 opts['Illuminate_ftblacklist']             = table.concat({"dirvish"}, ",")
 opts['completion_enable_snippet']          = 'neosnippet'

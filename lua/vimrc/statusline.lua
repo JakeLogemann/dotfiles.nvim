@@ -14,7 +14,7 @@ local file_info = function()
     local render = function(window, buffer)
         local name = vim.fn.fnamemodify(buffer.name, ':t')
         local icon = (extensions.file_icon(window, buffer) or '')
-        local readonly = (icons.get_icon("lock") or '')
+        local readonly = 'RO'
         local branch = (extensions.git_branch(window, buffer) or '')
         return table.concat({ "", icon, name, readonly, branch, "" }, " ")
     end
@@ -62,21 +62,21 @@ _G.vimrc.statusline.setup = function()
   })
 
 
-  require'bufferline'.setup({
-    options = {
-      view = "default", --"multiwindow" | "default"
-      numbers = "ordinal", -- | "none" | "ordinal" | "buffer_id"
-      number_style = "",
-      mappings = true,
-      close_icon = "x",
-      max_name_length = 20,
-      tab_size = 20,
-      show_buffer_close_icons = true,
-      separator_style = "thick", -- "thick" | "thin",
-      enforce_regular_tabs = false,
-      always_show_bufferline = false,
-    }
-  })
+-- require'bufferline'.setup({
+--   options = {
+--     view = "default", --"multiwindow" | "default"
+--     numbers = "ordinal", -- | "none" | "ordinal" | "buffer_id"
+--     number_style = "",
+--     mappings = true,
+--     close_icon = "x",
+--     max_name_length = 20,
+--     tab_size = 20,
+--     show_buffer_close_icons = true,
+--     separator_style = "thick", -- "thick" | "thin",
+--     enforce_regular_tabs = false,
+--     always_show_bufferline = false,
+--   }
+-- })
 
 end
 

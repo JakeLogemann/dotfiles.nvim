@@ -1,3 +1,4 @@
+_G.vimrc = (_G.vimrc or {})
 _G.vimrc.util = (_G.vimrc.util or {})
 _G.vimrc.util['load'] = require('vimrc.util.load')
 

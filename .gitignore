@@ -3,8 +3,8 @@
 .swp
 .swo
 **/.git
-/vendor/
-!/vendor/repos/github.com/Shougo/dein.vim/
+pack/
+!pack/packer/start/packer.nvim
 
 
 plugin/packer_compiled.vim

@@ -19,7 +19,6 @@ end
 
 define_autocommand("BufEnter", { callback = function()
   require'completion'.on_attach()
-  require'diagnostic'.on_attach()
 end })
 
 define_autocommand("BufWritePre", {

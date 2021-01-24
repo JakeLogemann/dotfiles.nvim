@@ -48,9 +48,4 @@ Buffer Info
 $(vim.inspect(vim.fn.getbufinfo(0)))
 ```
 
-Environment
------------
-```sh
-$(vim.fn.system("env | sort"))
-```
 ]])

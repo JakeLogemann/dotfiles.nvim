@@ -5,7 +5,7 @@ vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_tab_open = 1
 vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_width = 35
-vim.g.nvim_tree_side = "right"
+vim.g.nvim_tree_side = "left"
 vim.g.nvim_tree_ignore = { '.git', 'node_modules' }
 vim.g.nvim_tree_show_icons = { git=1, folders=1, icons=1 }
 vim.g.nvim_tree_icons = {

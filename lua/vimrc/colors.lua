@@ -1,24 +1,45 @@
--- luacheck: Globals Color, c, Group, g, s, vim
-_G.vim = _G.vim or {}
-_G.vimrc.colors = _G.vimrc.colors or {}
+paq "bluz71/vim-nightfly-guicolors"
+paq "kyazdani42/nvim-web-devicons"
+paq "norcalli/nvim-colorizer.lua"
+paq "tjdevries/colorbuddy.nvim"
+
+local vimrc = _G["vimrc"]
+vimrc.colors = {
+  colorizer_ft_opts = { 
+    'css'; 
+    css = { rgb_fn = true; };
+    scss = { rgb_fn = true; };
+    sass = { rgb_fn = true; };
+    stylus = { rgb_fn = true; };
+    vim = { names = false; };
+    tmux = { names = false; };
+    html = { mode = 'foreground'; };
+    'javascript';
+    'javascriptreact';
+    'typescript';
+    'typescriptreact';
+    'javascript'; 'lua'; 'html'; 'markdown';
+  };
+  colorizer_fallback = {
+    names = false; -- dont parse names like 'blue'
+    mode = 'background'
+  };
+  colorbuddy_opts = {
+  }
+}
 
 -- Colorizer
-require 'colorizer'.setup({ 
-  'css'; 'javascript'; 'lua'; 'html'; 'markdown';
-}, {
-  names = false; -- dont parse names like 'blue'
-  mode = 'background'
-})
+require('colorizer').setup(vimrc.colors.colorizer_ft_opts, vimrc.colors.colorizer_fallback)
+require'colorbuddy'.setup(vimrc.colors.colorbuddy_opts)
+_G["colorbuddy"] = require('colorbuddy.init')
 
-require'colorbuddy'.setup{}
+local Color = colorbuddy.Color
+local colors = colorbuddy.colors
+local groups = colorbuddy.groups
+local Group = colorbuddy.Group
+local styles = colorbuddy.styles
 
-local Color = require('colorbuddy.init').Color
-local colors = require('colorbuddy.init').colors
-local groups = require('colorbuddy.init').groups
-local Group = require('colorbuddy.init').Group
-local styles = require('colorbuddy.init').styles
-
-_G.vimrc.colors.reset = function()
+function vimrc.colors.reset()
   vim.o.termguicolors = true
   vim.o.background  = 'dark'
   vim.g.colors_name = 'nightfly'
@@ -684,6 +705,4 @@ _G.vimrc.colors.reset = function()
   Group.new('Beacon', colors.white, colors.none)
 end
 
-
-_G.vimrc.colors.reset()
-_G.vimrc.colors.reset()
+vimrc.colors.reset()

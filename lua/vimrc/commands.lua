@@ -1,7 +1,4 @@
-require'vimp' -- vimpeccable, not vim.api
-_G.vimrc.commands = vimrc.util.DeepTable()
-
-local util = require('vimrc.util')
+local vimrc = _G['vimrc']
 
 vim.cmd [[
 command! -nargs=1 -complete=file DE tabedit <args> 

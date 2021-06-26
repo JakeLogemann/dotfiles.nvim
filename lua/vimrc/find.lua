@@ -1,60 +1,66 @@
-local M = {}
-local actions    = require('telescope.actions')
-local builtin    = require('telescope.builtin')
-local conf       = require('telescope.config').values
-local finders    = require('telescope.finders')
-local make_entry = require('telescope.make_entry')
-local pickers    = require('telescope.pickers')
-local previewers = require('telescope.previewers')
-local sorters    = require('telescope.sorters')
-local telescope  = require('telescope')
-local themes     = require('telescope.themes')
-local utils      = require('telescope.utils')
-local filter = vim.tbl_filter
-local flatten = vim.tbl_flatten
+paq "nvim-lua/telescope.nvim"
 
+_G["telescope"]      = require('telescope')
+telescope.actions    = require('telescope.actions')
+telescope.builtin    = require('telescope.builtin')
+telescope.conf       = require('telescope.config').values
+telescope.finders    = require('telescope.finders')
+telescope.make_entry = require('telescope.make_entry')
+telescope.pickers    = require('telescope.pickers')
+telescope.previewers = require('telescope.previewers')
+telescope.sorters    = require('telescope.sorters')
+telescope.themes     = require('telescope.themes')
+telescope.utils      = require('telescope.utils')
 
-telescope.setup {
-  defaults = themes.get_dropdown ({
-    winblend = 5,
-    layout_strategy = "horizontal",
-    preview_cutoff = 120,
-    layout_options = { preview_width = 0.75 },
-    sorting_strategy = "ascending",
-    prompt_position = "top",
-    border = true,
-    -- borderchars = {{ '─', '│', '─', '│', '╭', '╮', '╯', '╰'}, preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},},
-  })
-}
+local find = { telescope = telescope; }
+
+find._setup = function()
+  telescope.setup {
+    defaults = telescope.themes.get_dropdown ({
+      winblend = 5,
+      layout_strategy = "horizontal",
+      preview_cutoff = 120,
+      layout_options = { preview_width = 0.75 },
+      sorting_strategy = "ascending",
+      prompt_position = "top",
+      border = true,
+      -- borderchars = {{ '─', '│', '─', '│', '╭', '╮', '╯', '╰'}, preview = { '─', '│', '─', '│', '╭', '╮', '╯', '╰'},},
+    })
+  }
+
+  find._names = vim.tbl_keys(find) -- creates a cache of the finder names.
+  vimrc.find = find  -- can be found globally under vimrc.find.
+  return find  -- can still be loaded directly from file.
+end
 
 --
 -- upstream builtin finders
 --
-M.file = function() builtin.find_files({}) end
-M.help_tag = function() builtin.help_tags({show_version = true}) end
-M.lsp_reference = function() builtin.lsp_references({}) end
-M.lsp_workspace_symbol = function() builtin.lsp_workspace_symbols({}) end
-M.recent_file = function() builtin.oldfiles({}) end
-M.lsp_document_symbol = function() builtin.lsp_document_symbols({}) end
-M.grep = function() builtin.live_grep({ shorten_path = true }) end
-M.current_buffer_line = function() builtin.current_buffer_fuzzy_find({}) end
-M.command_in_history = function() builtin.command_history({}) end
-M.buffer = function() builtin.buffers({}) end
+function find.buffer() telescope.builtin.buffers({}) end
+function find.buffer_line() telescope.builtin.current_buffer_fuzzy_find({}) end
+function find.document_symbol() telescope.builtin.lsp_document_symbols({}) end
+function find.file() telescope.builtin.find_files({}) end
+function find.grep() telescope.builtin.live_grep({ shorten_path = true }) end
+function find.help() telescope.builtin.help_tags({show_version = true}) end
+function find.recent_command() telescope.builtin.command_history({}) end
+function find.recent_file() telescope.builtin.oldfiles({}) end
+function find.reference() telescope.builtin.lsp_references({}) end
+function find.workspace_symbol() telescope.builtin.lsp_workspace_symbols({}) end
 
 --
 -- custom finders
 --
 
-M.git_repo = function()
-  builtin.find_files {
+find.git_repo = function()
+  telescope.builtin.find_files {
     previewer = false,
     layout_strategy = "vertical",
     cwd = require('nvim_lsp.util').root_pattern(".git")(vim.fn.expand("%:p")),
   }
 end
 
-M.neovim_config = function()
-  builtin.git_files {
+find.neovim_config = function()
+  telescope.builtin.git_files {
     previewer = false,
     shorten_path = false,
     cwd = vim.fn.stdpath('config'),
@@ -63,18 +69,18 @@ M.neovim_config = function()
   }
 end
 
-M.search_project_root = function()
-  builtin.find_files {
+find.search_project_root = function()
+  telescope.builtin.find_files {
     previewer = false,
     layout_strategy = "vertical",
     cwd = require('nvim_lsp.util').root_pattern(".git")(vim.fn.expand("%:p")),
   }
 end
 
-M.command = function()
-  pickers.new({}, {
+find.command = function()
+  telescope.pickers.new({}, {
     prompt = 'Commands',
-    finder = finders.new_table {
+    finder = telescope.finders.new_table {
       results = (function()
         local command_iter = vim.api.nvim_get_commands({})
         local commands = {}
@@ -94,11 +100,11 @@ M.command = function()
         }
       end
     },
-    sorter = sorters.get_generic_fuzzy_sorter(),
+    sorter = telescope.sorters.get_generic_fuzzy_sorter(),
     attach_mappings = function(prompt_bufnr, map)
       local run_command = function()
-        local selection = actions.get_selected_entry(prompt_bufnr)
-        actions.close(prompt_bufnr)
+        local selection = telescope.actions.get_selected_entry(prompt_bufnr)
+        telescope.actions.close(prompt_bufnr)
         local val = selection.value
         local cmd = string.format([[:%s ]], val.name)
 
@@ -119,9 +125,5 @@ M.command = function()
   }):find()
 end
 
----
--- Final Module Initialization & Return
----
-M.finder_names = vim.tbl_keys(M)
-_G.vimrc.find = M
-return M
+-- Finally, Initialization & Return
+return find._setup()  -- can still be loaded directly from file.

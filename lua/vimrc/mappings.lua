@@ -1,24 +1,41 @@
 local vimp = require('vimp')
-local util = require('vimrc.util')
+local vimrc = _G["vimrc"]
 vimp.unmap_all() -- Remove all previously added maps.
 vimp.add_chord_cancellations('n', '<leader>') -- cancel chords when leader is pressed in normal mode.
 local opts = {"override", "nowait"}
 local opts_expr = {"expr", "override", "nowait"}
 local which_key_leader_map = vim.empty_dict()
 
+-- command_mappings are mappings defined with their related commands. they are bound in normal/command mode, only.
+local command_mappings = vimrc.fn.deep_table()
+
+local function command_mapping(ident, opts)
+  local mapping_modes = opts.mapping_modes or {'n', 'x'}
+  local bind = opts.bind or { }
+  local cmd = opts.cmd or 'echoerr "Not Implemented"' 
+
+  _G.vimrc.autocmd[name] = callback
+  vim.cmd(string.format("autocmd %s %s lua require'vimrc'.autocmd['%s']()",
+    table.concat((opts.events or { name }),','),
+    table.concat(match, ','),
+    name))
+end
+
+
+
 which_key_leader_map["e"] = { '<CMD>NvimTreeToggle\\<CR>', 'filetree' }
 which_key_leader_map["t"] = { '<CMD>Vista!!\\<CR>', 'tagtree' }
-which_key_leader_map["d"] = { '<CMD>luafile '..vim.g.vimrc_config_dir..'/lua/vimrc/diags.lua\\<CR>', 'diagnostics' }
+-- which_key_leader_map["d"] = { '<CMD>luafile '..vim.g.vimrc_config_dir..'/lua/vimrc/diags.lua\\<CR>', 'diagnostics' }
 which_key_leader_map["f"] = {
   ["name"] = "+find",
   f = { '<CMD>lua vimrc.find.file()\\<CR>', 'file' },
-  h = { '<CMD>lua vimrc.find.help_tag()\\<CR>', 'help' },
-  r = { '<CMD>lua vimrc.find.lsp_reference()\\<CR>', 'lsp-ref' },
-  s = { '<CMD>lua vimrc.find.lsp_workspace_symbol()\\<CR>', 'lsp-sym' },
-  S = { '<CMD>lua vimrc.find.lsp_document_symbol()\\<CR>', 'doc-sym' },
+  h = { '<CMD>lua vimrc.find.help()\\<CR>', 'help' },
+  r = { '<CMD>lua vimrc.find.reference()\\<CR>', 'lsp-ref' },
+  s = { '<CMD>lua vimrc.find.workspace_symbol()\\<CR>', 'lsp-sym' },
+  S = { '<CMD>lua vimrc.find.document_symbol()\\<CR>', 'doc-sym' },
   g = { '<CMD>lua vimrc.find.grep()\\<CR>', 'grep' },
   x = { '<CMD>lua vimrc.find.command()\\<CR>', 'cmd' },
-  X = { '<CMD>lua vimrc.find.command_in_history()\\<CR>', 'cmd-hist' },
+  X = { '<CMD>lua vimrc.find.recent_command()\\<CR>', 'cmd-hist' },
   b = { '<CMD>lua vimrc.find.buffer()\\<CR>', 'buf' },
   v = { '<CMD>lua vimrc.find.neovim_config()', 'nvim-cfg' },
 }
@@ -51,29 +68,32 @@ which_key_leader_map["t"] = {
 
 which_key_leader_map["z"] = {
   ["name"] = "+toggle",
-  n = { '<CMD>lua vimrc.util.win.toggle_option("number")\\<CR>', 'number' },
-  w = { '<CMD>lua vimrc.util.win.toggle_option("wrap")\\<CR>', 'wrap' },
-  s = { '<CMD>lua vimrc.util.win.toggle_option("spell")\\<CR>', 'spell' },
-  l = { '<CMD>lua vimrc.util.win.toggle_option("list")\\<CR>', 'list' },
-  r = { '<CMD>lua vimrc.util.buf.toggle_option("readonly")\\<CR>', 'readonly' },
+  n = { '<CMD>lua vimrc.fn.toggle_window_option("number")\\<CR>', 'number' },
+  w = { '<CMD>lua vimrc.fn.toggle_window_option("wrap")\\<CR>', 'wrap' },
+  s = { '<CMD>lua vimrc.fn.toggle_window_option("spell")\\<CR>', 'spell' },
+  l = { '<CMD>lua vimrc.fn.toggle_window_option("list")\\<CR>', 'list' },
+  r = { '<CMD>lua vimrc.fn.toggle_window_option("readonly")\\<CR>', 'readonly' },
 }
 
 -- Quickly reload.
-which_key_leader_map["r"] = { ["name"] = "+reload" }
+which_key_leader_map["r"] = { 
+  ["name"] = "+reload";
+  n = { '<CMD>lua vimrc.fn.reload()\\<CR>', 'reload()' };
+}
+
 for k,fname in pairs({
     c = 'colors',
     m = 'mappings',
     s = 'statusline',
     A = 'apis',
     f = 'find',
-    d = 'diags',
+    F = 'fn/init',
     i = 'init',
-    o = 'options/init',
+    o = 'options',
     a = 'autocommands',
-    u = 'util/init',
   }) do
   which_key_leader_map["r"][k] = {
-    '<CMD>luafile '.. vim.g.vimrc_config_dir ..'/lua/vimrc/'..fname..'.lua\\<CR>', 
+    '<CMD>luafile '.. vim.fn.stdpath('config') ..'/lua/vimrc/'..fname..'.lua\\<CR>', 
     fname,
   }
 end
@@ -155,6 +175,7 @@ vim.cmd [[ inoremap <silent><expr> <C-Space> pumvisible() ? "\<C-n>" : completio
 
 _G.vimrc.mappings = {
   tbl = mapping_tbl,
+  cm = command_mappings,
   groups = mapping_groups,
 }
 -- vim: ft=lua

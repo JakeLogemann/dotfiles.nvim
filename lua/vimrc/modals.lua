@@ -1,5 +1,7 @@
+
+_G["paq"]({'Iron-E/nvim-libmodal', as = 'libmodal.nvim' })
+
 local api = vim.api
-local libmodal = (libmodal or require('libmodal')) -- exported in init.lua
 local M = { modes = {} } -- define module to be returned.
 
 -- Function which is called whenever the user presses a button in ReloadMode

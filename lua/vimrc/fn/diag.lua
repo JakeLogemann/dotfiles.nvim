@@ -1,4 +1,10 @@
-vimrc.util.win.ephemeral_markdown("Diagnostics", [[
+local vimrc = _G["vimrc"]
+
+-- pretty-print the vimrc options for inspection.
+function vimrc.fn.print_options() return print(vim.inspect(vimrc.opts)) end
+
+function vimrc.fn.diagnostics()
+  vimrc.fn.preview_markdown("Diagnostics", [[
 Vimrc Diagnostics
 =================
 - **USER**: _$(vim.env.USER)_
@@ -48,4 +54,5 @@ Buffer Info
 $(vim.inspect(vim.fn.getbufinfo(0)))
 ```
 
-]])
+  ]])
+end

@@ -1,7 +1,7 @@
-local BUF = {}
+local vimrc = _G["vimrc"]
 
 -- toggles a named option, outputing its new value for a better UX.
-function BUF.toggle_option(option_name)
+function vimrc.fn.toggle_buffer_option(option_name)
   local bufnr = vim.api.nvim_get_current_buf()
   local current = vim.api.nvim_buf_get_option(bufnr, option_name) or false
   local new_val = not current
@@ -9,8 +9,8 @@ function BUF.toggle_option(option_name)
   print("SET " .. option_name .. " = " .. (new_val and "ON" or "OFF"))
 end
 
-function BUF.make_ephemeral(winnr, bufnr)
-  BUF.disable_extras(winnr, bufnr)
+function vimrc.fn.make_ephemeral_buffer(winnr, bufnr)
+  vimrc.fn.disable_buffer_extras(winnr, bufnr)
   -- do not list this buffer for selection:
   vim.api.nvim_buf_set_option(bufnr, 'buflisted', false)
   -- do not persist a swapfile for this buffer:
@@ -25,16 +25,14 @@ function BUF.make_ephemeral(winnr, bufnr)
 end
 
 
-function BUF.disable_extras(winnr, bufnr)
+function vimrc.fn.disable_buffer_extras(winnr, bufnr)
   vim.api.nvim_win_set_option(bufnr, 'cursorline', true)
   vim.api.nvim_win_set_option(bufnr, 'number', false)
   vim.api.nvim_win_set_option(bufnr, 'wrap', false)
 end
 
-function BUF.autodelete_on_leave(bufnr)
+function vimrc.fn.autodelete_buffer_on_leave(bufnr)
   -- autocommand to automatically close/delete a buffer when its left.
   vim.cmd("autocmd WinLeave <buffer> silent! execute 'bwipe! ".. bufnr .."'")
 end
-
-_G.vimrc.util.buf = BUF
 

@@ -61,7 +61,7 @@ local function generator(winnr)
   return line
 end
 
-function vimrc.statusline.setup()
+function vimrc.fn.setup_statusline()
   el.setup({
       generator = generator;
   })

@@ -4,7 +4,8 @@ local vimrc = _G["vimrc"]
 function vimrc.fn.print_options() return print(vim.inspect(vimrc.opts)) end
 
 function vimrc.fn.diagnostics()
-  vimrc.fn.preview_markdown("Diagnostics", [[
+  local bufnr = vim.api.nvim_create_buf(false, false)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vimrc.fn.render_template([[
 Vimrc Diagnostics
 =================
 - **USER**: _$(vim.env.USER)_
@@ -42,10 +43,10 @@ Terminal Colors
 14. $(vim.g.terminal_color_14)
 15. $(vim.g.terminal_color_15)
 
-vimrc.options
+vimrc.opts
 -------------
 ```lua
-$(vim.inspect(vimrc.options))
+$(vim.inspect(vimrc.opts))
 ```
 
 Buffer Info
@@ -53,6 +54,29 @@ Buffer Info
 ```lua
 $(vim.inspect(vim.fn.getbufinfo(0)))
 ```
+]]))
 
-  ]])
+  vim.api.nvim_buf_set_option(bufnr, 'filetype', 'markdown')
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+  -- do not list this buffer for selection:
+  vim.api.nvim_buf_set_option(bufnr, 'buflisted', false)
+  -- do not persist a swapfile for this buffer:
+  vim.api.nvim_buf_set_option(bufnr, 'swapfile', false)
+  -- remove the buffer when it is hidden:
+  vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
+  -- buftype=nofile prevents marking buffers as not being backed by a real file, so
+  -- theres no need to save.
+  vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
+
+
+  _G["popup"].create(bufnr, {
+      title = 'Diagnostics',
+      line = 8,
+      col = 55,
+      pos = "botleft",
+      padding = { 2, 2, 2, 2 },
+      minwidth = math.floor((vim.o.columns - 10)*0.66),
+      border = { 1, 1, 1, 1 }
+    })
+  vim.cmd("autocmd WinLeave,BufLeave <buffer> silent! execute 'bwipeout!'")
 end

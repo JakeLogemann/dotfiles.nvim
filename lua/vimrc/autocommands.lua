@@ -28,13 +28,14 @@ vimrc.fn.autocommand_group("LuaVimrc", function()
     vim.cmd('wshada!') -- ensure ShaDa file is written before exit.
   end })
 
-  -- vimrc.fn.define_autocommand("VimEnter", { 
-      --   callback = function()
-        --     vim.defer_fn(function() print("Welcome to my NeoVim!") end, 1000)
-        --     vim.defer_fn(function() print("Lets see if this works ...") end, 2500)
-          --     vim.defer_fn(function() print(" ") end, 4000)
-        --   end,
-      -- })
+  vimrc.fn.define_autocommand("VimEnter", {
+      callback = function()
+        vim.cmd("NvimTreeOpen")
+        vim.defer_fn(function() print("Welcome to my NeoVim!") end, 1000)
+        vim.defer_fn(function() vim.cmd("NvimTreeOpen") end, 1500)
+        vim.defer_fn(function() print("Lets see if this works ...") end, 2500)
+        vim.defer_fn(function() print(" ") end, 4000)
+      end })
 
 
     vimrc.fn.define_autocommand("RefFileTypes", {
@@ -42,8 +43,7 @@ vimrc.fn.autocommand_group("LuaVimrc", function()
         match = {"help"},
         callback = function()
           vimrc.util.buf.disable_extras(0,0)
-        end,
-      })
+        end })
 
     vimrc.fn.define_autocommand("EphemeralFileTypes", {
         events = {"FileType"},
@@ -56,17 +56,15 @@ vimrc.fn.autocommand_group("LuaVimrc", function()
         callback = function()
           vimrc.util.buf.make_ephemeral(0,0)
           -- vimrc.util.buf.disable_extras(0,0)
-        end,
-      })
+        end })
 
     vimrc.fn.define_autocommand("SwapExists", {
         match = {"* nested"},
         callback = function()
           vim.v.swapchoice = 'o' -- automatically select readonly when swap exists.
-        end,
-      })
+        end })
 
-    vimrc.fn.define_autocommand("TextYankPost", { callback = function() 
+    vimrc.fn.define_autocommand("TextYankPost", { callback = function()
       require'vim.highlight'.on_yank()  -- requires nvim 0.5.0+
     end })
 

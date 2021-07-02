@@ -78,7 +78,7 @@ which_key_leader_map["z"] = {
 -- Quickly reload.
 which_key_leader_map["r"] = { 
   ["name"] = "+reload";
-  n = { '<CMD>lua vimrc.fn.reload()\\<CR>', 'reload()' };
+  r = { '<CMD>lua vimrc.setup()\\<CR>', 'setup()' };
 }
 
 for k,fname in pairs({

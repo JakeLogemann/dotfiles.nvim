@@ -55,6 +55,7 @@ function vimrc.fn.win_try_close(winnr)
 end
 
 function vimrc.fn.win_focus(winnr)
+  local win = vim.api.nvim_get_current_win()
   if win.is_open(winnr) and not win.is_current(winnr) then
     vim.api.nvim_set_current_win(winnr)
   end

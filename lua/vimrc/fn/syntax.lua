@@ -12,7 +12,7 @@ function vimrc.fn.get_highlight_at_cursor(winnr)
     local cursor = vim.api.nvim_win_get_cursor(winnr or 0)
 
     -- try to get treesitter node type firstly
-    local current_node = fn.treesitter_node_at_cursor(cursor)
+    local current_node = vimrc.fn.treesitter_node_at_cursor(cursor)
     if current_node then return current_node:type() end
     -- fallback
     return vim.fn.synIDattr(vim.fn.synID(cursor[1], cursor[2], 1), "name")
